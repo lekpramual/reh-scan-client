@@ -12,8 +12,7 @@
                 </div>
 
                 <div class="field">
-                    <label for="fullname">ชื่อ - สกุล</label>
-
+                    <label for="fullname"><i class="pi pi-user"></i> ชื่อ - สกุล</label>
                     <p-autoComplete [style]="{width: '100%'}" [(ngModel)]="selectedCountryAdvanced"
                         [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)" field="name"
                         [dropdown]="true" placeholder="ชื่อ - สกุล">
@@ -27,13 +26,12 @@
                 </div>
 
                 <div class="field">
-                    <label for="phone">เบอร์โทร</label>
-
+                    <label for="phone"><i class="pi pi-phone"></i> เบอร์โทร</label>
                     <p-inputMask [style]="{width: '100%'}" mask="(999) 999-9999" [(ngModel)]="valPhone"
                         placeholder="(999) 999-9999"></p-inputMask>
                 </div>
                 <div class="field">
-                    <label for="cid">เลขบัตรประชาชน</label>
+                    <label for="cid"><i class="pi pi-id-card"></i> เลขบัตรประชาชน</label>
 
                     <p-inputMask [style]="{width: '100%'}" mask="999-99-9999" [(ngModel)]="valCid"
                         placeholder="9-9999-99999-99-9"></p-inputMask>

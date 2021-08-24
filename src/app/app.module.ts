@@ -7,31 +7,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RegisterComponent } from './register/register.component';
 
-// Prime NG
-import { AvatarModule } from 'primeng/avatar'
-import { ButtonModule } from 'primeng/button';
-import { InputMaskModule } from 'primeng/inputmask';
-import { AutoCompleteModule } from 'primeng/autocomplete';
 @NgModule({
   declarations: [
-    AppComponent,
-    RegisterComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterModule,
-    ReactiveFormsModule,
-    FormsModule,
-    AvatarModule,
-    ButtonModule,
-    InputMaskModule,
-    AutoCompleteModule,
     HttpClientModule,
     BrowserAnimationsModule
-
   ],
   providers: [],
   bootstrap: [AppComponent]
