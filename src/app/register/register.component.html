@@ -1,0 +1,50 @@
+<div class="card">
+    <div class="flex align-items-center justify-content-center flex-wrap card-container yellow-container"
+        style="min-height: 100vh">
+        <div class="flex align-items-center justify-content-center text-gray-900 border-round">
+            <div class="card">
+                <div class="flex align-items-center justify-content-center field">
+                    <label for="avatar">
+                        <p-avatar
+                            image="https://i.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U"
+                            styleClass="p-mr-2 w-7rem h-7rem" size="xlarge" shape="circle"></p-avatar>
+                    </label>
+                </div>
+
+                <div class="field">
+                    <label for="fullname">ชื่อ - สกุล</label>
+
+                    <p-autoComplete [style]="{width: '100%'}" [(ngModel)]="selectedCountryAdvanced"
+                        [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)" field="name"
+                        [dropdown]="true" placeholder="ชื่อ - สกุล">
+                        <ng-template let-country pTemplate="item">
+                            <div class="country-item">
+                                <div>{{country.name}}</div>
+                            </div>
+                        </ng-template>
+                    </p-autoComplete>
+
+                </div>
+
+                <div class="field">
+                    <label for="phone">เบอร์โทร</label>
+
+                    <p-inputMask [style]="{width: '100%'}" mask="(999) 999-9999" [(ngModel)]="valPhone"
+                        placeholder="(999) 999-9999"></p-inputMask>
+                </div>
+                <div class="field">
+                    <label for="cid">เลขบัตรประชาชน</label>
+
+                    <p-inputMask [style]="{width: '100%'}" mask="999-99-9999" [(ngModel)]="valCid"
+                        placeholder="9-9999-99999-99-9"></p-inputMask>
+                </div>
+                <div class="field">
+                    <button [style]="{width: '100%'}" pButton type="submit" label="ลงทะเบียน"
+                        class="p-button-raised p-button-rounded"></button>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
