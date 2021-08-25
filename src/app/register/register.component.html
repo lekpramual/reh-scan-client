@@ -5,9 +5,8 @@
             <div class="card">
                 <div class="flex align-items-center justify-content-center field">
                     <label for="avatar">
-                        <p-avatar
-                            image="https://i.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U"
-                            styleClass="p-mr-2 w-7rem h-7rem" size="xlarge" shape="circle"></p-avatar>
+                        <p-avatar image={{profile.pictureUrl}} styleClass="p-mr-2 w-7rem h-7rem" size="xlarge"
+                            shape="circle"></p-avatar>
                     </label>
                 </div>
 
@@ -16,6 +15,12 @@
                         LIFF is running in {{os}}
                     </label>
                 </div>
+                <div class="flex align-items-center justify-content-center field">
+                    <label for="avatar">
+                        <p>userId:{{profile.userId}}</p>
+                    </label>
+                </div>
+
                 <div class="flex align-items-center justify-content-center field">
                     <label for="avatar">
                         <p>displayName:{{profile.displayName}}</p>
