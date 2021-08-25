@@ -20,13 +20,24 @@ export class AuthenticationService {
     private http: HttpClient,
     private apiURL: IpserviceService
   ) {
+    // this.getUserValue();
     this.currentUserSubject = new BehaviorSubject<User>(
       JSON.parse(localStorage.getItem("currentUser")!)
     );
+
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
   public get currentUserValue(): User {
+
+    this.getUserValue();
     return this.currentUserSubject.value;
   }
+
+  getUserValue() {
+    return this.currentUserSubject = new BehaviorSubject<User>(
+      JSON.parse(localStorage.getItem("currentUser")!)
+    );
+  }
+
 }

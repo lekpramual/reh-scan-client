@@ -59,7 +59,10 @@ export class RegisterComponent implements OnInit {
     private authenticationService: AuthenticationService,
   ) {
     // redirect to home if already logged in
+    console.log('auth :', this.authenticationService.currentUserValue)
+
     if (this.authenticationService.currentUserValue) {
+      console.log('auth :', this.authenticationService.currentUserValue)
       this.router.navigate(['/']);
     }
   }
@@ -71,7 +74,7 @@ export class RegisterComponent implements OnInit {
     this.getLiffLine();
 
     this.version = packageInfo.version;
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+
 
   }
 
@@ -100,7 +103,7 @@ export class RegisterComponent implements OnInit {
           this.displayName = profile.displayName;
         }).catch(console.error);
       } else {
-        liff.login()
+        // liff.login()
       }
     }).catch(console.error);
   }
@@ -111,10 +114,17 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  public SimulateNetworkRequest() {
+    return new Promise((resolve) => setTimeout(resolve, 1000));
+  };
+
   onSubmit() {
     // delay progressSpinner 1 s 
     if (this.loginForm.valid) {
+
       this.loading = false;
+
+      // บันทึกข้อมูล currentUser 
       localStorage.setItem('currentUser', JSON.stringify({
         userId: this.userId,
         displayName: this.displayName,
@@ -123,8 +133,10 @@ export class RegisterComponent implements OnInit {
         name: this.loginForm.value.fullname.name,
       }));
 
-      // login successful in the response true 
-      this.router.navigate([this.returnUrl]);
+      // ตรวจสอบว่ามี currentUser เข้าสู่ระบบแล้ว 
+      if (this.authenticationService.currentUserValue) {
+        this.router.navigate(['/checkin']);
+      }
     }
   }
 

@@ -1,0 +1,32 @@
+:host ::ng-deep .card-container .card {
+  width: 128px;
+  height: 128px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  user-select: none;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
+    0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  margin-bottom: 2rem;
+  padding: 0;
+  background-color: var(--surface-e);
+}
+:host ::ng-deep .card-container .card.primary-box {
+  background-color: var(--primary-color);
+  padding: 0;
+  color: var(--primary-color-text);
+}
+:host ::ng-deep .card-container .card.styled-box-green .p-ink {
+  background: rgba(75, 175, 80, 0.3);
+}
+:host ::ng-deep .card-container .card.styled-box-orange .p-ink {
+  background: rgba(255, 193, 6, 0.3);
+}
+:host ::ng-deep .card-container .card.styled-box-purple .p-ink {
+  background: rgba(156, 39, 176, 0.3);
+}
+:host ::ng-deep .card-container .card:last-child {
+  margin-right: 0;
+}
