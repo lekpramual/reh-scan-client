@@ -19,22 +19,26 @@ export class UserService {
     })
   }
 
-  // getUsers(search) {
-  //   return this.http.get<any>(this.apiURL.getIPAddress() + '//api/user/show?search=' + search, this.httpOptions)
-  //     .toPromise()
-  //     .then(res =>
-  //       // console.log(res);
-  //       <HosxpList[]>res.data
-  //     )
-  //     .then(data => {
-  //       return data;
-  //     });
-  // }
-
-  getUsers() {
-    return this.http.get<any>('../../assets/users.json')
+  getUsers(search: any) {
+    return this.http.get<any>(this.apiURL.getIPAddress() + '/api/user/show?search=' + search, this.httpOptions)
       .toPromise()
-      .then(res => <any[]>res.data)
-      .then(data => { return data; });
+      .then(data => {
+        // console.log(data)
+        return data;
+      });
+
+    // .then(res =>
+    //   console.log(res);
+    //   <HosxpList[]>res.data
+    // )
   }
+
+
+
+  // getUsers() {
+  //   return this.http.get<any>('../../assets/users.json')
+  //     .toPromise()
+  //     .then(res => <any[]>res.data)
+  //     .then(data => { return data; });
+  // }
 }

@@ -39,9 +39,9 @@ export class RegisterComponent implements OnInit {
   filteredGroups!: any[];
 
 
-  valFullName!: string;
-  valPhone!: string;
-  valCid!: string;
+  pictureUrl?: string = "../../assets/icon/logo128.png";
+  userId?: string = "";
+  displayName?: string = "";
 
   loginForm!: FormGroup;
   loading!: boolean;
@@ -56,10 +56,11 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
 
     this.resetForm();
+    this.getUsers("");
+
     this.version = packageInfo.version;
-    this.userService.getUsers().then(countries => {
-      this.countries = countries;
-    });
+
+
 
     // liff line
     liff.init({ liffId: '1656331237-XGkQjqOl' }).then(() => {
@@ -67,9 +68,13 @@ export class RegisterComponent implements OnInit {
       if (liff.isLoggedIn()) {
         liff.getProfile().then(profile => {
           this.profile = profile;
+          this.userId = profile.userId;
+          this.pictureUrl = profile.pictureUrl;
+          this.displayName = profile.displayName;
+
         }).catch(console.error);
       } else {
-        liff.login()
+        // liff.login()
       }
     }).catch(console.error);
   }
@@ -78,13 +83,19 @@ export class RegisterComponent implements OnInit {
     return this.loginForm.controls;
   }
 
-  public resetForm() {
+  resetForm() {
     this.loading = true
 
     this.loginForm = this.formBuilder.group({
       fullname: ['', [Validators.required]],
       phone: ['', [Validators.required, Validators.minLength(10)]]
     })
+  }
+
+  getUsers(name: any) {
+    this.userService.getUsers(name).then(countries => {
+      this.countries = countries.data;
+    });
   }
 
   onSubmit() {
@@ -98,6 +109,10 @@ export class RegisterComponent implements OnInit {
 
 
   filterCountry(event: { query: any; }) {
+    console.log(event);
+
+    this.getUsers(event.query)
+
     //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
     let filtered: any[] = [];
     let query = event.query;
@@ -111,27 +126,27 @@ export class RegisterComponent implements OnInit {
     this.filteredCountries = filtered;
   }
 
-  filterGroupedCity(event: { query: any; }) {
-    let query = event.query;
-    let filteredGroups = [];
+  // filterGroupedCity(event: { query: any; }) {
+  //   let query = event.query;
+  //   let filteredGroups = [];
 
-    for (let optgroup of this.groupedCities) {
-      let filteredSubOptions = this.filterService.filter(
-        optgroup.items,
-        ["label"],
-        query,
-        "contains"
-      );
-      if (filteredSubOptions && filteredSubOptions.length) {
-        filteredGroups.push({
-          label: optgroup.label,
-          value: optgroup.value,
-          items: filteredSubOptions
-        });
-      }
-    }
+  //   for (let optgroup of this.groupedCities) {
+  //     let filteredSubOptions = this.filterService.filter(
+  //       optgroup.items,
+  //       ["label"],
+  //       query,
+  //       "contains"
+  //     );
+  //     if (filteredSubOptions && filteredSubOptions.length) {
+  //       filteredGroups.push({
+  //         label: optgroup.label,
+  //         value: optgroup.value,
+  //         items: filteredSubOptions
+  //       });
+  //     }
+  //   }
 
-    this.filteredGroups = filteredGroups;
-  }
+  //   this.filteredGroups = filteredGroups;
+  // }
 
 }
