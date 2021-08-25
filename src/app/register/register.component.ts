@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 import liff from '@line/liff';
@@ -7,6 +8,8 @@ import { SelectItemGroup } from "primeng/api";
 
 import { UserService } from "../service/user.service";
 import packageInfo from '../../../package.json';
+
+import { AuthenticationService } from '../service/authentication.service';
 
 type UnPromise<T> = T extends Promise<infer X> ? X : T;
 
@@ -17,6 +20,7 @@ type UnPromise<T> = T extends Promise<infer X> ? X : T;
   providers: [UserService, FilterService]
 })
 export class RegisterComponent implements OnInit {
+  [x: string]: any;
 
   os: ReturnType<typeof liff.getOS>;
   profile!: UnPromise<ReturnType<typeof liff.getProfile>>;
@@ -50,18 +54,41 @@ export class RegisterComponent implements OnInit {
   constructor(
     public formBuilder: FormBuilder,
     private userService: UserService,
-    private filterService: FilterService
-  ) { }
+    private route: ActivatedRoute,
+    private router: Router,
+    private authenticationService: AuthenticationService,
+  ) {
+    // redirect to home if already logged in
+    if (this.authenticationService.currentUserValue) {
+      this.router.navigate(['/']);
+    }
+  }
 
   ngOnInit(): void {
 
     this.resetForm();
     this.getUsers("");
+    this.getLiffLine();
 
     this.version = packageInfo.version;
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+
+  }
+
+  get getControl() {
+    return this.loginForm.controls;
+  }
+
+  resetForm() {
+    this.loading = true;
+    this.loginForm = this.formBuilder.group({
+      fullname: ['', [Validators.required]],
+      phone: ['', [Validators.required, Validators.minLength(10)]]
+    })
+  }
 
 
-
+  getLiffLine() {
     // liff line
     liff.init({ liffId: '1656331237-XGkQjqOl' }).then(() => {
       this.os = liff.getOS();
@@ -71,25 +98,11 @@ export class RegisterComponent implements OnInit {
           this.userId = profile.userId;
           this.pictureUrl = profile.pictureUrl;
           this.displayName = profile.displayName;
-
         }).catch(console.error);
       } else {
         liff.login()
       }
     }).catch(console.error);
-  }
-
-  get getControl() {
-    return this.loginForm.controls;
-  }
-
-  resetForm() {
-    this.loading = true
-
-    this.loginForm = this.formBuilder.group({
-      fullname: ['', [Validators.required]],
-      phone: ['', [Validators.required, Validators.minLength(10)]]
-    })
   }
 
   getUsers(name: any) {
@@ -100,10 +113,18 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     // delay progressSpinner 1 s 
-    console.log(this.loginForm.valid)
-    console.log(this.loginForm)
     if (this.loginForm.valid) {
       this.loading = false;
+      localStorage.setItem('currentUser', JSON.stringify({
+        userId: this.userId,
+        displayName: this.displayName,
+        pictureUrl: this.pictureUrl,
+        badgenumber: this.loginForm.value.fullname.badgenumber,
+        name: this.loginForm.value.fullname.name,
+      }));
+
+      // login successful in the response true 
+      this.router.navigate([this.returnUrl]);
     }
   }
 
