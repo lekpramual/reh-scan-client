@@ -11,6 +11,17 @@
                     </label>
                 </div>
 
+                <div class="flex align-items-center justify-content-center field">
+                    <label for="avatar">
+                        LIFF is running in {{os}}
+                    </label>
+                </div>
+                <div class="flex align-items-center justify-content-center field">
+                    <label for="avatar">
+                        <p>displayName:{{profile.displayName}}</p>
+                    </label>
+                </div>
+
                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                     <div class="field">
                         <label for="fullname"><i class="pi pi-user"></i> ชื่อ - สกุล</label>
@@ -29,12 +40,6 @@
                         <label for="phone"><i class="pi pi-phone"></i> เบอร์โทร</label>
                         <p-inputMask [style]="{width: '100%'}" mask="(999) 999-9999" placeholder="(999) 999-9999"
                             formControlName="phone" minlength="10"></p-inputMask>
-                    </div>
-                    <div class="field">
-                        <label for="cid"><i class="pi pi-id-card"></i> เลขบัตรประชาชน {{loginForm.valid}}</label>
-
-                        <p-inputMask [style]="{width: '100%'}" mask="9-9999-99999-99-9" placeholder="9-9999-99999-99-9"
-                            formControlName="cid"></p-inputMask>
                     </div>
                     <div class="field">
                         <button [style]="{width: '100%'}" pButton type="submit" label="ลงทะเบียน"

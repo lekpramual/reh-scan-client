@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
+import liff from '@line/liff';
 import { FilterService } from "primeng/api";
 import { SelectItemGroup } from "primeng/api";
-import { UserService } from "../service/user.service";
 
+import { UserService } from "../service/user.service";
 import packageInfo from '../../../package.json';
+
+type UnPromise<T> = T extends Promise<infer X> ? X : T;
 
 @Component({
   selector: 'app-register',
@@ -14,6 +17,10 @@ import packageInfo from '../../../package.json';
   providers: [UserService, FilterService]
 })
 export class RegisterComponent implements OnInit {
+
+  os: ReturnType<typeof liff.getOS>;
+  profile!: UnPromise<ReturnType<typeof liff.getProfile>>;
+
 
   selectedCountry: any;
 
@@ -50,10 +57,21 @@ export class RegisterComponent implements OnInit {
 
     this.resetForm();
     this.version = packageInfo.version;
-
     this.userService.getUsers().then(countries => {
       this.countries = countries;
     });
+
+    // liff line
+    liff.init({ liffId: '1656331237-XGkQjqOl' }).then(() => {
+      this.os = liff.getOS();
+      if (liff.isLoggedIn()) {
+        liff.getProfile().then(profile => {
+          this.profile = profile;
+        }).catch(console.error);
+      } else {
+        liff.login()
+      }
+    }).catch(console.error);
   }
 
   get getControl() {
@@ -64,10 +82,8 @@ export class RegisterComponent implements OnInit {
     this.loading = true
 
     this.loginForm = this.formBuilder.group({
-      // fullname: ['', [Validators.required]],
-      fullname: { name: ['', [Validators.required]], code: ['', [Validators.required]] },
-      phone: ['', [Validators.required, Validators.minLength(10)]],
-      cid: ['', [Validators.required, Validators.minLength(13)]]
+      fullname: ['', [Validators.required]],
+      phone: ['', [Validators.required, Validators.minLength(10)]]
     })
   }
 
