@@ -33,11 +33,7 @@ export class RegisterlineComponent implements OnInit {
           console.log(this.profile)
           // บันทึกข้อมูล currentLine 
           console.log('login success...');
-          localStorage.setItem('currentLine', JSON.stringify({
-            userId: this.profile.userId,
-            displayName: this.profile.displayName,
-            pictureUrl: this.profile.pictureUrl,
-          }));
+          localStorage.setItem('currentLine', JSON.stringify(this.profile));
         }).catch(console.error);
       } else {
         console.log('is not login line ...')
