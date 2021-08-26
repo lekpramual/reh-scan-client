@@ -45,10 +45,12 @@ export class RegisterlineComponent implements OnInit {
           // บันทึกข้อมูล currentLine 
           console.log('login success...');
           localStorage.setItem('currentLine', JSON.stringify(this.profile));
+
+          this.router.navigate(['/register']);
         }).catch(console.error);
       } else {
         console.log('is not login line ...')
-        liff.login()
+        // liff.login()
       }
     }).catch(console.error);
   }
