@@ -6,26 +6,26 @@ import { AuthGuard } from './guard/auth.guard';
 
 const routes: Routes = [
   // App 
-  {
-    path: '',
-    component: AppComponent,
-    canActivate: [AuthGuard],
-    children: [
-      {
-        path: '',
-        redirectTo: 'register',
-        pathMatch: 'full'
-      },
-      {
-        path: 'register',
-        loadChildren: () => import('./register/register.module').then(m => m.RegisterModule)
-      },
-      {
-        path: 'checkin',
-        loadChildren: () => import('./checkin/checkin.module').then(m => m.CheckinModule)
-      }
-    ]
-  },
+  // {
+  //   path: '',
+  //   component: AppComponent,
+  //   canActivate: [AuthGuard],
+  //   children: [
+  //     {
+  //       path: '',
+  //       redirectTo: 'register',
+  //       pathMatch: 'full'
+  //     },
+  //     {
+  //       path: 'register',
+  //       loadChildren: () => import('./register/register.module').then(m => m.RegisterModule)
+  //     },
+  //     {
+  //       path: 'checkin',
+  //       loadChildren: () => import('./checkin/checkin.module').then(m => m.CheckinModule)
+  //     }
+  //   ]
+  // },
   // Auth Routes
   {
     path: '',
