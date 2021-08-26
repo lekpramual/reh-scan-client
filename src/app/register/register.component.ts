@@ -59,7 +59,7 @@ export class RegisterComponent implements OnInit {
     private authenticationService: AuthenticationService,
   ) {
 
-    //this.getLiffLine();
+    this.getLiffLine();
 
     // redirect to home if already logged in
     // if (this.authenticationService.currentUserValue) {
@@ -71,7 +71,7 @@ export class RegisterComponent implements OnInit {
 
     this.resetForm();
     this.getUsers("");
-    this.getLiffLine();
+
 
     this.version = packageInfo.version;
   }
@@ -93,11 +93,12 @@ export class RegisterComponent implements OnInit {
     liff.init({ liffId: '1656331237-XGkQjqOl' }).then(() => {
       this.os = liff.getOS();
       if (liff.isLoggedIn()) {
+        console.log('id loggein ... ')
         liff.getProfile().then(profile => {
           this.profile = profile;
           console.log(this.profile)
-
           // บันทึกข้อมูล currentLine 
+          console.log('login success...')
           localStorage.setItem('currentLine', JSON.stringify({
             userId: this.profile.userId,
             displayName: this.profile.displayName,
