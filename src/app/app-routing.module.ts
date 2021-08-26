@@ -22,7 +22,7 @@ const routes: Routes = [
       }
     ]
   },
-  
+
   // Auth Routes
   {
     path: '',
@@ -36,9 +36,7 @@ const routes: Routes = [
         path: '',
         redirectTo: '/register',
         pathMatch: 'full'
-      },
-      { path: '**', redirectTo: '/register' },
-
+      }
     ]
   }
 ];
