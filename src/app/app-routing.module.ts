@@ -29,13 +29,13 @@ const routes: Routes = [
     component: AppComponent,
     children: [
       {
-        path: 'register',
-        loadChildren: () => import('./register/register.module').then(m => m.RegisterModule)
-      },
-      {
         path: '',
         redirectTo: '/register',
         pathMatch: 'full'
+      },
+      {
+        path: 'register',
+        loadChildren: () => import('./register/register.module').then(m => m.RegisterModule)
       }
     ]
   }
