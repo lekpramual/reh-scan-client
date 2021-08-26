@@ -1,20 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
-import { AuthGuard } from './guard/auth.guard';
+
+// import { AppComponent } from './app.component';
+// import { AuthGuard } from './guard/auth.guard';
 import { RegisterlineComponent } from './registerline/registerline.component';
 
 
 const routes: Routes = [
-
   // App 
   {
     path: '',
-    redirectTo: '/registerline',
-    pathMatch: 'full'
-  },
-  {
-    path: 'registerline',
     component: RegisterlineComponent
   }
 
