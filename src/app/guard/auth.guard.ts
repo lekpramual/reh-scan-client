@@ -7,13 +7,15 @@ import {
 } from '@angular/router';
 
 import { AuthenticationService } from '../service/authentication.service';
+import { LineService } from '../service/line.service';
 
 @Injectable({ providedIn: 'root' })
 
 export class AuthGuard implements CanActivate {
     constructor(
         private router: Router,
-        private authenticationService: AuthenticationService
+        private authenticationService: AuthenticationService,
+        private lineService: LineService
     ) { }
 
     // route: ActivatedRouteSnapshot, state: RouterStateSnapshot
@@ -21,7 +23,10 @@ export class AuthGuard implements CanActivate {
 
         console.log("Guard Active");
         const currentUser = this.authenticationService.currentUserValue;
-        if (currentUser) {
+        const currentLine = this.lineService.getUserValue();
+        console.log(currentLine);
+
+        if (currentLine && currentUser) {
             // console.log("Guard : ", currentUser)
             // authorised so return true
             return true;
@@ -29,7 +34,14 @@ export class AuthGuard implements CanActivate {
 
         // not logged in so redirect to login page with the return url
         // this.router.navigate(['/auth']);
+
+        // if (currentLine) {
+
+        //     //return false;
+        // }
+
         this.router.navigate(['/register']);
         return false;
+
     }
 }

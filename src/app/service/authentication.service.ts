@@ -13,6 +13,7 @@ import { IpserviceService } from '../service/ipservice.service';
 })
 export class AuthenticationService {
 
+
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
@@ -38,5 +39,4 @@ export class AuthenticationService {
       JSON.parse(localStorage.getItem("currentUser")!)
     );
   }
-
 }
