@@ -9,16 +9,39 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+
+// Prime NG
+import { AvatarModule } from 'primeng/avatar'
+import { RippleModule } from 'primeng/ripple';
+import { ButtonModule } from 'primeng/button';
+import { InputMaskModule } from 'primeng/inputmask';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+
+// Components
+import { RegisterComponent } from './register/register.component';
+import { RegisterlineComponent } from './registerline/registerline.component';
+import { CheckinComponent } from './checkin/checkin.component';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    RegisterlineComponent,
+    RegisterComponent,
+    CheckinComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    FormsModule,
+    AvatarModule,
+    ButtonModule,
+    RippleModule,
+    InputMaskModule,
+    AutoCompleteModule,
   ],
   providers: [
     {

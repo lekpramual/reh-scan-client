@@ -9,7 +9,7 @@ import { SelectItemGroup } from "primeng/api";
 import { UserService } from "../service/user.service";
 import packageInfo from '../../../package.json';
 
-import { AuthenticationService } from '../service/authentication.service';
+import { LineService } from '../service/line.service';
 
 
 @Component({
@@ -19,7 +19,7 @@ import { AuthenticationService } from '../service/authentication.service';
   providers: [UserService, FilterService]
 })
 export class RegisterComponent implements OnInit {
-  
+
   selectedCountry: any;
 
   countries!: any[];
@@ -35,8 +35,7 @@ export class RegisterComponent implements OnInit {
   groupedCities!: SelectItemGroup[];
 
   filteredGroups!: any[];
-
-
+  
   pictureUrl?: string = "../../assets/icon/logo128.png";
   userId?: string = "";
   displayName?: string = "";
@@ -50,11 +49,11 @@ export class RegisterComponent implements OnInit {
     private userService: UserService,
     private route: ActivatedRoute,
     private router: Router,
-    private authenticationService: AuthenticationService,
+    private lineService: LineService,
   ) {
     // redirect to home if already logged in
-    if (this.authenticationService.currentUserValue) {
-      this.router.navigate(['/']);
+    if (this.lineService.getUserIsLogin() && this.lineService.getCurrentUserIsLogin()) {
+      this.router.navigate(['/checkin']);
     }
   }
 
@@ -64,6 +63,9 @@ export class RegisterComponent implements OnInit {
     this.getUsers("");
 
     this.version = packageInfo.version;
+    this.pictureUrl = this.lineService.getUserValue().pictureUrl;
+    this.userId = this.lineService.getUserValue().userId;
+    this.displayName = this.lineService.getUserValue().displayName;
   }
 
   get getControl() {
@@ -101,9 +103,8 @@ export class RegisterComponent implements OnInit {
       }));
 
       // ตรวจสอบว่ามี currentUser เข้าสู่ระบบแล้ว 
-      if (this.authenticationService.currentUserValue) {
-        this.router.navigate(['/checkin']);
-      }
+      this.router.navigate(['/checkin']);
+
     }
   }
 
@@ -125,28 +126,4 @@ export class RegisterComponent implements OnInit {
 
     this.filteredCountries = filtered;
   }
-
-  // filterGroupedCity(event: { query: any; }) {
-  //   let query = event.query;
-  //   let filteredGroups = [];
-
-  //   for (let optgroup of this.groupedCities) {
-  //     let filteredSubOptions = this.filterService.filter(
-  //       optgroup.items,
-  //       ["label"],
-  //       query,
-  //       "contains"
-  //     );
-  //     if (filteredSubOptions && filteredSubOptions.length) {
-  //       filteredGroups.push({
-  //         label: optgroup.label,
-  //         value: optgroup.value,
-  //         items: filteredSubOptions
-  //       });
-  //     }
-  //   }
-
-  //   this.filteredGroups = filteredGroups;
-  // }
-
 }

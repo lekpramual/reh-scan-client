@@ -30,3 +30,13 @@
 :host ::ng-deep .card-container .card:last-child {
   margin-right: 0;
 }
+:host ::ng-deep .p-avatar img {
+  border: 2px solid #dad0d0;
+  /* background: url(img/duck.png) no-repeat; */
+  -moz-box-shadow: 0px 6px 5px #ccc;
+  -webkit-box-shadow: 0px 6px 5px #ccc;
+  box-shadow: 0px 6px 5px #ccc;
+  -moz-border-radius: 190px;
+  /* -webkit-border-radius: 190px; */
+  border-radius: 190px;
+}

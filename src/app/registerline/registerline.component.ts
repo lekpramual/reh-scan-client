@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import liff from '@line/liff';
+import { LineService } from '../service/line.service';
 
 type UnPromise<T> = T extends Promise<infer X> ? X : T;
 
@@ -16,7 +18,16 @@ export class RegisterlineComponent implements OnInit {
   profile!: UnPromise<ReturnType<typeof liff.getProfile>>;
 
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private lineService: LineService,
+  ) {
+
+    // redirect to home if already logged in
+    if (this.lineService.getUserIsLogin()) {
+      this.router.navigate(['/register']);
+    }
+  }
 
   ngOnInit(): void {
     this.getLiffLine();

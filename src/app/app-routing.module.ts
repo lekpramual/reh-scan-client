@@ -1,16 +1,27 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+
+
 // import { AppComponent } from './app.component';
 // import { AuthGuard } from './guard/auth.guard';
+import { RegisterComponent } from './register/register.component';
 import { RegisterlineComponent } from './registerline/registerline.component';
-
+import { CheckinComponent } from './checkin/checkin.component';
 
 const routes: Routes = [
   // App 
   {
     path: '',
     component: RegisterlineComponent
+  },
+  {
+    path: 'register',
+    component: RegisterComponent
+  },
+  {
+    path: 'checkin',
+    component: CheckinComponent
   }
 
   // {
