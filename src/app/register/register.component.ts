@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
-import liff from '@line/liff';
+
 import { FilterService } from "primeng/api";
 import { SelectItemGroup } from "primeng/api";
 
@@ -11,7 +11,6 @@ import packageInfo from '../../../package.json';
 
 import { AuthenticationService } from '../service/authentication.service';
 
-type UnPromise<T> = T extends Promise<infer X> ? X : T;
 
 @Component({
   selector: 'app-register',
@@ -20,12 +19,7 @@ type UnPromise<T> = T extends Promise<infer X> ? X : T;
   providers: [UserService, FilterService]
 })
 export class RegisterComponent implements OnInit {
-  [x: string]: any;
-
-  os: ReturnType<typeof liff.getOS>;
-  profile!: UnPromise<ReturnType<typeof liff.getProfile>>;
-
-
+  
   selectedCountry: any;
 
   countries!: any[];
@@ -58,20 +52,16 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
   ) {
-
-    this.getLiffLine();
-
     // redirect to home if already logged in
-    // if (this.authenticationService.currentUserValue) {
-    //   this.router.navigate(['/']);
-    // }
+    if (this.authenticationService.currentUserValue) {
+      this.router.navigate(['/']);
+    }
   }
 
   ngOnInit(): void {
 
     this.resetForm();
     this.getUsers("");
-
 
     this.version = packageInfo.version;
   }
@@ -86,30 +76,6 @@ export class RegisterComponent implements OnInit {
       fullname: ['', [Validators.required]],
       phone: ['', [Validators.required, Validators.minLength(10)]]
     })
-  }
-
-  getLiffLine() {
-    // liff line
-    liff.init({ liffId: '1656331237-XGkQjqOl' }).then(() => {
-      this.os = liff.getOS();
-      if (liff.isLoggedIn()) {
-        console.log('id loggein ... ')
-        liff.getProfile().then(profile => {
-          this.profile = profile;
-          console.log(this.profile)
-          // บันทึกข้อมูล currentLine 
-          console.log('login success...')
-          localStorage.setItem('currentLine', JSON.stringify({
-            userId: this.profile.userId,
-            displayName: this.profile.displayName,
-            pictureUrl: this.profile.pictureUrl,
-          }));
-
-        }).catch(console.error);
-      } else {
-        liff.login()
-      }
-    }).catch(console.error);
   }
 
   getUsers(name: any) {

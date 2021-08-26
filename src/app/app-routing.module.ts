@@ -13,8 +13,12 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'checkin',
+        redirectTo: 'register',
         pathMatch: 'full'
+      },
+      {
+        path: 'register',
+        loadChildren: () => import('./register/register.module').then(m => m.RegisterModule)
       },
       {
         path: 'checkin',
@@ -29,12 +33,12 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/register',
+        redirectTo: '/registerline',
         pathMatch: 'full'
       },
       {
-        path: 'register',
-        loadChildren: () => import('./register/register.module').then(m => m.RegisterModule)
+        path: 'registerline',
+        loadChildren: () => import('./registerline/registerline.module').then(m => m.RegisterlineModule)
       }
     ]
   }

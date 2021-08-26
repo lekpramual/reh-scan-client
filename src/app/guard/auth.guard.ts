@@ -24,9 +24,10 @@ export class AuthGuard implements CanActivate {
         console.log("Guard Active");
         const currentUser = this.authenticationService.currentUserValue;
         const currentLine = this.lineService.getUserValue();
+
         console.log(currentLine);
 
-        if (currentLine && currentUser) {
+        if (currentLine) {
             // console.log("Guard : ", currentUser)
             // authorised so return true
             return true;
@@ -35,12 +36,8 @@ export class AuthGuard implements CanActivate {
         // not logged in so redirect to login page with the return url
         // this.router.navigate(['/auth']);
 
-        // if (currentLine) {
 
-        //     //return false;
-        // }
-
-        this.router.navigate(['/register']);
+        this.router.navigate(['/registerline']);
         return false;
 
     }
