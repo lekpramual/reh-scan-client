@@ -58,6 +58,9 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
   ) {
+
+    this.getLiffLine();
+
     // redirect to home if already logged in
     // if (this.authenticationService.currentUserValue) {
     //   this.router.navigate(['/']);
@@ -68,11 +71,8 @@ export class RegisterComponent implements OnInit {
 
     this.resetForm();
     this.getUsers("");
-    this.getLiffLine();
 
     this.version = packageInfo.version;
-
-
   }
 
   get getControl() {
@@ -86,7 +86,6 @@ export class RegisterComponent implements OnInit {
       phone: ['', [Validators.required, Validators.minLength(10)]]
     })
   }
-
 
   getLiffLine() {
     // liff line
