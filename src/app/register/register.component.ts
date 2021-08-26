@@ -95,6 +95,8 @@ export class RegisterComponent implements OnInit {
       if (liff.isLoggedIn()) {
         liff.getProfile().then(profile => {
           this.profile = profile;
+          console.log(this.profile)
+
           this.userId = profile.userId;
           this.pictureUrl = profile.pictureUrl;
           this.displayName = profile.displayName;
