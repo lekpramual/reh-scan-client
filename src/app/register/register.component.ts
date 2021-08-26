@@ -103,7 +103,7 @@ export class RegisterComponent implements OnInit {
           this.displayName = profile.displayName;
         }).catch(console.error);
       } else {
-        // liff.login()
+        liff.login()
       }
     }).catch(console.error);
   }
