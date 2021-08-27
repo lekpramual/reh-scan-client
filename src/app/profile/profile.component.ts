@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
+import liff from '@line/liff';
+
 import { UserService } from "../service/user.service";
 import packageInfo from '../../../package.json';
 
@@ -44,4 +46,7 @@ export class ProfileComponent implements OnInit {
     this.phone = this.lineService.getCurrentUserValue().phone;
   }
 
+  closeWindow() {
+    liff.closeWindow();
+  }
 }
