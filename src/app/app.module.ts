@@ -11,17 +11,20 @@ import { AppComponent } from './app.component';
 
 
 // Prime NG
+import { TableModule } from 'primeng/table';
 import { AvatarModule } from 'primeng/avatar'
 import { RippleModule } from 'primeng/ripple';
 import { ButtonModule } from 'primeng/button';
 import { InputMaskModule } from 'primeng/inputmask';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 
+
 // Components
 import { RegisterComponent } from './register/register.component';
 import { RegisterlineComponent } from './registerline/registerline.component';
 import { CheckinComponent } from './checkin/checkin.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ScanlistComponent } from './scanlist/scanlist.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,8 @@ import { ProfileComponent } from './profile/profile.component';
     RegisterlineComponent,
     RegisterComponent,
     CheckinComponent,
-    ProfileComponent
+    ProfileComponent,
+    ScanlistComponent
   ],
   imports: [
     BrowserModule,
@@ -44,6 +48,7 @@ import { ProfileComponent } from './profile/profile.component';
     RippleModule,
     InputMaskModule,
     AutoCompleteModule,
+    TableModule
   ],
   providers: [
     {

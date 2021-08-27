@@ -9,6 +9,7 @@ import { RegisterComponent } from './register/register.component';
 import { RegisterlineComponent } from './registerline/registerline.component';
 import { CheckinComponent } from './checkin/checkin.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ScanlistComponent } from './scanlist/scanlist.component';
 
 const routes: Routes = [
   // App 
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path: 'checkin',
     component: CheckinComponent
+  },
+  {
+    path: 'scanlist',
+    component: ScanlistComponent
   }
 
   // {
