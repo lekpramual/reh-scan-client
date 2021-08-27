@@ -25,7 +25,11 @@ export class RegisterlineComponent implements OnInit {
 
     // redirect to home if already logged in
     if (this.lineService.getUserIsLogin()) {
-      this.router.navigate(['/register']);
+      if (this.lineService.getCurrentUserIsLogin()) {
+        this.router.navigate(['/profile']);
+      } else {
+        this.router.navigate(['/register']);
+      }
     }
   }
 

@@ -35,7 +35,7 @@ export class RegisterComponent implements OnInit {
   groupedCities!: SelectItemGroup[];
 
   filteredGroups!: any[];
-  
+
   pictureUrl?: string = "../../assets/icon/logo128.png";
   userId?: string = "";
   displayName?: string = "";
@@ -51,10 +51,15 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private lineService: LineService,
   ) {
-    // redirect to home if already logged in
-    if (this.lineService.getUserIsLogin() && this.lineService.getCurrentUserIsLogin()) {
-      this.router.navigate(['/checkin']);
+
+    // มีการเข้าสู่ระบบ line
+    if (this.lineService.getUserIsLogin()) {
+      // มีการ ลงทะเบียน
+      if (this.lineService.getCurrentUserIsLogin()) {
+        this.router.navigate(['/profile']);
+      }
     }
+
   }
 
   ngOnInit(): void {
@@ -100,10 +105,11 @@ export class RegisterComponent implements OnInit {
       localStorage.setItem('currentUser', JSON.stringify({
         badgenumber: this.loginForm.value.fullname.badgenumber,
         name: this.loginForm.value.fullname.name,
+        phone: this.loginForm.value.phone
       }));
 
       // ตรวจสอบว่ามี currentUser เข้าสู่ระบบแล้ว 
-      this.router.navigate(['/checkin']);
+      this.router.navigate(['/profile']);
 
     }
   }

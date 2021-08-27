@@ -8,12 +8,17 @@ import { RouterModule, Routes } from '@angular/router';
 import { RegisterComponent } from './register/register.component';
 import { RegisterlineComponent } from './registerline/registerline.component';
 import { CheckinComponent } from './checkin/checkin.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   // App 
   {
     path: '',
     component: RegisterlineComponent
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent
   },
   {
     path: 'register',

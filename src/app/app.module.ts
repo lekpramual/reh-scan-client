@@ -21,13 +21,15 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { RegisterComponent } from './register/register.component';
 import { RegisterlineComponent } from './registerline/registerline.component';
 import { CheckinComponent } from './checkin/checkin.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterlineComponent,
     RegisterComponent,
-    CheckinComponent
+    CheckinComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
