@@ -24,8 +24,8 @@ export class RegisterlineComponent implements OnInit {
   ) {
 
     // รับค่า param จากไลน์
-    const medium = 'https://lekpramual.github.io/reh-scan-client/';
-    const queryString = decodeURIComponent(window.location.search);
+    // const medium = 'https://lekpramual.github.io/reh-scan-client/';
+    const queryString = decodeURIComponent(window.location.search).replace("?liff.state=", "");
     const params = new URLSearchParams(queryString);
     const page = params.get('page');
 
