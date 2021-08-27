@@ -29,33 +29,35 @@ export class RegisterlineComponent implements OnInit {
     const params = new URLSearchParams(queryString);
     const page = params.get('page');
 
-    // is param page
-    if (page != null && page != '') {
-      // is login line and register
-      if (this.lineService.getUserIsLogin() && this.lineService.getCurrentUserIsLogin()) {
-        if (page == "checkin") {
-          this.router.navigate(['/checkin']);
-        } else if (page == "scanlist") {
-          this.router.navigate(['/scanlist']);
-        }
-      } else {
-        this.router.navigate(['/register']);
-      }
-    }
+    console.log(params);
+    console.log(page);
+    // // is param page
+    // if (page != null && page != '') {
+    //   // is login line and register
+    //   if (this.lineService.getUserIsLogin() && this.lineService.getCurrentUserIsLogin()) {
+    //     if (page == "checkin") {
+    //       this.router.navigate(['/checkin']);
+    //     } else if (page == "scanlist") {
+    //       this.router.navigate(['/scanlist']);
+    //     }
+    //   } else {
+    //     this.router.navigate(['/register']);
+    //   }
+    //}
     // is not param page
-    else {
-      // is login line
-      if (this.lineService.getUserIsLogin()) {
-        // is register
-        if (this.lineService.getCurrentUserIsLogin()) {
-          this.router.navigate(['/profile']);
-        }
-        // is not register
-        else {
-          this.router.navigate(['/register']);
-        }
-      }
-    }
+    // else {
+    //   // is login line
+    //   if (this.lineService.getUserIsLogin()) {
+    //     // is register
+    //     if (this.lineService.getCurrentUserIsLogin()) {
+    //       this.router.navigate(['/profile']);
+    //     }
+    //     // is not register
+    //     else {
+    //       this.router.navigate(['/register']);
+    //     }
+    //   }
+    // }
 
 
   }
