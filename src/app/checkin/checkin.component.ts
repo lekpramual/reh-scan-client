@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PrimeNGConfig } from "primeng/api";
 
+import liff from '@line/liff';
+
 import packageInfo from '../../../package.json';
 import { LineService } from '../service/line.service';
 
@@ -31,6 +33,10 @@ export class CheckinComponent implements OnInit {
     this.pictureUrl = this.lineService.getUserValue().pictureUrl;
     this.userId = this.lineService.getUserValue().userId;
     this.displayName = this.lineService.getUserValue().displayName;
+  }
+
+  closeWindow() {
+    liff.closeWindow();
   }
 
 

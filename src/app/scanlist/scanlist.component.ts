@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import liff from '@line/liff';
 import packageInfo from '../../../package.json';
 import { LineService } from '../service/line.service';
 
@@ -30,6 +31,10 @@ export class ScanlistComponent implements OnInit {
     this.pictureUrl = this.lineService.getUserValue().pictureUrl;
     this.userId = this.lineService.getUserValue().userId;
     this.displayName = this.lineService.getCurrentUserValue().name;
+  }
+
+  closeWindow() {
+    liff.closeWindow();
   }
 
 }
