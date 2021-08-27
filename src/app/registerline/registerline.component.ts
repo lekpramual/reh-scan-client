@@ -32,34 +32,32 @@ export class RegisterlineComponent implements OnInit {
     console.log(params);
     console.log(page);
     // // is param page
-    // if (page != null && page != '') {
-    //   // is login line and register
-    //   if (this.lineService.getUserIsLogin() && this.lineService.getCurrentUserIsLogin()) {
-    //     if (page == "checkin") {
-    //       this.router.navigate(['/checkin']);
-    //     } else if (page == "scanlist") {
-    //       this.router.navigate(['/scanlist']);
-    //     }
-    //   } else {
-    //     this.router.navigate(['/register']);
-    //   }
-    //}
+    if (page != null && page != '') {
+      // is login line and register
+      if (this.lineService.getUserIsLogin() && this.lineService.getCurrentUserIsLogin()) {
+        if (page === "checkin") {
+          this.router.navigate(['/checkin']);
+        } else if (page === "scanlist") {
+          this.router.navigate(['/scanlist']);
+        }
+      } else {
+        this.router.navigate(['/register']);
+      }
+    }
     // is not param page
-    // else {
-    //   // is login line
-    //   if (this.lineService.getUserIsLogin()) {
-    //     // is register
-    //     if (this.lineService.getCurrentUserIsLogin()) {
-    //       this.router.navigate(['/profile']);
-    //     }
-    //     // is not register
-    //     else {
-    //       this.router.navigate(['/register']);
-    //     }
-    //   }
-    // }
-
-
+    else {
+      // is login line
+      if (this.lineService.getUserIsLogin()) {
+        // is register
+        if (this.lineService.getCurrentUserIsLogin()) {
+          this.router.navigate(['/profile']);
+        }
+        // is not register
+        else {
+          this.router.navigate(['/register']);
+        }
+      }
+    }
   }
 
   ngOnInit(): void {
@@ -74,12 +72,12 @@ export class RegisterlineComponent implements OnInit {
         console.log('id loggein ... ')
         liff.getProfile().then(profile => {
           this.profile = profile;
-          console.log(this.profile)
+          
           // บันทึกข้อมูล currentLine 
           console.log('login success...');
           localStorage.setItem('currentLine', JSON.stringify(this.profile));
 
-          // this.router.navigate(['/register']);
+          this.router.navigate(['/register']);
         }).catch(console.error);
       } else {
         console.log('is not login line ...')
