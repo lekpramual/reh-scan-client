@@ -65,21 +65,27 @@ export class RegisterlineComponent implements OnInit {
     // liff line
     liff.init({ liffId: '1656331237-XGkQjqOl' }).then(() => {
       this.os = liff.getOS();
-      if (liff.isLoggedIn()) {
-        console.log('id loggein ... ')
-        liff.getProfile().then(profile => {
-          this.profile = profile;
+      if (liff.getOS() !== "web") {
 
-          // บันทึกข้อมูล currentLine 
-          console.log('login success...');
-          localStorage.setItem('currentLine', JSON.stringify(this.profile));
+        if (liff.isLoggedIn()) {
+          console.log('id loggein ... ')
+          liff.getProfile().then(profile => {
+            this.profile = profile;
+            // บันทึกข้อมูล currentLine 
+            console.log('login success...');
+            localStorage.setItem('currentLine', JSON.stringify(this.profile));
 
-          this.router.navigate(['/register']);
-        }).catch(console.error);
+            this.router.navigate(['/register']);
+          }).catch(console.error);
+        } else {
+          console.log('is not login line ...')
+          liff.login()
+        }
       } else {
-        console.log('is not login line ...')
-        // liff.login()
+        console.log("GetOS : ", liff.getOS());
+        this.router.navigate(['/notsupport']);
       }
+
     }).catch(console.error);
   }
 

@@ -37,8 +37,8 @@ export class RegisterComponent implements OnInit {
   filteredGroups!: any[];
 
   pictureUrl?: string = "../../assets/icon/logo128.png";
-  userId?: string = "";
-  displayName?: string = "";
+  userId?: string = "{{userId}}";
+  displayName?: string = "{{displayName}}";
 
   loginForm!: FormGroup;
   loading!: boolean;
@@ -66,11 +66,10 @@ export class RegisterComponent implements OnInit {
 
     this.resetForm();
     this.getUsers("");
-
     this.version = packageInfo.version;
-    this.pictureUrl = this.lineService.getUserValue().pictureUrl;
-    this.userId = this.lineService.getUserValue().userId;
-    this.displayName = this.lineService.getUserValue().displayName;
+    // this.pictureUrl = this.lineService.getUserValue().pictureUrl;
+    // this.userId = this.lineService.getUserValue().userId;
+    // this.displayName = this.lineService.getUserValue().displayName;
   }
 
   get getControl() {

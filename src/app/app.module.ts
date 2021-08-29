@@ -17,14 +17,17 @@ import { RippleModule } from 'primeng/ripple';
 import { ButtonModule } from 'primeng/button';
 import { InputMaskModule } from 'primeng/inputmask';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-
-
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
+import { InputTextModule } from 'primeng/inputtext';
 // Components
 import { RegisterComponent } from './register/register.component';
 import { RegisterlineComponent } from './registerline/registerline.component';
 import { CheckinComponent } from './checkin/checkin.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ScanlistComponent } from './scanlist/scanlist.component';
+import { FooterComponent } from './shared/footer/footer.component';
+import { NotsupportComponent } from './notsupport/notsupport.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,9 @@ import { ScanlistComponent } from './scanlist/scanlist.component';
     RegisterComponent,
     CheckinComponent,
     ProfileComponent,
-    ScanlistComponent
+    ScanlistComponent,
+    FooterComponent,
+    NotsupportComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +53,10 @@ import { ScanlistComponent } from './scanlist/scanlist.component';
     RippleModule,
     InputMaskModule,
     AutoCompleteModule,
-    TableModule
+    TableModule,
+    MessagesModule,
+    MessageModule,
+    InputTextModule
   ],
   providers: [
     {

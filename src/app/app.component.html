@@ -1,1 +1,22 @@
-<router-outlet></router-outlet>
+<div class="flex-1 flex-column card-container">
+    <div style="min-height: 85vh;" class="flex align-items-center justify-content-center h-4rem border-round m-2">
+        <router-outlet></router-outlet>
+    </div>
+    <div style="min-height: 15vh;text-align: center;"
+        class="flex align-items-center justify-content-center h-4rem  font-bold border-round m-2">
+        <app-footer></app-footer>
+    </div>
+</div>
+
+
+<!-- <div class="grid" style="min-height: 85vh;">
+    <div class="col-12" style="background-color: rgb(236, 240, 240);text-align: center;">
+        <router-outlet></router-outlet>
+    </div>
+
+</div>
+<div class="grid" style="min-height: 15vh;text-align: center;">
+    <div class="col-12">
+        <app-footer></app-footer>
+    </div>
+</div> -->
