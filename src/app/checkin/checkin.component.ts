@@ -7,6 +7,7 @@ import liff from '@line/liff';
 import packageInfo from '../../../package.json';
 import { LineService } from '../service/line.service';
 import { LocationService } from '../service/location.service'
+import { ArepointService } from '../service/arepoint.service'
 
 @Component({
   selector: 'app-checkin',
@@ -21,8 +22,8 @@ export class CheckinComponent implements OnInit {
   displayName?: string = "";
   version!: string;
 
-  lat?: number = 0;
-  lng?: number = 0;
+  lat = 0;
+  lng = 0;
 
   statusParam!: string;
   locationParam!: number;
@@ -32,7 +33,8 @@ export class CheckinComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private lineService: LineService,
-    private locationService: LocationService
+    private locationService: LocationService,
+    private arepointService: ArepointService
   ) {
     // redirect to home if already logged in
     if (!this.lineService.getUserIsLogin() && !this.lineService.getCurrentUserIsLogin()) {
@@ -53,7 +55,6 @@ export class CheckinComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.statusParam = params['status'];
       this.locationParam = params['location'];
-
     });
   }
 
@@ -67,6 +68,15 @@ export class CheckinComponent implements OnInit {
       this.lng = pos.lng;
       console.log(`Positon: ${pos.lng} ${pos.lat}`);
     });
+  }
+
+
+  isCheckArePoint() {
+    // checkPoint: { lng: 16.04861893399044, lat: 103.65054529523633 },
+    // centerPoint: { lat: this.lat, lng: this.lng; },
+    return this.arepointService.arePointsNear(
+      { lat: 16.04861893399044, lng: 103.65054529523633 }, { lat: this.lat, lng: this.lng }
+    )
   }
 
 
