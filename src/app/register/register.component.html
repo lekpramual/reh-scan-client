@@ -17,7 +17,6 @@
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="field">
         <span class="p-float-label">
-            <!-- <input id="float-input" type="text" pInputText> -->
             <p-autoComplete [style]="{width: '100%'}" [(ngModel)]="selectedCountryAdvanced"
                 [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)" field="name"
                 [dropdown]="true" formControlName="fullname">
@@ -30,17 +29,6 @@
 
             <label for="float-input">ชื่อ - สกุล</label>
         </span>
-
-        <!-- <label for="fullname"><i class="pi pi-user"></i> ชื่อ - สกุล </label>
-        <p-autoComplete [style]="{width: '100%'}" [(ngModel)]="selectedCountryAdvanced"
-            [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)" field="name" [dropdown]="true"
-            placeholder="ชื่อ - สกุล" formControlName="fullname">
-            <ng-template let-country pTemplate="item">
-                <div class="country-item">
-                    <div>{{country.name}}</div>
-                </div>
-            </ng-template>
-        </p-autoComplete> -->
     </div>
     <div class="field">
         <span class="p-float-label">
@@ -50,10 +38,6 @@
 
             <label for="float-input">เบอร์โทร</label>
         </span>
-
-        <!-- <label for="phone"><i class="pi pi-phone"></i> เบอร์โทร</label>
-        <p-inputMask [style]="{width: '100%'}" mask="(999) 999-9999" placeholder="(999) 999-9999"
-            formControlName="phone" minlength="10"></p-inputMask> -->
     </div>
     <div class="field">
         <button [style]="{width: '100%'}" pButton type="submit" label="ลงทะเบียน" [disabled]="!loginForm.valid"

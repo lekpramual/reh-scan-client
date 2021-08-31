@@ -27,7 +27,7 @@ const routes: Routes = [
     component: RegisterComponent
   },
   {
-    path: 'checkin',
+    path: 'checkin/:status',
     component: CheckinComponent
   },
   {

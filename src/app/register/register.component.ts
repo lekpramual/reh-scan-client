@@ -51,10 +51,13 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private lineService: LineService,
   ) {
-
-    // มีการเข้าสู่ระบบ line
+    // is register line
     if (this.lineService.getUserIsLogin()) {
-      // มีการ ลงทะเบียน
+      // get data is local store
+      this.pictureUrl = this.lineService.getUserValue().pictureUrl;
+      this.userId = this.lineService.getUserValue().userId;
+      this.displayName = this.lineService.getUserValue().displayName;
+      // is register 
       if (this.lineService.getCurrentUserIsLogin()) {
         this.router.navigate(['/profile']);
       }
@@ -67,9 +70,7 @@ export class RegisterComponent implements OnInit {
     this.resetForm();
     this.getUsers("");
     this.version = packageInfo.version;
-    // this.pictureUrl = this.lineService.getUserValue().pictureUrl;
-    // this.userId = this.lineService.getUserValue().userId;
-    // this.displayName = this.lineService.getUserValue().displayName;
+
   }
 
   get getControl() {

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { PrimeNGConfig } from "primeng/api";
 
 import liff from '@line/liff';
 
 import packageInfo from '../../../package.json';
 import { LineService } from '../service/line.service';
+import { LocationService } from '../service/location.service'
 
 @Component({
   selector: 'app-checkin',
@@ -19,8 +20,18 @@ export class CheckinComponent implements OnInit {
   displayName?: string = "";
   version!: string;
 
-  constructor(private primengConfig: PrimeNGConfig, private router: Router,
-    private lineService: LineService) {
+  lat?: number = 0;
+  lng?: number = 0;
+
+  myParam!: string;
+
+  constructor(
+    private primengConfig: PrimeNGConfig,
+    private router: Router,
+    private route: ActivatedRoute,
+    private lineService: LineService,
+    private locationService: LocationService
+  ) {
     // redirect to home if already logged in
     if (!this.lineService.getUserIsLogin() && !this.lineService.getCurrentUserIsLogin()) {
       this.router.navigate(['/']);
@@ -33,10 +44,21 @@ export class CheckinComponent implements OnInit {
     this.pictureUrl = this.lineService.getUserValue().pictureUrl;
     this.userId = this.lineService.getUserValue().userId;
     this.displayName = this.lineService.getUserValue().displayName;
+
+    this.getLocaton();
+    this.route.params.subscribe((params: Params) => this.myParam = params['status']);
   }
 
   closeWindow() {
     liff.closeWindow();
+  }
+
+  getLocaton() {
+    this.locationService.getPosition().then(pos => {
+      this.lat = pos.lat;
+      this.lng = pos.lng;
+      console.log(`Positon: ${pos.lng} ${pos.lat}`);
+    });
   }
 
 

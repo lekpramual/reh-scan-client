@@ -1,0 +1,5 @@
+:host
+  ::ng-deep
+  .p-mr-2.w-7rem.h-7rem.p-avatar.p-component.p-avatar-image.p-avatar-circle.p-avatar-xl {
+  box-shadow: 0 5px 8px 0 rgb(0 0 0 / 20%), 0 6px 10px 0 rgb(0 0 0 / 19%) !important;
+}

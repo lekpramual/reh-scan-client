@@ -1,0 +1,6 @@
+/* box-shadow: 0 5px 8px 0 rgb(0 0 0 / 10%), 0 6px 10px 0 rgb(0 0 0 / 19%) !important; */
+:host
+  ::ng-deep
+  .p-button.p-button-icon-only.p-button-rounded {
+  box-shadow: 0 5px 8px 0 rgb(0 0 0 / 10%), 0 6px 10px 0 rgb(0 0 0 / 19%) !important;
+}

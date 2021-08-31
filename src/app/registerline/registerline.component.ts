@@ -24,7 +24,6 @@ export class RegisterlineComponent implements OnInit {
   ) {
 
     // รับค่า param จากไลน์
-    // const medium = 'https://lekpramual.github.io/reh-scan-client/';
     const queryString = decodeURIComponent(window.location.search).replace("?liff.state=", "");
     const params = new URLSearchParams(queryString);
     const page = params.get('page');
@@ -33,7 +32,8 @@ export class RegisterlineComponent implements OnInit {
       // is login line and register
       if (this.lineService.getUserIsLogin() && this.lineService.getCurrentUserIsLogin()) {
         if (page === "checkin") {
-          this.router.navigate(['/checkin']);
+          const status = params.get('status');
+          this.router.navigate(['/checkin', status]);
         } else if (page === "scanlist") {
           this.router.navigate(['/scanlist']);
         }
@@ -65,26 +65,42 @@ export class RegisterlineComponent implements OnInit {
     // liff line
     liff.init({ liffId: '1656331237-XGkQjqOl' }).then(() => {
       this.os = liff.getOS();
-      if (liff.getOS() !== "web") {
 
-        if (liff.isLoggedIn()) {
-          console.log('id loggein ... ')
-          liff.getProfile().then(profile => {
-            this.profile = profile;
-            // บันทึกข้อมูล currentLine 
-            console.log('login success...');
-            localStorage.setItem('currentLine', JSON.stringify(this.profile));
+      if (liff.isLoggedIn()) {
+        console.log('id loggein ... ')
+        liff.getProfile().then(profile => {
+          this.profile = profile;
+          // บันทึกข้อมูล currentLine 
+          console.log('login success...');
+          localStorage.setItem('currentLine', JSON.stringify(this.profile));
 
-            this.router.navigate(['/register']);
-          }).catch(console.error);
-        } else {
-          console.log('is not login line ...')
-          liff.login()
-        }
+          this.router.navigate(['/register']);
+        }).catch(console.error);
       } else {
-        console.log("GetOS : ", liff.getOS());
-        this.router.navigate(['/notsupport']);
+        console.log('is not login line ...')
+        // liff.login()
       }
+
+      // is moblie
+      // if (liff.getOS() !== "web") {
+      //   if (liff.isLoggedIn()) {
+      //     console.log('id loggein ... ')
+      //     liff.getProfile().then(profile => {
+      //       this.profile = profile;
+      //       // บันทึกข้อมูล currentLine 
+      //       console.log('login success...');
+      //       localStorage.setItem('currentLine', JSON.stringify(this.profile));
+
+      //       this.router.navigate(['/register']);
+      //     }).catch(console.error);
+      //   } else {
+      //     console.log('is not login line ...')
+      //     liff.login()
+      //   }
+      // } else {
+      //   console.log("GetOS : ", liff.getOS());
+      //   this.router.navigate(['/notsupport']);
+      // }
 
     }).catch(console.error);
   }
