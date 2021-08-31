@@ -82,5 +82,11 @@ export class CheckinComponent implements OnInit {
     )
   }
 
+  isCheckArePoint1() {
+    return this.arepointService.testFun1(
+      { lat1: this.lat, lon1: this.lng }, { lat2: 16.04861893399044, lon2: 103.65054529523633 }
+    )
+  }
+
 
 }
