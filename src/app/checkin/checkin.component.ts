@@ -15,6 +15,7 @@ import { LocationService } from '../service/location.service'
 })
 export class CheckinComponent implements OnInit {
 
+
   pictureUrl?: string = "../../assets/icon/logo128.png";
   userId?: string = "";
   displayName?: string = "";
@@ -23,7 +24,8 @@ export class CheckinComponent implements OnInit {
   lat?: number = 0;
   lng?: number = 0;
 
-  myParam!: string;
+  statusParam!: string;
+  locationParam!: number;
 
   constructor(
     private primengConfig: PrimeNGConfig,
@@ -46,7 +48,13 @@ export class CheckinComponent implements OnInit {
     this.displayName = this.lineService.getUserValue().displayName;
 
     this.getLocaton();
-    this.route.params.subscribe((params: Params) => this.myParam = params['status']);
+
+
+    this.route.params.subscribe((params: Params) => {
+      this.statusParam = params['status'];
+      this.locationParam = params['location'];
+
+    });
   }
 
   closeWindow() {

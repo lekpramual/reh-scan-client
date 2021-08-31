@@ -23,7 +23,7 @@ export class RegisterlineComponent implements OnInit {
     private lineService: LineService,
   ) {
 
-    // รับค่า param จากไลน์
+    // get param line liff
     const queryString = decodeURIComponent(window.location.search).replace("?liff.state=", "");
     const params = new URLSearchParams(queryString);
     const page = params.get('page');
@@ -33,7 +33,8 @@ export class RegisterlineComponent implements OnInit {
       if (this.lineService.getUserIsLogin() && this.lineService.getCurrentUserIsLogin()) {
         if (page === "checkin") {
           const status = params.get('status');
-          this.router.navigate(['/checkin', status]);
+          const location = params.get('location');
+          this.router.navigate(['/checkin', status, location]);
         } else if (page === "scanlist") {
           this.router.navigate(['/scanlist']);
         }
