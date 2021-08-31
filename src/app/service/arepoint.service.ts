@@ -95,7 +95,7 @@ export class ArepointService {
     }, {
       latitude: centerPoint.lat2,
       longitude: centerPoint.lon2,
-    }, 50)
+    }, geolib.convertDistance(10, 'm'))
   }
 
 
