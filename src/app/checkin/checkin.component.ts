@@ -73,8 +73,12 @@ export class CheckinComponent implements OnInit {
 
   isCheckArePoint() {
 
-    return this.arepointService.getDistanceFromLatLonInKm(
-      { lat: 16.048707959999994, lng: 103.65104674999999 }, { lat: 16.04861893399044, lng: 103.65054529523633 }
+    // { lat2: 16.0487079, lon2: 103.6510467 } จุดกึ่งกลาง
+    // { lat1: 16.0486144, lon1: 103.6505200 } จุดสแกน นอกศูนย์คอม | 3.2183401536933527
+    // { lat1: 16.048707960017705, lon1: 103.65104675009971 }, ห้องประชุม ชั้น 7 |  54.492843409208106
+
+    return this.arepointService.testFun(
+      { lat1: this.lat, lon1: this.lng }, { lat2: 16.04861893399044, lon2: 103.65054529523633 }
     )
   }
 

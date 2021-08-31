@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as geolib from 'geolib';
 
 @Injectable({
   providedIn: 'root'
@@ -20,83 +21,85 @@ export class ArepointService {
     return Math.sqrt(dx * dx + dy * dy) <= 0.1;
   }
 
+  distance(checkPoint: { lat1: number; lon1: number; }, centerPoint: { lat2: number; lon2: number; }) {
+    // lat1, lon1, lat2, lon2
+    /* var R = 6371; // Earth's radius in Km
+    return Math.acos(Math.sin(checkPoint.lat1) * Math.sin(centerPoint.lat2) +
+    Math.cos(checkPoint.lat1) * Math.cos(centerPoint.lat2) *
+    Math.cos(centerPoint.lon2 - checkPoint.lon1)) * R;
+    */
 
-  //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-  //:::                                                                         :::
-  //:::  This routine calculates the distance between two points (given the     :::
-  //:::  latitude/longitude of those points). It is being used to calculate     :::
-  //:::  the distance between two locations using GeoDataSource (TM) prodducts  :::
-  //:::                                                                         :::
-  //:::  Definitions:                                                           :::
-  //:::    South latitudes are negative, east longitudes are positive           :::
-  //:::                                                                         :::
-  //:::  Passed to function:                                                    :::
-  //:::    lat1, lon1 = Latitude and Longitude of point 1 (in decimal degrees)  :::
-  //:::    lat2, lon2 = Latitude and Longitude of point 2 (in decimal degrees)  :::
-  //:::    unit = the unit you desire for results                               :::
-  //:::           where: 'M' is statute miles (default)                         :::
-  //:::                  'K' is kilometers                                      :::
-  //:::                  'N' is nautical miles                                  :::
-  //:::                                                                         :::
-  //:::  Worldwide cities and other features databases with latitude longitude  :::
-  //:::  are available at https://www.geodatasource.com                         :::
-  //:::                                                                         :::
-  //:::  For enquiries, please contact sales@geodatasource.com                  :::
-  //:::                                                                         :::
-  //:::  Official Web site: https://www.geodatasource.com                       :::
-  //:::                                                                         :::
-  //:::               GeoDataSource.com (C) All Rights Reserved 2018            :::
-  //:::                                                                         :::
-  //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+    const lat = checkPoint.lat1 - centerPoint.lat2
 
-  distance(checkPoint: { lat: number; lng: number; }, centerPoint: { lat: number; lng: number; }) {
-
-    //lat1, lon1, lat2, lon2, unit
-
-    if ((checkPoint.lat == centerPoint.lat) && (centerPoint.lng == centerPoint.lng)) {
-      return 0;
-    }
-    else {
-      var radlat1 = Math.PI * checkPoint.lat / 180;
-      var radlat2 = Math.PI * centerPoint.lat / 180;
-      var theta = centerPoint.lng - centerPoint.lng;
-      var radtheta = Math.PI * theta / 180;
-      var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-
-      console.log(dist);
-      if (dist > 1) {
-        dist = 1;
-      }
-      dist = Math.acos(dist);
-      dist = dist * 180 / Math.PI;
-      dist = dist * 60 * 1.1515;
-      // if (unit == "K") { dist = dist * 1.609344 }
-      // if (unit == "N") { dist = dist * 0.8684 }
-      // dist = dist * 1.609344
-
-      dist = dist * 1.609344
-      console.log(dist)
-      console.log(Math.sin(0.0006))
-      return Math.sqrt(dist) <= 0.0006;
-    }
+    // distance(user.lat, user.lon, post.lat, post.lon) <= desiredRadiusInKm
   }
 
-  getDistanceFromLatLonInKm(checkPoint: { lat: number; lng: number; }, centerPoint: { lat: number; lng: number; }) {
-    // lat1,lon1,lat2,lon2
-    var R = 6371; // Radius of the earth in km
-    var dLat = this.deg2rad(checkPoint.lat - centerPoint.lat);  // deg2rad below
-    var dLon = this.deg2rad(checkPoint.lng - centerPoint.lng);
-    var a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(this.deg2rad(centerPoint.lat)) * Math.cos(this.deg2rad(checkPoint.lat)) *
-      Math.sin(dLon / 2) * Math.sin(dLon / 2)
-      ;
+  degreesToRadians(degrees: number) {
+    return degrees * Math.PI / 180;
+  }
+
+  distanceInKmBetweenEarthCoordinates(checkPoint: { lat1: number; lon1: number; }, centerPoint: { lat2: number; lon2: number; }) {
+
+    var earthRadiusKm = 6371;
+
+    var dLat = this.degreesToRadians(centerPoint.lat2 - checkPoint.lat1);
+    var dLon = this.degreesToRadians(centerPoint.lon2 - checkPoint.lon1);
+
+    var lat1 = this.degreesToRadians(checkPoint.lat1);
+    var lat2 = this.degreesToRadians(centerPoint.lat2);
+
+    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    var d = R * c; // Distance in km
-    return d;
+    return earthRadiusKm * c;
   }
 
-  deg2rad(deg: number) {
-    return deg * (Math.PI / 180)
+  /**
+ * Calculates the great-circle distance between two points, with
+ * the Haversine formula.
+ * @param float $latitudeFrom Latitude of start point in [deg decimal]
+ * @param float $longitudeFrom Longitude of start point in [deg decimal]
+ * @param float $latitudeTo Latitude of target point in [deg decimal]
+ * @param float $longitudeTo Longitude of target point in [deg decimal]
+ * @param float $earthRadius Mean earth radius in [m]
+ * @return float Distance between points in [m] (same as earthRadius)
+ */
+  haversineGreatCircleDistance(
+    checkPoint: { lat1: number; lon1: number; }, centerPoint: { lat2: number; lon2: number; }
+    // $latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $earthRadius = 6371000
+
+  ) {
+    // convert from degrees to radians
+    var latFrom = this.degreesToRadians(checkPoint.lat1);
+    var lonFrom = this.degreesToRadians(checkPoint.lon1);
+    var latTo = this.degreesToRadians(centerPoint.lat2);
+    var lonTo = this.degreesToRadians(centerPoint.lon2);
+
+    var latDelta = latTo - latFrom;
+    var lonDelta = lonTo - lonFrom;
+
+    var angle = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(latDelta / 2), 2) +
+      Math.cos(latFrom) * Math.cos(latTo) * Math.pow(Math.sin(lonDelta / 2), 2)));
+
+    console.log(angle)
+    return angle * 6371000;
   }
+
+  testFun(checkPoint: { lat1: number; lon1: number; }, centerPoint: { lat2: number; lon2: number; }) {
+
+    // isPointWithinRadius(point, centerPoint, radius) ตรวจสอบว่าจุดอยู่ภายในวงกลมหรือไม่
+    // checks if 51.525/7.4575 is within a radius of 5 km from 51.5175/7.4678
+    return geolib.isPointWithinRadius({
+      latitude: checkPoint.lat1,
+      longitude: checkPoint.lon1,
+    }, {
+      latitude: centerPoint.lat2,
+      longitude: centerPoint.lon2,
+    }, 50)
+  }
+
+
+
+
+
 }
