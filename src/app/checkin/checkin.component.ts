@@ -72,10 +72,9 @@ export class CheckinComponent implements OnInit {
 
 
   isCheckArePoint() {
-    // checkPoint: { lng: 16.04861893399044, lat: 103.65054529523633 },
-    // centerPoint: { lat: this.lat, lng: this.lng; },
-    return this.arepointService.arePointsNear(
-      { lat: 16.04861893399044, lng: 103.65054529523633 }, { lat: this.lat, lng: this.lng }
+
+    return this.arepointService.getDistanceFromLatLonInKm(
+      { lat: 16.048707959999994, lng: 103.65104674999999 }, { lat: 16.04861893399044, lng: 103.65054529523633 }
     )
   }
 
