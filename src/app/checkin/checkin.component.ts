@@ -1,9 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+
+import { Subscription, timer } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+// Prime NG
 import { PrimeNGConfig } from "primeng/api";
 
+// Line Liff
 import liff from '@line/liff';
 
+// Component
 import packageInfo from '../../../package.json';
 import { LineService } from '../service/line.service';
 import { LocationService } from '../service/location.service'
@@ -27,6 +33,8 @@ export class CheckinComponent implements OnInit {
 
   statusParam!: string;
   locationParam!: number;
+
+  subscription!: Subscription;
 
   constructor(
     private primengConfig: PrimeNGConfig,
@@ -59,7 +67,21 @@ export class CheckinComponent implements OnInit {
     });
 
     // load location
-    this.getLocaton();
+    // this.getLocaton();
+
+    // 10000
+    this.subscription = timer(0, 10000).pipe(
+      switchMap(() => this.locationService.getPosition())
+    ).subscribe(pos => {
+      console.log('reload ...')
+      this.lat = pos.lat;
+      this.lng = pos.lng;
+    });
+
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   closeWindow() {
