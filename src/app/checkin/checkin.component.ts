@@ -31,6 +31,9 @@ export class CheckinComponent implements OnInit {
 
   statusParam!: string;
   locationParam!: number;
+  loadLocation = false;
+  currenLocation = false;
+  currenCicle = 0;
 
   constructor(
     private primengConfig: PrimeNGConfig,
@@ -45,8 +48,6 @@ export class CheckinComponent implements OnInit {
       this.router.navigate(['/']);
     }
 
-    // load location
-    this.getLocaton();
   }
   ngOnInit() {
     this.primengConfig.ripple = true;
@@ -63,13 +64,11 @@ export class CheckinComponent implements OnInit {
     });
 
     // load location
-    // this.getLocaton();
+    this.getLocaton();
   }
 
 
   closeWindow() {
-    this.lat = 0;
-    this.lng = 0;
     liff.closeWindow();
   }
 
@@ -78,13 +77,17 @@ export class CheckinComponent implements OnInit {
       this.lat = pos.lat;
       this.lng = pos.lng;
       console.log(`Positon: ${pos.lng} ${pos.lat}`);
+      this.loadLocation = true;
+      this.currenLocation = this.isCheckArePoint();
+      console.log(this.isCheckArePoint());
+      this.currenCicle = this.isCheckArePoint1();
+      console.log(this.isCheckArePoint1())
     });
   }
 
 
   isCheckArePoint() {
     // { lat2: 16.0579597, lon2: 103.6478599 } จุดกึ่งกลาง
-
     return this.arepointService.testFun(
       // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
       { lat1: this.lat, lon1: this.lng }, { lat2: 16.048707958611494, lon2: 103.65104674217899 }
