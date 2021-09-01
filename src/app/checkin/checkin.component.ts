@@ -87,7 +87,7 @@ export class CheckinComponent implements OnInit {
 
     return this.arepointService.testFun(
       // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
-      { lat1: this.lat, lon1: this.lng }, { lat2: 16.04861449355022, lon2: 103.65052028367047 }
+      { lat1: this.lat, lon1: this.lng }, { lat2: 16.048707958611494, lon2: 103.65104674217899 }
     )
   }
 
@@ -95,7 +95,7 @@ export class CheckinComponent implements OnInit {
     return this.arepointService.testFun1(
       // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
       // { lat1: this.lat, lon1: this.lng }, { lat2: 16.04870796002785, lon2: 103.65104675015687 }
-      { lat1: this.lat, lon1: this.lng }, { lat2: 16.04861449355022, lon2: 103.65052028367047 }
+      { lat1: this.lat, lon1: this.lng }, { lat2: 16.048707958611494, lon2: 103.65104674217899 }
     )
   }
 
