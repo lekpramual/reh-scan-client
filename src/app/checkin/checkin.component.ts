@@ -67,22 +67,22 @@ export class CheckinComponent implements OnInit {
     });
 
     // load location
-    // this.getLocaton();
+    this.getLocaton();
 
     // 10000
-    this.subscription = timer(0, 10000).pipe(
-      switchMap(() => this.locationService.getPosition())
-    ).subscribe(pos => {
-      console.log('reload ...')
-      this.lat = pos.lat;
-      this.lng = pos.lng;
-    });
+    // this.subscription = timer(0, 10000).pipe(
+    //   switchMap(() => this.locationService.getPosition())
+    // ).subscribe(pos => {
+    //   console.log('reload ...')
+    //   this.lat = pos.lat;
+    //   this.lng = pos.lng;
+    // });
 
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
+  // ngOnDestroy() {
+  //   this.subscription.unsubscribe();
+  // }
 
   closeWindow() {
     liff.closeWindow();
