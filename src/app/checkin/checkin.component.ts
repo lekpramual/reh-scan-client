@@ -42,7 +42,7 @@ export class CheckinComponent implements OnInit {
     }
 
     // load location
-    this.getLocaton();
+    // this.getLocaton();
   }
   ngOnInit() {
     this.primengConfig.ripple = true;
@@ -57,6 +57,9 @@ export class CheckinComponent implements OnInit {
       this.statusParam = params['status'];
       this.locationParam = params['location'];
     });
+
+    // load location
+    this.getLocaton();
   }
 
   closeWindow() {
