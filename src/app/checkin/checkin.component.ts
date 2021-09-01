@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
-import { Subscription, timer } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 // Prime NG
 import { PrimeNGConfig } from "primeng/api";
 
@@ -34,8 +32,6 @@ export class CheckinComponent implements OnInit {
   statusParam!: string;
   locationParam!: number;
 
-  subscription!: Subscription;
-
   constructor(
     private primengConfig: PrimeNGConfig,
     private router: Router,
@@ -50,7 +46,7 @@ export class CheckinComponent implements OnInit {
     }
 
     // load location
-    // this.getLocaton();
+    this.getLocaton();
   }
   ngOnInit() {
     this.primengConfig.ripple = true;
@@ -67,24 +63,13 @@ export class CheckinComponent implements OnInit {
     });
 
     // load location
-    this.getLocaton();
-
-    // 10000
-    // this.subscription = timer(0, 10000).pipe(
-    //   switchMap(() => this.locationService.getPosition())
-    // ).subscribe(pos => {
-    //   console.log('reload ...')
-    //   this.lat = pos.lat;
-    //   this.lng = pos.lng;
-    // });
-
+    // this.getLocaton();
   }
 
-  // ngOnDestroy() {
-  //   this.subscription.unsubscribe();
-  // }
 
   closeWindow() {
+    this.lat = 0;
+    this.lng = 0;
     liff.closeWindow();
   }
 
@@ -98,12 +83,11 @@ export class CheckinComponent implements OnInit {
 
 
   isCheckArePoint() {
-    // { lat2: 16.0487079, lon2: 103.6510467 } จุดกึ่งกลาง
-    // { lat1: 16.0486144, lon1: 103.6505200 } จุดสแกน นอกศูนย์คอม | 3.2183401536933527
-    // { lat1: 16.048707960017705, lon1: 103.65104675009971 }, ห้องประชุม ชั้น 7 |  54.492843409208106
+    // { lat2: 16.0579597, lon2: 103.6478599 } จุดกึ่งกลาง
+
     return this.arepointService.testFun(
       // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
-      { lat1: this.lat, lon1: this.lng }, { lat2: 16.04870796002785, lon2: 103.65104675015687 }
+      { lat1: this.lat, lon1: this.lng }, { lat2: 16.04861449355022, lon2: 103.65052028367047 }
     )
   }
 
@@ -111,7 +95,7 @@ export class CheckinComponent implements OnInit {
     return this.arepointService.testFun1(
       // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
       // { lat1: this.lat, lon1: this.lng }, { lat2: 16.04870796002785, lon2: 103.65104675015687 }
-      { lat1: this.lat, lon1: this.lng }, { lat2: 16.04870796002785, lon2: 103.65104675015687 }
+      { lat1: this.lat, lon1: this.lng }, { lat2: 16.04861449355022, lon2: 103.65052028367047 }
     )
   }
 

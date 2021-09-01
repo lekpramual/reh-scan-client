@@ -18,7 +18,7 @@ export class ArepointService {
     }, {
       latitude: centerPoint.lat2,
       longitude: centerPoint.lon2,
-    }, 0.01)
+    }, geolib.convertDistance(10, 'm'))
 
     // geolib.convertDistance(10, 'm')
   }
@@ -27,13 +27,13 @@ export class ArepointService {
 
     // isPointWithinRadius(point, centerPoint, radius) ตรวจสอบว่าจุดอยู่ภายในวงกลมหรือไม่
     // checks if 51.525/7.4575 is within a radius of 5 km from 51.5175/7.4678
-    return geolib.getDistance({
+    return geolib.getPreciseDistance({
       latitude: checkPoint.lat1,
       longitude: checkPoint.lon1,
     }, {
       latitude: centerPoint.lat2,
       longitude: centerPoint.lon2,
-    }, 0.01)
+    }, geolib.convertDistance(10, 'm'))
   }
 
 
