@@ -77,12 +77,15 @@ export class CheckinComponent implements OnInit {
     // { lat1: 16.0486144, lon1: 103.6505200 } จุดสแกน นอกศูนย์คอม | 3.2183401536933527
     // { lat1: 16.048707960017705, lon1: 103.65104675009971 }, ห้องประชุม ชั้น 7 |  54.492843409208106
     return this.arepointService.testFun(
+      // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
       { lat1: this.lat, lon1: this.lng }, { lat2: 16.04870796002785, lon2: 103.65104675015687 }
     )
   }
 
   isCheckArePoint1() {
     return this.arepointService.testFun1(
+      // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
+      // { lat1: this.lat, lon1: this.lng }, { lat2: 16.04870796002785, lon2: 103.65104675015687 }
       { lat1: this.lat, lon1: this.lng }, { lat2: 16.04870796002785, lon2: 103.65104675015687 }
     )
   }

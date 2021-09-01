@@ -18,7 +18,7 @@ export class ArepointService {
     }, {
       latitude: centerPoint.lat2,
       longitude: centerPoint.lon2,
-    }, 1)
+    }, 0.01)
 
     // geolib.convertDistance(10, 'm')
   }
@@ -33,7 +33,7 @@ export class ArepointService {
     }, {
       latitude: centerPoint.lat2,
       longitude: centerPoint.lon2,
-    }, 1)
+    }, 0.01)
   }
 
 
