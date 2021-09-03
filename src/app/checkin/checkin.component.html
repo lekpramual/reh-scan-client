@@ -21,27 +21,6 @@
                     </label>
                 </div>
             </div>
-
-            <!-- <div class="flex align-items-center justify-content-center flex-wrap m-2" style="min-width: 128px; ">
-                <div class="card styled-box-orange" pRipple style="text-align: center;" (click)="getLocaton()"
-                    onclick="window.location='https://line.me/R/nv/QRCodeReader'">
-                    <div class="p-d-flex p-flex-column">
-                        <div class="p-mb-2"><i class="pi pi-sign-in" style="font-size: 3rem;color:palevioletred"></i>
-                        </div>
-                        <div class="p-mb-2" style="font-size: 2rem;color:palevioletred">เข้า</div>
-                    </div>
-                </div>
-            </div>
-            <div class="flex align-items-center justify-content-center flex-wrap  m-2" style="min-width: 128px;">
-                <div class="card styled-box-orange" pRipple style="text-align: center;" (click)="getLocaton()"
-                    onclick="window.location='https://line.me/R/nv/QRCodeReader'">
-                    <div class="p-d-flex p-flex-column">
-                        <div class="p-mb-2"><i class="pi pi-sign-out" style="font-size: 3rem;color:palevioletred"></i>
-                        </div>
-                        <div class="p-mb-2" style="font-size: 2rem;color:palevioletred">ออก</div>
-                    </div>
-                </div>
-            </div> -->
             <div class="flex align-items-center justify-content-center flex-wrap m-2" style="min-width: 256px; ">
                 <div class="p-d-flex p-flex-column">
                     <label for="displayName" style="color:palevioletred;font-weight: bold;">
@@ -63,20 +42,6 @@
                     </label>
                 </div>
             </div>
-
-            <!-- <div class="flex align-items-center justify-content-center flex-wrap m-2" style="min-width: 256px; ">
-                <div class="p-d-flex p-flex-column" *ngIf="loadLocation">
-                    <label for="displayName" style="color:palevioletred;font-weight: bold;">
-                        CurrenPoint : {{loadLocation}}
-                    </label>
-                </div>
-                <div class="p-d-flex p-flex-column" *ngIf="!loadLocation">
-                    <label for="displayName" style="color:palevioletred;font-weight: bold;">
-                        Download Location ....
-                    </label>
-                </div>
-            </div> -->
-
             <div class="flex align-items-center justify-content-center flex-wrap m-2" style="min-width: 256px; ">
                 <div class="p-d-flex p-flex-column">
                     <label for="displayName" style="color:palevioletred;font-weight: bold;">
@@ -91,6 +56,51 @@
                     </label>
                 </div>
             </div>
+
+            <div *ngIf="isCheckArePoint();else other_content">
+                <p-messages severity="success">
+                    <ng-template pTemplate>
+                        <span class="custom-message">
+                            <div class="grid">
+                                <div class="col-12 font-bold" style="text-align: center;">
+                                    <i class="pi pi-question-circle" style="font-size: 2em;"></i> สำเร็จ
+                                </div>
+                            </div>
+                            <div class="grid">
+                                <div class="col-12" style="text-align: center;">
+                                    สถานะ : {{statusParam}}
+                                </div>
+                            </div>
+                            <div class="grid">
+                                <div class="col-12" style="text-align: center;">
+                                    จุดสแกน : {{locationParam}}
+                                </div>
+                            </div>
+                        </span>
+                    </ng-template>
+                </p-messages>
+            </div>
+
+            <ng-template #other_content>
+                <p-messages severity="warn">
+                    <ng-template pTemplate>
+                        <span class="custom-message">
+                            <div class="grid">
+                                <div class="col-12 font-bold" style="text-align: center;">
+                                    <i class="pi pi-question-circle" style="font-size: 2em;"></i> แจ้งเตือน
+                                </div>
+                            </div>
+
+                            <div class="grid">
+                                <div class="col-12" style="text-align: center;">
+                                    กรุณาตรวจสอบระยะห่างระหว่างจุดสแกน.
+                                </div>
+                            </div>
+                        </span>
+                    </ng-template>
+                </p-messages>
+            </ng-template>
+
         </div>
     </div>
 </div>

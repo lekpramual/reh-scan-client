@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 // Prime NG
 import { PrimeNGConfig } from "primeng/api";
+import { Message, MessageService } from 'primeng/api';
 
 // Line Liff
 import liff from '@line/liff';
@@ -16,7 +17,8 @@ import { ArepointService } from '../service/arepoint.service'
 @Component({
   selector: 'app-checkin',
   templateUrl: './checkin.component.html',
-  styleUrls: ['./checkin.component.css']
+  styleUrls: ['./checkin.component.css'],
+  providers: [MessageService]
 })
 export class CheckinComponent implements OnInit, OnDestroy {
 
