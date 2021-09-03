@@ -38,7 +38,7 @@ export class CheckinComponent implements OnInit, OnDestroy {
   locationParam!: number;
   loadLocation = false;
   currenLocation = false;
-  currenCicle = 0;
+
 
   myUserSub!: Subscription;
 
@@ -56,11 +56,12 @@ export class CheckinComponent implements OnInit, OnDestroy {
     }
 
     // load location
-    this.myUserSub = this.locationService.getLocation1().subscribe(rep => {
-      this.lat = rep.coords.latitude;
-      this.lng = rep.coords.longitude;
-      console.log(rep)
-    })
+    this.getLocaton();
+    // this.myUserSub = this.locationService.getLocation1().subscribe(rep => {
+    //   this.lat = rep.coords.latitude;
+    //   this.lng = rep.coords.longitude;
+    //   console.log(rep)
+    // })
 
     this.locationService.getPosition().then(rep => {
       this.lat2 = rep.lat;
@@ -96,10 +97,16 @@ export class CheckinComponent implements OnInit, OnDestroy {
     liff.closeWindow();
   }
 
+  showLocation(param: boolean) {
+    console.log("Param : ", param);
+    this.loadLocation = !param;
+  }
+
   getLocaton() {
-    this.locationService.getPosition().then((pos: { lat: number, lng: number }) => {
-      this.lat = pos.lat;
-      this.lng = pos.lng;
+    this.myUserSub = this.locationService.getLocation1().subscribe(rep => {
+      this.lat = rep.coords.latitude;
+      this.lng = rep.coords.longitude;
+      console.log(rep)
     })
   }
 

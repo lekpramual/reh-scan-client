@@ -3,17 +3,15 @@
         style="min-height: 100vh">
 
         <div class="flex align-content-center justify-content-center flex-wrap card-container" style="max-width: 300px">
-
             <div class="flex align-items-center justify-content-center flex-wrap m-2" style="min-width: 256px; ">
                 <div class="p-d-flex p-flex-column">
-                    <label for="avatar">
+                    <label for="avatar" (click)="showLocation(loadLocation)">
                         <p-avatar image={{pictureUrl}} styleClass="p-mr-2 w-7rem h-7rem" size="xlarge" shape="circle">
                         </p-avatar>
 
                     </label>
                 </div>
             </div>
-
             <div class="flex align-items-center justify-content-center flex-wrap m-2" style="min-width: 256px; ">
                 <div class="p-d-flex p-flex-column">
                     <label for="displayName" style="color:palevioletred;font-weight: bold;">
@@ -21,36 +19,38 @@
                     </label>
                 </div>
             </div>
-            <div class="flex align-items-center justify-content-center flex-wrap m-2" style="min-width: 256px; ">
+
+            <div class="flex align-items-center justify-content-center flex-wrap m-2" style="min-width: 256px; "
+                *ngIf="loadLocation">
                 <div class="p-d-flex p-flex-column">
                     <label for="displayName" style="color:palevioletred;font-weight: bold;">
                         Lat : {{lat}} | Lng : {{lng}}
                     </label>
                 </div>
             </div>
-            <div class="flex align-items-center justify-content-center flex-wrap m-2" style="min-width: 256px; ">
+            <!-- <div class="flex align-items-center justify-content-center flex-wrap m-2" style="min-width: 256px; ">
                 <div class="p-d-flex p-flex-column">
                     <label for="displayName" style="color:palevioletred;font-weight: bold;">
                         Lat : {{lat2}} | Lng : {{lng2}}
                     </label>
                 </div>
-            </div>
-            <div class="flex align-items-center justify-content-center flex-wrap m-2" style="min-width: 256px; ">
+            </div> -->
+            <!-- <div class="flex align-items-center justify-content-center flex-wrap m-2" style="min-width: 256px; ">
                 <div class="p-d-flex p-flex-column">
                     <label for="displayName" style="color:palevioletred;font-weight: bold;">
                         statusParam : {{statusParam}} | locationParam : {{locationParam}}
                     </label>
                 </div>
-            </div>
+            </div> -->
             <div class="flex align-items-center justify-content-center flex-wrap m-2" style="min-width: 256px; ">
-                <div class="p-d-flex p-flex-column">
+                <div class="p-d-flex p-flex-column" *ngIf="loadLocation">
                     <label for="displayName" style="color:palevioletred;font-weight: bold;">
                         CheckArePoint : {{isCheckArePoint()}}
                     </label>
                 </div>
             </div>
             <div class="flex align-items-center justify-content-center flex-wrap m-2" style="min-width: 256px; ">
-                <div class="p-d-flex p-flex-column">
+                <div class="p-d-flex p-flex-column" *ngIf="loadLocation">
                     <label for="displayName" style="color:palevioletred;font-weight: bold;">
                         CheckArePoint1 : {{isCheckArePoint1()}}
                     </label>
@@ -58,7 +58,7 @@
             </div>
 
             <div *ngIf="isCheckArePoint();else other_content">
-                <p-messages severity="success">
+                <p-messages severity="success" style="width: 100%;">
                     <ng-template pTemplate>
                         <span class="custom-message">
                             <div class="grid">
@@ -73,7 +73,7 @@
                             </div>
                             <div class="grid">
                                 <div class="col-12" style="text-align: center;">
-                                    จุดสแกน : {{locationParam}}
+                                    จุดสแกน : ศูนย์คอมพิวเตอร์ {{locationParam}}
                                 </div>
                             </div>
                         </span>
@@ -81,7 +81,7 @@
                 </p-messages>
             </div>
 
-            <ng-template #other_content>
+            <ng-template #other_content style="width: 100%;">
                 <p-messages severity="warn">
                     <ng-template pTemplate>
                         <span class="custom-message">
@@ -100,6 +100,15 @@
                     </ng-template>
                 </p-messages>
             </ng-template>
+
+            <div class="flex align-items-center justify-content-center flex-wrap m-2" style="min-width: 256px; ">
+                <div class="p-d-flex p-flex-column">
+                    <button pButton pRipple type="button" icon="pi pi-camera" class="p-button-rounded p-button-info"
+                        onclick="window.location.href='https://line.me/R/nv/QRCodeReader'"
+                        (click)="getLocaton()"></button>
+                </div>
+            </div>
+
 
         </div>
     </div>
