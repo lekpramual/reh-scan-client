@@ -19,7 +19,6 @@ export class RegisterlineComponent implements OnInit {
 
   pageUrl!: string | null;
   paramsUrl!: URLSearchParams | null;
-  messageUrl!: string | null;
 
   constructor(
     private router: Router,
@@ -28,20 +27,7 @@ export class RegisterlineComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // this.getParamUrl();
-
-    const queryString = decodeURIComponent(window.location.search).replace("?liff.state=", "");
-    const params = new URLSearchParams(queryString);
-    const page = params.get('page');
-
-    this.pageUrl = page;
-    this.paramsUrl = params;
-
-    if (page != null && page != '') {
-      this.messageUrl = "is param";
-    } else {
-      this.messageUrl = "is not param";
-    }
+    this.getParamUrl();
     // // is login line
     // if (this.lineService.getUserIsLogin()) {
     //   // get param line liff
@@ -115,9 +101,36 @@ export class RegisterlineComponent implements OnInit {
     this.paramsUrl = params;
 
     if (page != null && page != '') {
-      this.messageUrl = "is param";
-    } else {
-      this.messageUrl = "is not param";
+      // is login line and register
+      if (this.lineService.getUserIsLogin() && this.lineService.getCurrentUserIsLogin()) {
+        // if (page === "checkin") {
+        //   const status = params.get('status');
+        //   const location = params.get('location');
+        //   // refresh page without reloading
+        //   this.router.navigate(['/checkin', status, location]).then(() => {
+        //     window.location.reload();
+        //   });
+        // } else if (page === "scanlist") {
+        //   this.router.navigate(['/scanlist']);
+        // }
+
+      } else {
+        //this.router.navigate(['/register']);
+      }
+    }
+    // is not param page
+    else {
+      // is login line
+      if (this.lineService.getUserIsLogin()) {
+        // is register
+        if (this.lineService.getCurrentUserIsLogin()) {
+          this.router.navigate(['/profile']);
+        }
+        // is not register
+        else {
+          this.router.navigate(['/register']);
+        }
+      }
     }
   }
 
