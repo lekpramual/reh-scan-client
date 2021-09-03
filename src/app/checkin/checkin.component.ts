@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-
+import { Subscription } from 'rxjs';
 // Prime NG
 import { PrimeNGConfig } from "primeng/api";
 
@@ -18,7 +18,7 @@ import { ArepointService } from '../service/arepoint.service'
   templateUrl: './checkin.component.html',
   styleUrls: ['./checkin.component.css']
 })
-export class CheckinComponent implements OnInit {
+export class CheckinComponent implements OnInit, OnDestroy {
 
 
   pictureUrl?: string = "../../assets/icon/logo128.png";
@@ -34,6 +34,8 @@ export class CheckinComponent implements OnInit {
   loadLocation = false;
   currenLocation = false;
   currenCicle = 0;
+
+  myUserSub!: Subscription;
 
   constructor(
     private primengConfig: PrimeNGConfig,
@@ -64,7 +66,17 @@ export class CheckinComponent implements OnInit {
     });
 
     // load location
-    this.getLocaton();
+    this.myUserSub = this.locationService.getLocation1().subscribe(rep => {
+      this.lat = rep.coords.latitude;
+      this.lng = rep.coords.longitude;
+      console.log(rep)
+    })
+  }
+
+  ngOnDestroy() {
+    if (this.myUserSub) {
+      this.myUserSub.unsubscribe();
+    }
   }
 
 
@@ -73,18 +85,11 @@ export class CheckinComponent implements OnInit {
   }
 
   getLocaton() {
-    this.locationService.getPosition().then(pos => {
+    this.locationService.getPosition().then((pos: { lat: number, lng: number }) => {
       this.lat = pos.lat;
       this.lng = pos.lng;
-      console.log(`Positon: ${pos.lng} ${pos.lat}`);
-      this.loadLocation = true;
-      this.currenLocation = this.isCheckArePoint();
-      console.log(this.isCheckArePoint());
-      this.currenCicle = this.isCheckArePoint1();
-      console.log(this.isCheckArePoint1())
-    });
+    })
   }
-
 
   isCheckArePoint() {
     // { lat2: 16.0579597, lon2: 103.6478599 } จุดกึ่งกลาง
@@ -101,6 +106,5 @@ export class CheckinComponent implements OnInit {
       { lat1: this.lat, lon1: this.lng }, { lat2: 16.048707958611494, lon2: 103.65104674217899 }
     )
   }
-
-
 }
+
