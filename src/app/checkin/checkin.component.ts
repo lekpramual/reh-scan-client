@@ -60,9 +60,9 @@ export class CheckinComponent implements OnInit, OnDestroy {
       console.log(rep)
     })
 
-    this.locationService.getLocation1().subscribe(rep => {
-      this.lat2 = rep.coords.latitude;
-      this.lng2 = rep.coords.longitude;
+    this.locationService.getPosition().then(rep => {
+      this.lat2 = rep.lat;
+      this.lng2 = rep.lng;
       console.log(rep)
     })
   }
