@@ -50,6 +50,12 @@ export class CheckinComponent implements OnInit, OnDestroy {
       this.router.navigate(['/']);
     }
 
+    // load location
+    this.myUserSub = this.locationService.getLocation1().subscribe(rep => {
+      this.lat = rep.coords.latitude;
+      this.lng = rep.coords.longitude;
+      console.log(rep)
+    })
   }
   ngOnInit() {
     this.primengConfig.ripple = true;
@@ -65,12 +71,7 @@ export class CheckinComponent implements OnInit, OnDestroy {
       this.locationParam = params['location'];
     });
 
-    // load location
-    this.myUserSub = this.locationService.getLocation1().subscribe(rep => {
-      this.lat = rep.coords.latitude;
-      this.lng = rep.coords.longitude;
-      console.log(rep)
-    })
+
   }
 
   ngOnDestroy() {
