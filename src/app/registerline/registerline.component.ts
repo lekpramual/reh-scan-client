@@ -24,9 +24,12 @@ export class RegisterlineComponent implements OnInit {
   ) {
 
     // get param line liff
-    const queryString = decodeURIComponent(window.location.search).replace("?liff.state=", "");
+    // const queryString = decodeURIComponent(window.location.search).replace("?liff.state=", "");
+    const queryString = decodeURIComponent(window.location.search);
     const params = new URLSearchParams(queryString);
     const page = params.get('page');
+
+    console.log(queryString);
 
     if (page != null && page != '') {
       // is login line and register
@@ -35,11 +38,10 @@ export class RegisterlineComponent implements OnInit {
           const status = params.get('status');
           const location = params.get('location');
           // refresh page without reloading
-          this.router.navigate(['/checkin', status, location]);
-
-          // this.router.navigate(['/checkin', status, location]).then(() => {
-          //   window.location.reload();
-          // });
+          //this.router.navigate(['/checkin', status, location]);
+          this.router.navigate(['/checkin', status, location]).then(() => {
+            window.location.reload();
+          });
         } else if (page === "scanlist") {
           this.router.navigate(['/scanlist']);
         }
