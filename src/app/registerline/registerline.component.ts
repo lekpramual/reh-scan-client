@@ -26,10 +26,14 @@ export class RegisterlineComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // line liff
-    this.getLiffLineMobile();
-    // get param line liff
-    this.getParamUrl();
+    // is login line
+    if (this.lineService.getUserIsLogin()) {
+      // get param line liff
+      this.getParamUrl();
+    } else {
+      // line liff
+      this.getLiffLineMobile();
+    }
   }
 
   getLiffLineWeb() {
