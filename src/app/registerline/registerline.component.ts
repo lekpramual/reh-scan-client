@@ -19,6 +19,7 @@ export class RegisterlineComponent implements OnInit {
 
   pageUrl!: string | null;
   paramsUrl!: URLSearchParams | null;
+  messageUrl!: string | null;
 
   constructor(
     private router: Router,
@@ -26,14 +27,16 @@ export class RegisterlineComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // is login line
-    if (this.lineService.getUserIsLogin()) {
-      // get param line liff
-      this.getParamUrl();
-    } else {
-      // line liff
-      this.getLiffLineMobile();
-    }
+
+    this.getParamUrl();
+    // // is login line
+    // if (this.lineService.getUserIsLogin()) {
+    //   // get param line liff
+    //   this.getParamUrl();
+    // } else {
+    //   // line liff
+    //   this.getLiffLineWeb();
+    // }
   }
 
   getLiffLineWeb() {
@@ -77,7 +80,7 @@ export class RegisterlineComponent implements OnInit {
             console.log('login success...');
             localStorage.setItem('currentLine', JSON.stringify(this.profile));
 
-            this.router.navigate(['/register']);
+            // this.router.navigate(['/register']);
           }).catch(console.error);
         } else {
           console.log('is not login line ...')
@@ -95,36 +98,13 @@ export class RegisterlineComponent implements OnInit {
     const params = new URLSearchParams(queryString);
     const page = params.get('page');
 
+    this.pageUrl = page;
+    this.paramsUrl = params;
+
     if (page != null && page != '') {
-      // is login line and register
-      if (this.lineService.getUserIsLogin() && this.lineService.getCurrentUserIsLogin()) {
-        if (page === "checkin") {
-          const status = params.get('status');
-          const location = params.get('location');
-          // refresh page without reloading
-          this.router.navigate(['/checkin', status, location]).then(() => {
-            window.location.reload();
-          });
-        } else if (page === "scanlist") {
-          this.router.navigate(['/scanlist']);
-        }
-      } else {
-        this.router.navigate(['/register']);
-      }
-    }
-    // is not param page
-    else {
-      // is login line
-      if (this.lineService.getUserIsLogin()) {
-        // is register
-        if (this.lineService.getCurrentUserIsLogin()) {
-          this.router.navigate(['/profile']);
-        }
-        // is not register
-        else {
-          this.router.navigate(['/register']);
-        }
-      }
+      this.messageUrl = "is param";
+    } else {
+      this.messageUrl = "is not param";
     }
   }
 
