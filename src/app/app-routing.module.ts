@@ -35,6 +35,10 @@ const routes: Routes = [
     component: ScanlistComponent
   },
   {
+    path: 'registerline',
+    component: RegisterlineComponent
+  },
+  {
     path: 'notsupport',
     component: NotsupportComponent
   }
