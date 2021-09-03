@@ -29,6 +29,9 @@ export class CheckinComponent implements OnInit, OnDestroy {
   lat = 0;
   lng = 0;
 
+  lat2!: number;
+  lng2!: number;
+
   statusParam!: string;
   locationParam!: number;
   loadLocation = false;
@@ -54,6 +57,12 @@ export class CheckinComponent implements OnInit, OnDestroy {
     this.myUserSub = this.locationService.getLocation1().subscribe(rep => {
       this.lat = rep.coords.latitude;
       this.lng = rep.coords.longitude;
+      console.log(rep)
+    })
+
+    this.locationService.getLocation1().subscribe(rep => {
+      this.lat2 = rep.coords.latitude;
+      this.lng2 = rep.coords.longitude;
       console.log(rep)
     })
   }

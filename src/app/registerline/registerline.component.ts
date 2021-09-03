@@ -35,9 +35,11 @@ export class RegisterlineComponent implements OnInit {
           const status = params.get('status');
           const location = params.get('location');
           // refresh page without reloading
-          this.router.navigate(['/checkin', status, location]).then(() => {
-            window.location.reload();
-          });
+          this.router.navigate(['/checkin', status, location]);
+
+          // this.router.navigate(['/checkin', status, location]).then(() => {
+          //   window.location.reload();
+          // });
         } else if (page === "scanlist") {
           this.router.navigate(['/scanlist']);
         }
