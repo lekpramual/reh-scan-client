@@ -43,7 +43,8 @@ export class CheckinComponent implements OnInit, OnDestroy {
   latitude!: number;
   longitude!: number;
   zoom!: number;
-
+  point!: boolean;
+  precise!: number;
 
   myUserSub!: Subscription;
 
@@ -99,16 +100,19 @@ export class CheckinComponent implements OnInit, OnDestroy {
   }
 
   getAddress(latitude: number, longitude: number) {
-    return this.arepointService.testFun(
+    const isPoint = this.arepointService.testFun(
       // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
       { lat1: latitude, lon1: longitude }, { lat2: 16.048707958611494, lon2: 103.65104674217899 }
     )
+    this.point = isPoint;
   }
   getAddress2(latitude: number, longitude: number) {
-    return this.arepointService.testFun1(
+    const getPrecise = this.arepointService.testFun1(
       // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
       { lat1: latitude, lon1: longitude }, { lat2: 16.048707958611494, lon2: 103.65104674217899 }
     )
+
+    this.precise = getPrecise;
   }
 
 
