@@ -26,45 +26,10 @@ export class RegisterlineComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    this.getLiffLineMobile
-    // get param line liff
-    const queryString = decodeURIComponent(window.location.search).replace("?liff.state=", "");
-    const params = new URLSearchParams(queryString);
-    const page = params.get('page');
-
-    this.paramsUrl = params;
-    this.pageUrl = page;
+    this.getLiffLine
   }
 
-  getLiffLineWeb() {
-    // liff line
-    liff.init({ liffId: '1656331237-XGkQjqOl' }).then(() => {
-      this.os = liff.getOS();
-      // is moblie
-      if (liff.getOS() === "web") {
-        if (liff.isLoggedIn()) {
-          console.log('id loggein ... ')
-          liff.getProfile().then(profile => {
-            this.profile = profile;
-            // บันทึกข้อมูล currentLine 
-            console.log('login success...');
-            localStorage.setItem('currentLine', JSON.stringify(this.profile));
-
-            this.router.navigate(['/register']);
-          }).catch(console.error);
-        } else {
-          console.log('is not login line ...')
-          liff.login()
-        }
-      } else {
-        console.log("GetOS : ", liff.getOS());
-        this.router.navigate(['/notsupport']);
-      }
-    }).catch(console.error);
-  }
-
-  getLiffLineMobile() {
+  getLiffLine() {
     // liff line
     liff.init({ liffId: '1656331237-XGkQjqOl' }).then(() => {
       this.os = liff.getOS();
@@ -79,6 +44,13 @@ export class RegisterlineComponent implements OnInit {
             localStorage.setItem('currentLine', JSON.stringify(this.profile));
 
             // this.router.navigate(['/register']);
+            // get param line liff
+            const queryString = decodeURIComponent(window.location.search).replace("?liff.state=", "");
+            const params = new URLSearchParams(queryString);
+            const page = params.get('page');
+
+            this.paramsUrl = params;
+            this.pageUrl = page;
           }).catch(console.error);
         } else {
           console.log('is not login line ...')
@@ -89,48 +61,6 @@ export class RegisterlineComponent implements OnInit {
         this.router.navigate(['/notsupport']);
       }
     }).catch(console.error);
-  }
-
-  getParamUrl() {
-    const queryString = decodeURIComponent(window.location.search).replace("?liff.state=", "");
-    const params = new URLSearchParams(queryString);
-    const page = params.get('page');
-
-    this.pageUrl = page;
-    this.paramsUrl = params;
-
-    if (page != null && page != '') {
-      // is login line and register
-      if (this.lineService.getUserIsLogin() && this.lineService.getCurrentUserIsLogin()) {
-        // if (page === "checkin") {
-        //   const status = params.get('status');
-        //   const location = params.get('location');
-        //   // refresh page without reloading
-        //   this.router.navigate(['/checkin', status, location]).then(() => {
-        //     window.location.reload();
-        //   });
-        // } else if (page === "scanlist") {
-        //   this.router.navigate(['/scanlist']);
-        // }
-
-      } else {
-        //this.router.navigate(['/register']);
-      }
-    }
-    // is not param page
-    else {
-      // is login line
-      if (this.lineService.getUserIsLogin()) {
-        // is register
-        if (this.lineService.getCurrentUserIsLogin()) {
-          this.router.navigate(['/profile']);
-        }
-        // is not register
-        else {
-          this.router.navigate(['/register']);
-        }
-      }
-    }
   }
 
 }
