@@ -37,6 +37,7 @@ export class CheckinComponent implements OnInit, OnDestroy {
   statusParam!: string;
   locationParam!: number;
   loadLocation = false;
+  showInfo = false;
   currenLocation = false;
 
 
@@ -94,7 +95,7 @@ export class CheckinComponent implements OnInit, OnDestroy {
         this.longitude = position.coords.longitude;
         this.zoom = 15;
 
-        this.loadLocation = true;
+        //this.loadLocation = true;
 
         this.getAddress(this.latitude, this.longitude)
         this.getAddress2(this.latitude, this.longitude)
@@ -133,6 +134,7 @@ export class CheckinComponent implements OnInit, OnDestroy {
   showLocation(param: boolean) {
     console.log("Param : ", param);
     this.loadLocation = !param;
+
   }
 
   getLocaton() {

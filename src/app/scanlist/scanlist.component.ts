@@ -5,6 +5,8 @@ import liff from '@line/liff';
 import packageInfo from '../../../package.json';
 import { LineService } from '../service/line.service';
 
+import { ProductService } from '../service/productservice';
+import { Product } from '../domain/product';
 
 @Component({
   selector: 'app-scanlist',
@@ -18,8 +20,13 @@ export class ScanlistComponent implements OnInit {
   displayName?: string = "";
   version!: string;
 
+
+  products!: Product[];
+
   constructor(private router: Router,
-    private lineService: LineService) {
+    private lineService: LineService,
+    private productService: ProductService
+  ) {
 
   }
 
@@ -29,6 +36,8 @@ export class ScanlistComponent implements OnInit {
     this.pictureUrl = this.lineService.getUserValue().pictureUrl;
     this.userId = this.lineService.getUserValue().userId;
     this.displayName = this.lineService.getCurrentUserValue().name;
+
+    this.productService.getProductsSmall().then(data => this.products = data);
   }
 
   closeWindow() {

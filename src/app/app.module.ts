@@ -21,6 +21,7 @@ import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
 // Components
 import { RegisterComponent } from './register/register.component';
 import { RegisterlineComponent } from './registerline/registerline.component';
@@ -30,6 +31,8 @@ import { ScanlistComponent } from './scanlist/scanlist.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { NotsupportComponent } from './notsupport/notsupport.component';
 
+// Service 
+import { ProductService } from './service/productservice';
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,7 +66,8 @@ import { NotsupportComponent } from './notsupport/notsupport.component';
   providers: [
     {
       provide: LocationStrategy, useClass: PathLocationStrategy
-    }
+    },
+    ProductService
   ],
   bootstrap: [AppComponent]
 })

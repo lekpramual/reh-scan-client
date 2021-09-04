@@ -1,0 +1,96 @@
+<div class="flex align-items-center justify-content-center field">
+    <label for="avatar">
+        <p-avatar image={{pictureUrl}} styleClass="p-mr-2 w-7rem h-7rem" size="xlarge" shape="circle">
+        </p-avatar>
+    </label>
+</div>
+<div class="field " style="margin-top: 20px;">
+    <div class="card">
+        <div class="flex align-items-center justify-content-center field">
+            <label for="avatar">
+                {{displayName}}
+            </label>
+        </div>
+    </div>
+</div>
+
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="field">
+        <span class="p-float-label">
+            <p-autoComplete [style]="{width: '100%'}" [(ngModel)]="selectedCountryAdvanced"
+                [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)" field="name"
+                [dropdown]="true" formControlName="fullname">
+                <ng-template let-country pTemplate="item">
+                    <div class="country-item">
+                        <div>{{country.name}}</div>
+                    </div>
+                </ng-template>
+            </p-autoComplete>
+
+            <label for="float-input">ชื่อ - สกุล</label>
+        </span>
+    </div>
+    <div class="field">
+        <span class="p-float-label">
+            <!-- <input id="float-input" type="text" pInputText> -->
+            <p-inputMask [style]="{width: '100%'}" mask="(999) 999-9999" formControlName="phone" minlength="10">
+            </p-inputMask>
+
+            <label for="float-input">เบอร์โทร</label>
+        </span>
+    </div>
+    <div class="field">
+        <button [style]="{width: '100%'}" pButton type="submit" label="ลงทะเบียน" [disabled]="!loginForm.valid"
+            class="p-button-raised p-button-rounded"></button>
+    </div>
+</form>
+
+
+<!-- <div class="flex align-items-center justify-content-center flex-wrap card-container yellow-container"
+    style="min-height: 100vh">
+    <div class="flex align-items-center justify-content-center text-gray-900 border-round">
+        <div class="card">
+            <div class="flex align-items-center justify-content-center field">
+                <label for="avatar">
+                    <p-avatar image={{pictureUrl}} styleClass="p-mr-2 w-7rem h-7rem" size="xlarge" shape="circle">
+                    </p-avatar>
+
+                </label>
+            </div>
+            <div class="field " style="margin-top: 32px;">
+                <div class="card">
+                    <div class="flex align-items-center justify-content-center field">
+                        <label for="avatar">
+                            {{displayName}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="field">
+                    <label for="fullname"><i class="pi pi-user"></i> ชื่อ - สกุล </label>
+                    <p-autoComplete [style]="{width: '100%'}" [(ngModel)]="selectedCountryAdvanced"
+                        [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)" field="name"
+                        [dropdown]="true" placeholder="ชื่อ - สกุล" formControlName="fullname">
+                        <ng-template let-country pTemplate="item">
+                            <div class="country-item">
+                                <div>{{country.name}}</div>
+                            </div>
+                        </ng-template>
+                    </p-autoComplete>
+                </div>
+
+                <div class="field">
+                    <label for="phone"><i class="pi pi-phone"></i> เบอร์โทร</label>
+                    <p-inputMask [style]="{width: '100%'}" mask="(999) 999-9999" placeholder="(999) 999-9999"
+                        formControlName="phone" minlength="10"></p-inputMask>
+                </div>
+                <div class="field">
+                    <button [style]="{width: '100%'}" pButton type="submit" label="ลงทะเบียน"
+                        [disabled]="!loginForm.valid" class="p-button-raised p-button-rounded"></button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div> -->
