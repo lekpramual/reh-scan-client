@@ -20,26 +20,26 @@
             <div class="col-12">
                 <p-messages severity="info">
                     <ng-template pTemplate>
-                        <span class="custom-message">
-                            <div class="grid">
-                                <div class="col-12 font-bold" style="text-align: center;">
+                        <span class="custom-message" style="width: 100%;">
+                            <div class=" grid">
+                                <div class="col-12 font-bold">
                                     <i class="pi pi-info-circle" style="font-size: 2em;"></i> ตรวจสอบ
                                 </div>
                             </div>
                             <div class="grid">
-                                <div class="col-12" style="text-align: center;">
+                                <div class="col-12">
 
                                     ละติจูด : {{latitude}} | ลองติจูด : {{longitude}}
 
                                 </div>
                             </div>
                             <div class="grid">
-                                <div class="col-12" style="text-align: center;">
+                                <div class="col-12">
                                     รัศมี : {{point}}
                                 </div>
                             </div>
                             <div class="grid">
-                                <div class="col-12" style="text-align: center;">
+                                <div class="col-12">
                                     ระยะห่าง : {{precise}}
                                 </div>
                             </div>
@@ -50,43 +50,46 @@
         </div>
 
 
-        <div class="grid" *ngIf="point;else other_content" style="text-align: center;">
-            <p-messages severity="success">
-                <ng-template pTemplate>
-                    <span class="custom-message">
-                        <div class="grid">
-                            <div class="col-12 font-bold" style="text-align: center;">
-                                <i class="pi pi-question-circle" style="font-size: 2em;"></i> สำเร็จ
+        <div class="grid" style="text-align: center;" *ngIf="point;else other_content">
+            <div class="col-12">
+                <p-messages severity="success">
+                    <ng-template pTemplate>
+                        <span class="custom-message" style="width: 100%;">
+                            <div class="grid">
+                                <div class="col-12 font-bold">
+                                    <i class="pi pi-question-circle" style="font-size: 2em;"></i> สำเร็จ
+                                </div>
                             </div>
-                        </div>
-                        <div class="grid">
-                            <div class="col-12" style="text-align: center;">
-                                สถานะ : {{statusParam}}
+                            <div class="grid">
+                                <div class="col-12">
+                                    สถานะ : {{statusParam}}
+                                </div>
                             </div>
-                        </div>
-                        <div class="grid">
-                            <div class="col-12" style="text-align: center;">
-                                จุดสแกน : ศูนย์คอมพิวเตอร์ {{locationParam}}
+                            <div class="grid">
+                                <div class="col-12">
+                                    จุดสแกน : ศูนย์คอมพิวเตอร์ {{locationParam}}
+                                </div>
                             </div>
-                        </div>
-                    </span>
-                </ng-template>
-            </p-messages>
+                        </span>
+                    </ng-template>
+                </p-messages>
+            </div>
         </div>
+
         <div class="grid" style="text-align: center;">
             <div class="col-12">
-                <ng-template #other_content style="width: 100%;">
+                <ng-template #other_content>
                     <p-messages severity="warn">
                         <ng-template pTemplate>
-                            <span class="custom-message">
+                            <span class="custom-message" style="width: 100%;">
                                 <div class="grid">
-                                    <div class="col-12 font-bold" style="text-align: center;">
+                                    <div class="col-12 font-bold">
                                         <i class="pi pi-question-circle" style="font-size: 2em;"></i> แจ้งเตือน
                                     </div>
                                 </div>
 
                                 <div class="grid">
-                                    <div class="col-12" style="text-align: center;">
+                                    <div class="col-12">
                                         กรุณาตรวจสอบระยะห่างระหว่างจุดสแกน.
                                     </div>
                                 </div>
