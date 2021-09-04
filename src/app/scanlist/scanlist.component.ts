@@ -20,10 +20,10 @@ export class ScanlistComponent implements OnInit {
 
   constructor(private router: Router,
     private lineService: LineService) {
+    // check is login line and register 
     if (!this.lineService.getUserIsLogin() && !this.lineService.getCurrentUserIsLogin()) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/register']);
     }
-
   }
 
   ngOnInit(): void {

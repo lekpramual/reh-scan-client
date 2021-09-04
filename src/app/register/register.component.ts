@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
-
 import { FilterService } from "primeng/api";
 import { SelectItemGroup } from "primeng/api";
 
@@ -10,6 +9,10 @@ import { UserService } from "../service/user.service";
 import packageInfo from '../../../package.json';
 
 import { LineService } from '../service/line.service';
+
+import liff from '@line/liff';
+
+type UnPromise<T> = T extends Promise<infer X> ? X : T;
 
 
 @Component({
@@ -19,6 +22,9 @@ import { LineService } from '../service/line.service';
   providers: [UserService, FilterService]
 })
 export class RegisterComponent implements OnInit {
+
+  os: ReturnType<typeof liff.getOS>;
+  profile!: UnPromise<ReturnType<typeof liff.getProfile>>;
 
   selectedCountry: any;
 
@@ -36,13 +42,10 @@ export class RegisterComponent implements OnInit {
 
   filteredGroups!: any[];
 
-  pictureUrl?: string = "../../assets/icon/logo128.png";
-  userId?: string = "{{userId}}";
-  displayName?: string = "{{displayName}}";
-
   loginForm!: FormGroup;
   loading!: boolean;
   version!: string;
+
 
   constructor(
     public formBuilder: FormBuilder,
@@ -51,17 +54,6 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private lineService: LineService,
   ) {
-    // is register line
-    if (this.lineService.getUserIsLogin()) {
-      // get data is local store
-      this.pictureUrl = this.lineService.getUserValue().pictureUrl;
-      this.userId = this.lineService.getUserValue().userId;
-      this.displayName = this.lineService.getUserValue().displayName;
-      // is register 
-      if (this.lineService.getCurrentUserIsLogin()) {
-        this.router.navigate(['/profile']);
-      }
-    }
 
   }
 
@@ -70,6 +62,29 @@ export class RegisterComponent implements OnInit {
     this.resetForm();
     this.getUsers("");
     this.version = packageInfo.version;
+
+    // liff line
+    liff.init({ liffId: '1656331237-XGkQjqOl' }).then(() => {
+      this.os = liff.getOS();
+      // is moblie
+      if (liff.getOS() !== "web") {
+        if (liff.isLoggedIn()) {
+          console.log('id loggein ... ')
+          liff.getProfile().then(profile => {
+            this.profile = profile;
+            // บันทึกข้อมูล currentLine 
+            console.log('login success...');
+            localStorage.setItem('currentLine', JSON.stringify(this.profile));
+          }).catch(console.error);
+        } else {
+          console.log('is not login line ...')
+          liff.login()
+        }
+      } else {
+        console.log("GetOS : ", liff.getOS());
+        this.router.navigate(['/notsupport']);
+      }
+    }).catch(console.error);
 
   }
 
@@ -115,7 +130,6 @@ export class RegisterComponent implements OnInit {
 
 
   filterCountry(event: { query: any; }) {
-    console.log(event);
 
     this.getUsers(event.query)
 
