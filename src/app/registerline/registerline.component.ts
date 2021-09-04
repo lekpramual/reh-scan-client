@@ -26,41 +26,13 @@ export class RegisterlineComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getLiffLine
-  }
+    // get param line liff
+    const queryString = decodeURIComponent(window.location.search).replace("?liff.state=", "");
+    const params = new URLSearchParams(queryString);
+    const page = params.get('page');
 
-  getLiffLine() {
-    // liff line
-    liff.init({ liffId: '1656331237-XGkQjqOl' }).then(() => {
-      this.os = liff.getOS();
-      // is moblie
-      if (liff.getOS() !== "web") {
-        if (liff.isLoggedIn()) {
-          console.log('id loggein ... ')
-          liff.getProfile().then(profile => {
-            this.profile = profile;
-            // บันทึกข้อมูล currentLine 
-            console.log('login success...');
-            localStorage.setItem('currentLine', JSON.stringify(this.profile));
-
-            // this.router.navigate(['/register']);
-            // get param line liff
-            const queryString = decodeURIComponent(window.location.search).replace("?liff.state=", "");
-            const params = new URLSearchParams(queryString);
-            const page = params.get('page');
-
-            this.paramsUrl = params;
-            this.pageUrl = page;
-          }).catch(console.error);
-        } else {
-          console.log('is not login line ...')
-          liff.login()
-        }
-      } else {
-        console.log("GetOS : ", liff.getOS());
-        this.router.navigate(['/notsupport']);
-      }
-    }).catch(console.error);
+    this.paramsUrl = params;
+    this.pageUrl = page;
   }
 
 }
