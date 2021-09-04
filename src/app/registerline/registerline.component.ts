@@ -36,24 +36,16 @@ export class RegisterlineComponent implements OnInit {
 
     if (page != null && page != '') {
       if (page === "register") {
-        this.router.navigate(['/register']).then(() => {
-          window.location.reload();
-        });
+        this.router.navigate(['/register'])
       } else if (page === "scanlist") {
-        this.router.navigate(['/scanlist']).then(() => {
-          window.location.reload();
-        });
+        this.router.navigate(['/scanlist'])
       } else if (page === "checkin") {
         const status = params.get('status');
         const location = params.get('location');
         // refresh page without reloading
-        this.router.navigate(['/checkin', status, location]).then(() => {
-          window.location.reload();
-        });
+        this.router.navigate(['/checkin', status, location])
       } else {
-        this.router.navigate(['/notsupport']).then(() => {
-          window.location.reload();
-        });
+        this.router.navigate(['/notsupport'])
       }
     }
   }
