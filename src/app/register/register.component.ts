@@ -10,11 +10,6 @@ import packageInfo from '../../../package.json';
 
 import { LineService } from '../service/line.service';
 
-import liff from '@line/liff';
-
-type UnPromise<T> = T extends Promise<infer X> ? X : T;
-
-
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -23,8 +18,6 @@ type UnPromise<T> = T extends Promise<infer X> ? X : T;
 })
 export class RegisterComponent implements OnInit {
 
-  os: ReturnType<typeof liff.getOS>;
-  profile!: UnPromise<ReturnType<typeof liff.getProfile>>;
 
   selectedCountry: any;
 
@@ -46,8 +39,9 @@ export class RegisterComponent implements OnInit {
   loading!: boolean;
   version!: string;
 
-  pictureUrl?= "";
-  displayName?= "";
+  pictureUrl?: string = "../../assets/icon/logo128.png";
+  userId?: string = "";
+  displayName?: string = "";
 
 
   constructor(
@@ -62,7 +56,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // this.getLiffLineMobile();
+    this.getLineProfile();
     this.resetForm();
     this.getUsers("");
     this.version = packageInfo.version;
@@ -84,6 +78,14 @@ export class RegisterComponent implements OnInit {
     this.userService.getUsers(name).then(countries => {
       this.countries = countries.data;
     });
+  }
+
+  getLineProfile() {
+    if (this.lineService.getUserIsLogin()) {
+      this.pictureUrl = this.lineService.getUserValue().pictureUrl;
+      this.userId = this.lineService.getUserValue().userId;
+      this.displayName = this.lineService.getCurrentUserValue().name;
+    }
   }
 
   public SimulateNetworkRequest() {
@@ -125,31 +127,4 @@ export class RegisterComponent implements OnInit {
     this.filteredCountries = filtered;
   }
 
-  getLiffLineMobile() {
-    // liff line
-    liff.init({ liffId: '1656331237-XGkQjqOl' }).then(() => {
-      this.os = liff.getOS();
-      // is moblie
-      if (liff.getOS() !== "web") {
-        if (liff.isLoggedIn()) {
-          console.log('id loggein ... ')
-          liff.getProfile().then(profile => {
-            this.profile = profile;
-            this.pictureUrl = profile.pictureUrl;
-            this.displayName = profile.pictureUrl;
-            // บันทึกข้อมูล currentLine 
-            console.log('login success...');
-            localStorage.setItem('currentLine', JSON.stringify(this.profile));
-            this.router.navigate(['/register']);
-          }).catch(console.error);
-        } else {
-          console.log('is not login line ...')
-          liff.login()
-        }
-      } else {
-        console.log("GetOS : ", liff.getOS());
-        this.router.navigate(['/notsupport']);
-      }
-    }).catch(console.error);
-  }
 }
