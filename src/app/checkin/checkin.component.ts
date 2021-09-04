@@ -50,11 +50,6 @@ export class CheckinComponent implements OnInit, OnDestroy {
     private locationService: LocationService,
     private arepointService: ArepointService
   ) {
-    // redirect to home if already logged in
-    if (!this.lineService.getUserIsLogin() && !this.lineService.getCurrentUserIsLogin()) {
-      this.router.navigate(['/']);
-    }
-
     // load location
     this.getLocaton();
     // this.myUserSub = this.locationService.getLocation1().subscribe(rep => {
@@ -82,8 +77,6 @@ export class CheckinComponent implements OnInit, OnDestroy {
       this.statusParam = params['status'];
       this.locationParam = params['location'];
     });
-
-
   }
 
   ngOnDestroy() {
