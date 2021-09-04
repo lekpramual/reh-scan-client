@@ -26,16 +26,14 @@ export class RegisterlineComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // get param line liff
+    const queryString = decodeURIComponent(window.location.search).replace("?liff.state=", "");
+    // const queryString = decodeURIComponent(window.location.search);
+    const params = new URLSearchParams(queryString);
+    const page = params.get('page');
 
-    this.getParamUrl();
-    // // is login line
-    // if (this.lineService.getUserIsLogin()) {
-    //   // get param line liff
-    //   this.getParamUrl();
-    // } else {
-    //   // line liff
-    //   this.getLiffLineWeb();
-    // }
+    this.paramsUrl = params;
+    this.pageUrl = page;
   }
 
   getLiffLineWeb() {
