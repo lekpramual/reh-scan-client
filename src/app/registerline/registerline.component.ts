@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
-import liff from '@line/liff';
 import { LineService } from '../service/line.service';
 
-type UnPromise<T> = T extends Promise<infer X> ? X : T;
 
 
 @Component({
@@ -13,9 +10,6 @@ type UnPromise<T> = T extends Promise<infer X> ? X : T;
   styleUrls: ['./registerline.component.css']
 })
 export class RegisterlineComponent implements OnInit {
-
-  os: ReturnType<typeof liff.getOS>;
-  profile!: UnPromise<ReturnType<typeof liff.getProfile>>;
 
   pageUrl!: string | null;
   paramsUrl!: URLSearchParams | null;
