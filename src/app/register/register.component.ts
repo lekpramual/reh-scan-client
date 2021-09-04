@@ -104,7 +104,7 @@ export class RegisterComponent implements OnInit {
         phone: this.loginForm.value.phone
       }));
 
-      // ตรวจสอบว่ามี currentUser เข้าสู่ระบบแล้ว 
+      // redirect to profile
       this.router.navigate(['/profile']);
 
     }
