@@ -33,23 +33,8 @@ export class RegisterlineComponent implements OnInit {
     this.paramsUrl = params;
     this.pageUrl = page;
 
-    if (page != null && page != '') {
-      if (page === "register") {
-        // this.router.navigate(['/register'])
-        this.getLiffLineMobile();
-      } else if (page === "scanlist") {
-        this.router.navigate(['/scanlist'])
-      } else if (page === "checkin") {
-        const status = params.get('status');
-        const location = params.get('location');
-        // refresh page without reloading
-        this.router.navigate(['/checkin', status, location])
-      } else {
-        this.router.navigate(['/notsupport'])
-      }
-    }
-
-
+    // check login line 
+    this.getLiffLineWeb();
   }
 
   getLiffLineMobile() {
@@ -65,7 +50,24 @@ export class RegisterlineComponent implements OnInit {
             // บันทึกข้อมูล currentLine 
             console.log('login success...');
             localStorage.setItem('currentLine', JSON.stringify(this.profile));
-            this.router.navigate(['/register']);
+
+            // is check param
+            if (this.pageUrl != null && this.pageUrl != '') {
+              if (this.pageUrl === "register") {
+                // this.router.navigate(['/register'])
+                this.getLiffLineMobile();
+                this.router.navigate(['/register']);
+              } else if (this.pageUrl === "scanlist") {
+                this.router.navigate(['/scanlist'])
+              } else if (this.pageUrl === "checkin") {
+                //const status = this.paramsUrl?.get('status');
+                //const location = this.paramsUrl?.get('location');
+                // refresh page without reloading
+                this.router.navigate(['/checkin', status, location])
+              } else {
+                this.router.navigate(['/notsupport'])
+              }
+            }
           }).catch(console.error);
         } else {
           console.log('is not login line ...')
@@ -75,6 +77,45 @@ export class RegisterlineComponent implements OnInit {
         console.log("GetOS : ", liff.getOS());
         this.router.navigate(['/notsupport']);
       }
+    }).catch(console.error);
+  }
+
+  getLiffLineWeb() {
+    // liff line
+    liff.init({ liffId: '1656331237-XGkQjqOl' }).then(() => {
+      this.os = liff.getOS();
+      // is moblie
+      if (liff.isLoggedIn()) {
+        console.log('id loggein ... ')
+        liff.getProfile().then(profile => {
+          this.profile = profile;
+          // บันทึกข้อมูล currentLine 
+          console.log('login success...');
+          localStorage.setItem('currentLine', JSON.stringify(this.profile));
+
+          // is check param
+          if (this.pageUrl != null && this.pageUrl != '') {
+            if (this.pageUrl === "register") {
+              // this.router.navigate(['/register'])
+              // this.getLiffLineMobile();
+              this.router.navigate(['/register']);
+            } else if (this.pageUrl === "scanlist") {
+              this.router.navigate(['/scanlist'])
+            } else if (this.pageUrl === "checkin") {
+              //const status = this.paramsUrl?.get('status');
+              //const location = this.paramsUrl?.get('location');
+              // refresh page without reloading
+              this.router.navigate(['/checkin', status, location])
+            } else {
+              this.router.navigate(['/notsupport'])
+            }
+          }
+        }).catch(console.error);
+      } else {
+        console.log('is not login line ...')
+        liff.login()
+      }
+
     }).catch(console.error);
   }
 
