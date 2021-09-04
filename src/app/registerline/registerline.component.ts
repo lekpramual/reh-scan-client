@@ -95,16 +95,35 @@ export class RegisterlineComponent implements OnInit {
           // is check param
           if (this.pageUrl != null && this.pageUrl != '') {
             if (this.pageUrl === "register") {
-              // this.router.navigate(['/register'])
-              // this.getLiffLineMobile();
-              this.router.navigate(['/register']);
+
+              // is register
+              if (this.lineService.getCurrentUserIsLogin()) {
+                this.router.navigate(['/profile'])
+              } else {
+                // is not register
+                this.router.navigate(['/register']);
+              }
             } else if (this.pageUrl === "scanlist") {
-              this.router.navigate(['/scanlist'])
+              // is register
+              if (this.lineService.getCurrentUserIsLogin()) {
+                this.router.navigate(['/scanlist'])
+              } else {
+                // is not register
+                this.router.navigate(['/register']);
+              }
+
             } else if (this.pageUrl === "checkin") {
               const status = this.paramsUrl?.get('status');
               const location = this.paramsUrl?.get('location');
-              // refresh page without reloading
-              this.router.navigate(['/checkin', status, location])
+              // is register
+              if (this.lineService.getCurrentUserIsLogin()) {
+                // refresh page without reloading
+                this.router.navigate(['/checkin', status, location])
+              } else {
+                // is not register
+                this.router.navigate(['/register']);
+              }
+
             } else {
               this.router.navigate(['/notsupport'])
             }
