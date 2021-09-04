@@ -26,9 +26,10 @@ export class RegisterlineComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+    this.getLiffLineMobile
     // get param line liff
     const queryString = decodeURIComponent(window.location.search).replace("?liff.state=", "");
-    // const queryString = decodeURIComponent(window.location.search);
     const params = new URLSearchParams(queryString);
     const page = params.get('page');
 
