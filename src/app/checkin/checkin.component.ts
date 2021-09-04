@@ -94,7 +94,10 @@ export class CheckinComponent implements OnInit, OnDestroy {
         this.longitude = position.coords.longitude;
         this.zoom = 15;
 
+        this.loadLocation = true;
+
         this.getAddress(this.latitude, this.longitude)
+        this.getAddress2(this.latitude, this.longitude)
       });
     }
   }
@@ -102,14 +105,14 @@ export class CheckinComponent implements OnInit, OnDestroy {
   getAddress(latitude: number, longitude: number) {
     const isPoint = this.arepointService.testFun(
       // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
-      { lat1: latitude, lon1: longitude }, { lat2: 16.048707958611494, lon2: 103.65104674217899 }
+      { lat1: latitude, lon1: longitude }, { lat2: 16.04861489815688, lon2: 103.65051961805949 }
     )
     this.point = isPoint;
   }
   getAddress2(latitude: number, longitude: number) {
     const getPrecise = this.arepointService.testFun1(
       // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
-      { lat1: latitude, lon1: longitude }, { lat2: 16.048707958611494, lon2: 103.65104674217899 }
+      { lat1: latitude, lon1: longitude }, { lat2: 16.04861489815688, lon2: 103.65051961805949 }
     )
 
     this.precise = getPrecise;
