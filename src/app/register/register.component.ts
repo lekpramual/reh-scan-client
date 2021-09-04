@@ -84,7 +84,7 @@ export class RegisterComponent implements OnInit {
     if (this.lineService.getUserIsLogin()) {
       this.pictureUrl = this.lineService.getUserValue().pictureUrl;
       this.userId = this.lineService.getUserValue().userId;
-      this.displayName = this.lineService.getCurrentUserValue().displayName;
+      this.displayName = this.lineService.getUserValue().displayName;
     }
   }
 
