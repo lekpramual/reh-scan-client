@@ -11,7 +11,6 @@ import packageInfo from '../../../package.json';
 import { LineService } from '../service/line.service';
 
 import liff from '@line/liff';
-import { threadId } from 'worker_threads';
 
 type UnPromise<T> = T extends Promise<infer X> ? X : T;
 
@@ -63,7 +62,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.getLiffLineMobile();
+    // this.getLiffLineMobile();
     this.resetForm();
     this.getUsers("");
     this.version = packageInfo.version;
@@ -141,7 +140,7 @@ export class RegisterComponent implements OnInit {
             // บันทึกข้อมูล currentLine 
             console.log('login success...');
             localStorage.setItem('currentLine', JSON.stringify(this.profile));
-            // this.router.navigate(['/register']);
+            this.router.navigate(['/register']);
           }).catch(console.error);
         } else {
           console.log('is not login line ...')
