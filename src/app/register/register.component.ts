@@ -59,33 +59,10 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.getLiffLineMobile();
     this.resetForm();
     this.getUsers("");
     this.version = packageInfo.version;
-
-    // liff line
-    liff.init({ liffId: '1656331237-XGkQjqOl' }).then(() => {
-      this.os = liff.getOS();
-      // is moblie
-      if (liff.getOS() !== "web") {
-        if (liff.isLoggedIn()) {
-          console.log('id loggein ... ')
-          liff.getProfile().then(profile => {
-            this.profile = profile;
-            // บันทึกข้อมูล currentLine 
-            console.log('login success...');
-            localStorage.setItem('currentLine', JSON.stringify(this.profile));
-          }).catch(console.error);
-        } else {
-          console.log('is not login line ...')
-          liff.login()
-        }
-      } else {
-        console.log("GetOS : ", liff.getOS());
-        this.router.navigate(['/notsupport']);
-      }
-    }).catch(console.error);
-
   }
 
   get getControl() {
@@ -144,5 +121,31 @@ export class RegisterComponent implements OnInit {
     }
 
     this.filteredCountries = filtered;
+  }
+
+  getLiffLineMobile() {
+    // liff line
+    liff.init({ liffId: '1656331237-XGkQjqOl' }).then(() => {
+      this.os = liff.getOS();
+      // is moblie
+      if (liff.getOS() !== "web") {
+        if (liff.isLoggedIn()) {
+          console.log('id loggein ... ')
+          liff.getProfile().then(profile => {
+            this.profile = profile;
+            // บันทึกข้อมูล currentLine 
+            console.log('login success...');
+            localStorage.setItem('currentLine', JSON.stringify(this.profile));
+            // this.router.navigate(['/register']);
+          }).catch(console.error);
+        } else {
+          console.log('is not login line ...')
+          liff.login()
+        }
+      } else {
+        console.log("GetOS : ", liff.getOS());
+        this.router.navigate(['/notsupport']);
+      }
+    }).catch(console.error);
   }
 }
