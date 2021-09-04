@@ -59,7 +59,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.getLiffLineMobile();
+    // this.getLiffLineMobile();
     this.resetForm();
     this.getUsers("");
     this.version = packageInfo.version;
@@ -109,7 +109,6 @@ export class RegisterComponent implements OnInit {
   filterCountry(event: { query: any; }) {
 
     this.getUsers(event.query)
-
     //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
     let filtered: any[] = [];
     let query = event.query;
