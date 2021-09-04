@@ -20,6 +20,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { InputTextModule } from 'primeng/inputtext';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 // Components
 import { RegisterComponent } from './register/register.component';
 import { RegisterlineComponent } from './registerline/registerline.component';
@@ -56,7 +57,8 @@ import { NotsupportComponent } from './notsupport/notsupport.component';
     TableModule,
     MessagesModule,
     MessageModule,
-    InputTextModule
+    InputTextModule,
+    ProgressSpinnerModule
   ],
   providers: [
     {

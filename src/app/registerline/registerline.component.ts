@@ -41,53 +41,58 @@ export class RegisterlineComponent implements OnInit {
     // liff line
     liff.init({ liffId: '1656331237-XGkQjqOl' }).then(() => {
       this.os = liff.getOS();
-      // is moblie
-      if (liff.isLoggedIn()) {
-        console.log('id loggein ... ')
-        liff.getProfile().then(profile => {
-          this.profile = profile;
-          // บันทึกข้อมูล currentLine 
-          console.log('login success...');
-          localStorage.setItem('currentLine', JSON.stringify(this.profile));
+      // is check in moblie
+      if (liff.getOS() !== "web") {
+        // is moblie
+        if (liff.isLoggedIn()) {
+          console.log('id loggein ... ')
+          liff.getProfile().then(profile => {
+            this.profile = profile;
+            // บันทึกข้อมูล currentLine 
+            console.log('login success...');
+            localStorage.setItem('currentLine', JSON.stringify(this.profile));
 
-          console.log('Page URL : ', this.pageUrl);
-          // is check param
-          if (this.pageUrl != null && this.pageUrl != '') {
-            if (this.pageUrl === "register") {
-              // is register
-              if (this.lineService.getCurrentUserIsLogin()) {
-                this.router.navigate(['/profile'])
+            console.log('Page URL : ', this.pageUrl);
+            // is check param
+            if (this.pageUrl != null && this.pageUrl != '') {
+              if (this.pageUrl === "register") {
+                // is register
+                if (this.lineService.getCurrentUserIsLogin()) {
+                  this.router.navigate(['/profile'])
+                } else {
+                  // is not register
+                  this.router.navigate(['/register']);
+                }
+              } else if (this.pageUrl === "scanlist") {
+                // is register
+                if (this.lineService.getCurrentUserIsLogin()) {
+                  this.router.navigate(['/scanlist'])
+                } else {
+                  // is not register
+                  this.router.navigate(['/register']);
+                }
+              } else if (this.pageUrl === "checkin") {
+                const status = this.paramsUrl?.get('status');
+                const location = this.paramsUrl?.get('location');
+                // is register
+                if (this.lineService.getCurrentUserIsLogin()) {
+                  // refresh page without reloading
+                  this.router.navigate(['/checkin', status, location])
+                } else {
+                  // is not register
+                  this.router.navigate(['/register']);
+                }
               } else {
-                // is not register
-                this.router.navigate(['/register']);
+                this.router.navigate(['/notsupport'])
               }
-            } else if (this.pageUrl === "scanlist") {
-              // is register
-              if (this.lineService.getCurrentUserIsLogin()) {
-                this.router.navigate(['/scanlist'])
-              } else {
-                // is not register
-                this.router.navigate(['/register']);
-              }
-            } else if (this.pageUrl === "checkin") {
-              const status = this.paramsUrl?.get('status');
-              const location = this.paramsUrl?.get('location');
-              // is register
-              if (this.lineService.getCurrentUserIsLogin()) {
-                // refresh page without reloading
-                this.router.navigate(['/checkin', status, location])
-              } else {
-                // is not register
-                this.router.navigate(['/register']);
-              }
-            } else {
-              this.router.navigate(['/notsupport'])
             }
-          }
-        }).catch(console.error);
+          }).catch(console.error);
+        } else {
+          console.log('is not login line ...')
+          liff.login()
+        }
       } else {
-        console.log('is not login line ...')
-        liff.login()
+        this.router.navigate(['/notsupport'])
       }
 
     }).catch(console.error);
