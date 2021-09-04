@@ -100,7 +100,6 @@ export class RegisterComponent implements OnInit {
     if (this.loginForm.valid) {
 
       this.loading = false;
-      
       // บันทึกข้อมูล currentUser 
       localStorage.setItem('currentUser', JSON.stringify({
         badgenumber: this.loginForm.value.fullname.badgenumber,
