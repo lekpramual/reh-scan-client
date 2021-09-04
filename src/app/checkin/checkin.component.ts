@@ -87,7 +87,7 @@ export class CheckinComponent implements OnInit, OnDestroy {
   }
 
   // Get Current Location Coordinates
-  private setCurrentLocation() {
+  setCurrentLocation() {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.latitude = position.coords.latitude;

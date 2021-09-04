@@ -57,7 +57,7 @@
                 </div>
             </div>
 
-            <div *ngIf="isCheckArePoint();else other_content">
+            <div *ngIf="point;else other_content">
                 <p-messages severity="success" style="width: 100%;">
                     <ng-template pTemplate>
                         <span class="custom-message">
@@ -105,11 +105,9 @@
                 <div class="p-d-flex p-flex-column">
                     <button pButton pRipple type="button" icon="pi pi-camera" class="p-button-rounded p-button-info"
                         onclick="window.location.href='https://line.me/R/nv/QRCodeReader'"
-                        (click)="getLocaton()"></button>
+                        (click)="setCurrentLocation()"></button>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>
