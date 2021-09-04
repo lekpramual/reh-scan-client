@@ -9,8 +9,7 @@ export class ArepointService {
   constructor() { }
 
   testFun(checkPoint: { lat1: number; lon1: number; }, centerPoint: { lat2: number; lon2: number; }) {
-    // isPointWithinRadius(point, centerPoint, radius) ตรวจสอบว่าจุดอยู่ภายในวงกลมหรือไม่
-    // checks if 51.525/7.4575 is within a radius of 5 km from 51.5175/7.4678
+    //  ตรวจสอบว่าจุดอยู่ภายในวงกลมหรือไม่
     return geolib.isPointWithinRadius({
       latitude: checkPoint.lat1,
       longitude: checkPoint.lon1,
@@ -18,21 +17,19 @@ export class ArepointService {
       latitude: centerPoint.lat2,
       longitude: centerPoint.lon2,
     }, geolib.convertDistance(100, 'm'))
-
     // geolib.convertDistance(10, 'm')
   }
 
   testFun1(checkPoint: { lat1: number; lon1: number; }, centerPoint: { lat2: number; lon2: number; }) {
 
-    // isPointWithinRadius(point, centerPoint, radius) ตรวจสอบว่าจุดอยู่ภายในวงกลมหรือไม่
-    // checks if 51.525/7.4575 is within a radius of 5 km from 51.5175/7.4678
-    return geolib.getPreciseDistance({
+    // คำนวณระยะทางระหว่างสองพิกัดทางภูมิศาสตร์
+    return geolib.getDistance({
       latitude: checkPoint.lat1,
       longitude: checkPoint.lon1,
     }, {
       latitude: centerPoint.lat2,
       longitude: centerPoint.lon2,
-    }, geolib.convertDistance(100, 'm'))
+    })
   }
 
 
