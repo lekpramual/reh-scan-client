@@ -92,7 +92,6 @@ export class RegisterlineComponent implements OnInit {
           // บันทึกข้อมูล currentLine 
           console.log('login success...');
           localStorage.setItem('currentLine', JSON.stringify(this.profile));
-
           // is check param
           if (this.pageUrl != null && this.pageUrl != '') {
             if (this.pageUrl === "register") {
@@ -102,8 +101,8 @@ export class RegisterlineComponent implements OnInit {
             } else if (this.pageUrl === "scanlist") {
               this.router.navigate(['/scanlist'])
             } else if (this.pageUrl === "checkin") {
-              //const status = this.paramsUrl?.get('status');
-              //const location = this.paramsUrl?.get('location');
+              const status = this.paramsUrl?.get('status');
+              const location = this.paramsUrl?.get('location');
               // refresh page without reloading
               this.router.navigate(['/checkin', status, location])
             } else {
