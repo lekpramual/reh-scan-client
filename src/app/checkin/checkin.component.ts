@@ -121,7 +121,7 @@ export class CheckinComponent implements OnInit, OnDestroy {
       },
         err => {
           reject(err);
-        }, { maximumAge: 2000 });
+        }, { maximumAge: 0, enableHighAccuracy: true, timeout: 5000 });
     });
   }
 
