@@ -21,6 +21,7 @@ import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { TooltipModule } from 'primeng/tooltip';
 
 // Components
 import { RegisterComponent } from './register/register.component';
@@ -61,7 +62,8 @@ import { ProductService } from './service/productservice';
     MessagesModule,
     MessageModule,
     InputTextModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    TooltipModule
   ],
   providers: [
     {
