@@ -8,10 +8,13 @@ import { LineService } from '../service/line.service';
 import { ProductService } from '../service/productservice';
 import { Product } from '../domain/product';
 
+import { ScanlistService } from "../service/scanlist.service";
+
 @Component({
   selector: 'app-scanlist',
   templateUrl: './scanlist.component.html',
-  styleUrls: ['./scanlist.component.css']
+  styleUrls: ['./scanlist.component.css'],
+  providers: [ScanlistService]
 })
 export class ScanlistComponent implements OnInit {
 
@@ -20,12 +23,14 @@ export class ScanlistComponent implements OnInit {
   displayName?: string = "";
   version!: string;
 
+  scanlists!: any[];
 
   products!: Product[];
 
   constructor(private router: Router,
     private lineService: LineService,
-    private productService: ProductService
+    private productService: ProductService,
+    private scanlistService: ScanlistService
   ) {
 
   }
@@ -38,10 +43,20 @@ export class ScanlistComponent implements OnInit {
     this.displayName = this.lineService.getCurrentUserValue().name;
 
     this.productService.getProductsSmall().then(data => this.products = data);
+
+    // get data api
+    this.getScanlist();
+
   }
 
   closeWindow() {
     liff.closeWindow();
+  }
+
+  getScanlist() {
+    this.scanlistService.getScanLists(this.lineService.getCurrentUserValue().badgenumber).then((resp) => {
+      this.scanlists = resp.data;
+    });
   }
 
 }

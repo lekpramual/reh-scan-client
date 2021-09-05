@@ -8,7 +8,7 @@
                 </label>
             </div>
         </div>
-        <div class="grid" style="text-align: center;">
+        <div class="grid" style="text-align: center;font-weight: bold;">
             <div class="col-12">
                 <label for="displayName">
                     {{displayName}}
@@ -17,19 +17,34 @@
         </div>
         <div class="grid">
             <div class="col-12">
-                <p-table [value]="products" responsiveLayout="scroll">
+                <p-table [value]="scanlists" responsiveLayout="scroll">
                     <ng-template pTemplate="header">
                         <tr>
-                            <th>Code</th>
-                            <th>Name</th>
-                            <th>Quantity</th>
+                            <th style="font-weight: bold;">วันเวลา</th>
+                            <th style="font-weight: bold;">จุดสแกน</th>
+                            <th style="font-weight: bold;">สถานะ</th>
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-product>
+                    <ng-template pTemplate="body" let-scanlist>
                         <tr>
-                            <td>{{product.code}}</td>
-                            <td>{{product.name}}</td>
-                            <td>{{product.quantity}}</td>
+                            <td>{{scanlist.checktime | date: "dd/MM/yyyy HH:mm:ss"}}</td>
+                            <td>{{scanlist.scan_location}}</td>
+                            <td>
+                                <p-messages severity="info" *ngIf="scanlist.checktype==0">
+                                    <ng-template pTemplate style="text-align: center;">
+
+                                        <i class="pi pi-sign-in" style="margin-right: 5px;"></i>
+                                        <div class="p-ml-2">เข้า</div>
+                                    </ng-template>
+                                </p-messages>
+                                <p-messages severity="success" *ngIf="scanlist.checktype==1">
+                                    <ng-template pTemplate style="text-align: center;">
+                                        <i class="pi pi-sign-out" style="margin-right: 5px;"></i>
+                                        <div class="p-ml-2">ออก</div>
+                                    </ng-template>
+                                </p-messages>
+
+                            </td>
                         </tr>
                     </ng-template>
                 </p-table>
