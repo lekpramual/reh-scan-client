@@ -71,7 +71,8 @@ export class CheckinComponent implements OnInit, OnDestroy {
     //   console.log(rep)
     // })
 
-    this.setCurrentLocation();
+    // this.setCurrentLocation();
+    this.getAddressPromise();
   }
   ngOnInit() {
     this.primengConfig.ripple = true;
@@ -103,12 +104,55 @@ export class CheckinComponent implements OnInit, OnDestroy {
     }
   }
 
+
+  setCurrentLocation2(): Promise<any> {
+    // getCurrentPosition
+
+    return new Promise((resolve, reject) => {
+      // geolocation.watchPosition() | ดึงข้อมูลตำแหน่งปัจจุบันของอุปกรณ์
+      // geolocation.getCurrentPosition ลงทะเบียนฟังก์ชันตัวจัดการที่จะเรียกโดยอัตโนมัติทุกครั้งที่ตำแหน่งของอุปกรณ์เปลี่ยนแปลง 
+      // โดยจะส่งคืนตำแหน่งที่อัปเดต
+
+      //  {longitude: 100.992541, latitude: 15.870032}
+
+      navigator.geolocation.getCurrentPosition(resp => {
+        console.log(resp);
+        resolve({ longitude: resp.coords.longitude, latitude: resp.coords.latitude });
+      },
+        err => {
+          reject(err);
+        }, { maximumAge: 2000 });
+    });
+  }
+
+  getAddressPromise() {
+    console.log('Address Promise ....')
+    this.setCurrentLocation2()
+      .then((position) => {
+        console.log(position);
+        this.latitude = position.latitude;
+        this.longitude = position.longitude;
+
+        this.getAddress(position.latitude, position.longitude)
+        this.getAddress2(position.latitude, position.longitude)
+
+      })
+      .catch((err) => {
+        console.error(err.message);
+      });
+  }
+
+
   getAddress(latitude: number, longitude: number) {
     const isPoint = this.arepointService.testFun(
       // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
       { lat1: latitude, lon1: longitude }, { lat2: 16.04861489815688, lon2: 103.65051961805949 }
     )
+
+    console.log(isPoint);
     this.point = isPoint;
+
+
   }
   getAddress2(latitude: number, longitude: number) {
     const getPrecise = this.arepointService.testFun1(
@@ -116,6 +160,7 @@ export class CheckinComponent implements OnInit, OnDestroy {
       { lat1: latitude, lon1: longitude }, { lat2: 16.04861489815688, lon2: 103.65051961805949 }
     )
 
+    console.log(getPrecise);
     this.precise = getPrecise;
   }
 

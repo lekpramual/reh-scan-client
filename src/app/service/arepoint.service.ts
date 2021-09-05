@@ -16,14 +16,13 @@ export class ArepointService {
     }, {
       latitude: centerPoint.lat2,
       longitude: centerPoint.lon2,
-    }, geolib.convertDistance(100, 'm'))
+    }, geolib.convertDistance(500, 'm'))
     // geolib.convertDistance(10, 'm')
   }
 
   testFun1(checkPoint: { lat1: number; lon1: number; }, centerPoint: { lat2: number; lon2: number; }) {
-
     // คำนวณระยะทางระหว่างสองพิกัดทางภูมิศาสตร์
-    return geolib.getDistance({
+    return geolib.getPreciseDistance({
       latitude: checkPoint.lat1,
       longitude: checkPoint.lon1,
     }, {
