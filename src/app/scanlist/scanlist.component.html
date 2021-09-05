@@ -17,15 +17,40 @@
         </div>
         <div class="grid">
             <div class="col-12">
-                <p-table [value]="scanlists" responsiveLayout="scroll">
+                <p-table [value]="scanlists" styleClass="p-datatable-sm" responsiveLayout="scroll"
+                    [loading]="scanlistload" [frozenValue]="scanlists" [scrollable]="true" scrollHeight="100%">
                     <ng-template pTemplate="header">
                         <tr>
                             <th style="font-weight: bold;">วันเวลา</th>
                             <th style="font-weight: bold;">จุดสแกน</th>
-                            <th style="font-weight: bold;">สถานะ</th>
+                            <th style="flex: 0 0 4rem"></th>
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-scanlist>
+                    <!-- <ng-template pTemplate="frozenbody" let-scanlist let-index="rowIndex">
+                        <tr>
+                            <td>{{scanlist.checktime | date: "dd/MM/yyyy HH:mm:ss"}}</td>
+                            <td>{{scanlist.scan_location}}</td>
+                            <td style="flex: 0 0 4rem">
+                                <button pButton pRipple type="button" [icon]="'pi pi-lock-open'"
+                                    class="p-button-sm p-button-text"></button>
+                            </td>
+                        </tr>
+                    </ng-template> -->
+                    <ng-template pTemplate="body" let-scanlist let-index="rowIndex">
+                        <tr>
+                            <td>{{scanlist.checktime | date: "dd/MM/yyyy HH:mm:ss"}}</td>
+                            <td>{{scanlist.scan_location}}</td>
+                            <td style="flex: 0 0 4rem">
+                                <button pButton pRipple type="button" [icon]="'pi pi-sign-in'"
+                                    class="p-button-sm p-button-text" *ngIf="scanlist.checktype==0"></button>
+                                <button pButton pRipple type="button" [icon]="'pi pi-sign-out'"
+                                    class="p-button-sm p-button-text" *ngIf="scanlist.checktype==1"></button>
+                            </td>
+                        </tr>
+                    </ng-template>
+
+                    <!-- <ng-template pTemplate="body" let-scanlist>
+
                         <tr>
                             <td>{{scanlist.checktime | date: "dd/MM/yyyy HH:mm:ss"}}</td>
                             <td>{{scanlist.scan_location}}</td>
@@ -46,7 +71,8 @@
 
                             </td>
                         </tr>
-                    </ng-template>
+
+                    </ng-template> -->
                 </p-table>
             </div>
         </div>

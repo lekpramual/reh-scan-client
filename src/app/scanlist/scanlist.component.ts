@@ -9,6 +9,8 @@ import { ProductService } from '../service/productservice';
 import { Product } from '../domain/product';
 
 import { ScanlistService } from "../service/scanlist.service";
+import { timeout } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-scanlist',
@@ -24,6 +26,7 @@ export class ScanlistComponent implements OnInit {
   version!: string;
 
   scanlists!: any[];
+  scanlistload!: boolean;
 
   products!: Product[];
 
@@ -38,6 +41,7 @@ export class ScanlistComponent implements OnInit {
   ngOnInit(): void {
     this.version = packageInfo.version;
 
+    this.scanlistload = true;
     this.pictureUrl = this.lineService.getUserValue().pictureUrl;
     this.userId = this.lineService.getUserValue().userId;
     this.displayName = this.lineService.getCurrentUserValue().name;
@@ -54,9 +58,13 @@ export class ScanlistComponent implements OnInit {
   }
 
   getScanlist() {
-    this.scanlistService.getScanLists(this.lineService.getCurrentUserValue().badgenumber).then((resp) => {
-      this.scanlists = resp.data;
-    });
+    this.scanlistService.getScanLists(this.lineService.getCurrentUserValue().badgenumber)
+      .then((resp: { data: any[]; }) => {
+        setTimeout(() => {
+          this.scanlistload = false;
+          this.scanlists = resp.data;
+        }, 3000)
+      })
   }
 
 }
