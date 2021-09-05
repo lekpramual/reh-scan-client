@@ -63,7 +63,7 @@ export class ScanlistComponent implements OnInit {
         setTimeout(() => {
           this.scanlistload = false;
           this.scanlists = resp.data;
-        }, 3000)
+        }, 1000)
       })
   }
 
