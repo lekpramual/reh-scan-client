@@ -34,6 +34,7 @@ import { NotsupportComponent } from './notsupport/notsupport.component';
 
 // Service 
 import { ProductService } from './service/productservice';
+import { CheckoutComponent } from './checkout/checkout.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +44,8 @@ import { ProductService } from './service/productservice';
     ProfileComponent,
     ScanlistComponent,
     FooterComponent,
-    NotsupportComponent
+    NotsupportComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,

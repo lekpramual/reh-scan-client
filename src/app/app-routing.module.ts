@@ -11,6 +11,7 @@ import { CheckinComponent } from './checkin/checkin.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ScanlistComponent } from './scanlist/scanlist.component';
 import { NotsupportComponent } from './notsupport/notsupport.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 const routes: Routes = [
   // App 
@@ -33,6 +34,10 @@ const routes: Routes = [
   {
     path: 'scanlist',
     component: ScanlistComponent
+  },
+  {
+    path: 'checkout',
+    component: CheckoutComponent
   },
   {
     path: 'notsupport',
