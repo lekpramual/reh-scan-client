@@ -12,6 +12,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ScanlistComponent } from './scanlist/scanlist.component';
 import { NotsupportComponent } from './notsupport/notsupport.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { ChkComponent } from './chk/chk.component';
 
 const routes: Routes = [
   // App 
@@ -38,6 +39,10 @@ const routes: Routes = [
   {
     path: 'checkout',
     component: CheckoutComponent
+  },
+  {
+    path: 'chk/:location',
+    component: ChkComponent
   },
   {
     path: 'notsupport',

@@ -22,6 +22,7 @@ import { MessageModule } from 'primeng/message';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TooltipModule } from 'primeng/tooltip';
+import { ToastModule } from 'primeng/toast';
 
 // Components
 import { RegisterComponent } from './register/register.component';
@@ -35,6 +36,7 @@ import { NotsupportComponent } from './notsupport/notsupport.component';
 // Service 
 import { ProductService } from './service/productservice';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { ChkComponent } from './chk/chk.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +47,8 @@ import { CheckoutComponent } from './checkout/checkout.component';
     ScanlistComponent,
     FooterComponent,
     NotsupportComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    ChkComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +68,9 @@ import { CheckoutComponent } from './checkout/checkout.component';
     MessageModule,
     InputTextModule,
     ProgressSpinnerModule,
-    TooltipModule
+    TooltipModule,
+    RippleModule,
+    ToastModule
   ],
   providers: [
     {
