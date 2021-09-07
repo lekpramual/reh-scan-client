@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { IpserviceService } from '../service/ipservice.service';
+import { Scan } from '../domain/scan';
 
 
 @Injectable({
@@ -33,5 +34,48 @@ export class ScanlistService {
     //   <HosxpList[]>res.data
     // )
   }
+
+  createPost(post: any) {
+    console.log(post)
+    return this.http.post<any>(this.apiURL.getIPAddress() + '/api/scan/create', JSON.stringify(post), this.httpOptions)
+      .toPromise()
+      .then(res =>
+        <Scan[]>res
+      )
+      .then(data => {
+        console.log(data);
+        return data;
+      });
+  }
+
+
+
+  // const data = {
+  //   userId: Auth.getProfile().id,
+  //   checkType: msg === "chkin" ? "0" : "1",
+  //   scanId: location
+  // };
+
+  // export function createScanInOut(data) {
+  //   return (dispatch) => {
+  //     dispatch(createBegin());
+  //     return axios
+  //       .post(`${ApiServiceHeroku}/api/scan/create`, data, {
+  //         headers: {
+  //           "Access-Control-Allow-Origin": "*",
+  //           "Content-type": "application/json",
+  //           SecretKey: SecretKey
+  //         }
+  //       })
+  //       .then((res) => {
+  //         var data = [];
+  //         data.push(res.data);
+  //         dispatch(createSuccess(data));
+  //         console.log(data);
+  //         return data;
+  //       })
+  //       .catch((error) => dispatch(createFailure(error)));
+  //   };
+  // }
 
 }
