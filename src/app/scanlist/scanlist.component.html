@@ -17,10 +17,7 @@
         </div>
         <div class="grid">
             <div class="col-12">
-                <p-table [value]="scanlists"
-                 styleClass="p-datatable-sm" 
-                [scrollable]="true" 
-                [loading]="scanlistload" >
+                <p-table [value]="scanlists" styleClass="p-datatable-sm" [scrollable]="true" [loading]="scanlistload">
                     <ng-template pTemplate="header">
                         <tr>
                             <th style="font-weight: bold;">วันเวลา</th>
@@ -33,14 +30,17 @@
                             <td>{{scanlist.checktime | date: "dd/MM/yyyy HH:mm:ss"}}</td>
                             <td>{{scanlist.scan_location}}</td>
                             <td style="flex: 0 0 4rem">
-
-                                <button pButton pRipple type="button" icon="pi pi-sign-in"
+                                <div
+                                    [ngClass]="{'instock': scanlist.checktype == 0, 'outofstock': scanlist.checktype == 1 }">
+                                    {{scanlist.checktype == 0 ? "เข้า":"ออก"}}
+                                </div>
+                                <!-- <button pButton pRipple type="button" icon="pi pi-sign-in"
                                     class="p-button-sm  p-button-text" *ngIf="scanlist.checktype==0" pTooltip="เข้างาน"
                                     tooltipPosition="left" tooltipEvent="focus"></button>
 
                                 <button pButton pRipple type="button" [icon]="'pi pi-sign-out'"
                                     class="p-button-sm p-button-text" *ngIf="scanlist.checktype==1" pTooltip="ออกงาน"
-                                    tooltipPosition="left" tooltipEvent="focus"></button>
+                                    tooltipPosition="left" tooltipEvent="focus"></button> -->
                             </td>
                         </tr>
                     </ng-template>

@@ -3,6 +3,16 @@
     custom-progress-spinner-color 6s ease-in-out infinite;
 }
 
+:host ::ng-deep .instock {
+  font-weight: 700;
+  color: #cce5ff;
+}
+
+:host ::ng-deep .outofstock {
+  font-weight: 700;
+  color: #d4edda;
+}
+
 @keyframes custom-progress-spinner-color {
   100%,
   0% {
