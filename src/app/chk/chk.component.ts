@@ -19,7 +19,7 @@ export class ChkComponent implements OnInit {
   pictureUrl = "../../assets/icon/logo128.png";
   displayName = "";
   badgenumber!: number;
-  locationParam!: number;
+  locationParam!: string;
 
   latitude!: number;
   longitude!: number;
@@ -79,7 +79,7 @@ export class ChkComponent implements OnInit {
     });
   }
 
-  getAddressPromise(checktype: number) {
+  getAddressPromise(checktype: string) {
     console.log('Address Promise ....')
     this.setCurrentLocation()
       .then((position) => {
@@ -101,29 +101,18 @@ export class ChkComponent implements OnInit {
         this.point = isPoint;
         this.precise = getPrecise;
 
-
-        console.log(this.badgenumber);
-        console.log(checktype)
-        console.log(this.locationParam)
-        // userId!: number;
-        // checkType!: number;
-        // scanId!: number;
         if (isPoint) {
           this.scanlistService.createPost({
             "userId": this.badgenumber,
             "checkType": checktype,
             "scanId": this.locationParam
           }).then(resp => {
-            // const msg = resp[0].msg;
-            this.messageService.add({ key: 'tc', severity: 'success', summary: 'เรียบร้อย', detail: 'คุณได้ลงเวลาทำงาน' });
-            // if (msg === "created successful") {
-            //   this.messageService.add({ key: 'tc', severity: 'success', summary: 'เรียบร้อย', detail: 'คุณได้ลงเวลาทำงาน' });
-            // } else {
-            //   this.messageService.add({ key: 'tc', severity: 'warn', summary: 'แจ้งเตือน', detail: 'กรุณาตรวจสอบการเชื่อมต่อ' });
-            // }
+            if (resp === "created successful") {
+              this.messageService.add({ key: 'tc', severity: 'success', summary: 'เรียบร้อย', detail: 'คุณได้ลงเวลาทำงาน' });
+            } else {
+              this.messageService.add({ key: 'tc', severity: 'warn', summary: 'แจ้งเตือน', detail: 'กรุณาตรวจสอบการเชื่อมต่อ' });
+            }
           })
-
-
         } else {
           this.messageService.add({ key: 'tc', severity: 'warn', summary: 'แจ้งเตือน', detail: 'กรุณาตรวจสอบระยะห่างระหว่างจุดสแกน' });
         }

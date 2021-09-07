@@ -37,14 +37,14 @@ export class ScanlistService {
 
   createPost(post: any) {
     console.log(post)
+    // .then(res =>
+    //   <Scan[]>res
+    // )
     return this.http.post<any>(this.apiURL.getIPAddress() + '/api/scan/create', JSON.stringify(post), this.httpOptions)
       .toPromise()
-      .then(res =>
-        <Scan[]>res
-      )
       .then(data => {
-        console.log(data);
-        return data;
+
+        return data.msg;
       });
   }
 

@@ -1,7 +1,7 @@
 export class Scan {
-    userId!: number;
-    checkType!: number;
-    scanId!: number;
+  userId!: number;
+  checkType!: number;
+  scanId!: string;
 }
 
 // const data = {
