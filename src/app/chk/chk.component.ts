@@ -8,9 +8,6 @@ import { LineService } from '../service/line.service';
 import { ArepointService } from '../service/arepoint.service'
 import { ScanlistService } from '../service/scanlist.service'
 
-declare var require: any
-const imgname = require("../../assets/icon/013-fingerprint-8.png");
-
 @Component({
   selector: 'app-chk',
   templateUrl: './chk.component.html',
@@ -21,7 +18,7 @@ export class ChkComponent implements OnInit {
 
 
   pictureUrl = "../../assets/icon/logo128.png";
-  pictureScan = "../../assets/icon/013-fingerprint-8.png";
+  pictureScan = "assets/icon/013-fingerprint-8.png";
   displayName = "";
   badgenumber!: number;
   locationParam!: string;
@@ -58,7 +55,7 @@ export class ChkComponent implements OnInit {
     this.pictureUrl = this.lineService.getUserValue().pictureUrl;
     this.displayName = this.lineService.getCurrentUserValue().name;
     this.badgenumber = this.lineService.getCurrentUserValue().badgenumber;
-    this.pictureScan = imgname;
+
 
     this.route.params.subscribe((params: Params) => {
       this.locationParam = params['location'];
