@@ -11,7 +11,6 @@
                     <label for="avatar">
                         <p-avatar image={{pictureUrl}} styleClass="p-mr-2 w-7rem h-7rem" size="xlarge" shape="circle">
                         </p-avatar>
-
                     </label>
                 </div>
             </div>
@@ -34,7 +33,10 @@
                         <div class="grid" style="margin-top: 20px;">
                             <div class="col-12">
                                 <!-- <i class="pi pi-sign-in" style="font-size: 32px;"></i> -->
-                                <img src="{{pictureScan}}" style="height: 64px;">
+                                <p-avatar image={{pictureScan}} size="xlarge">
+                                </p-avatar>
+
+                                <!-- <img src={{pictureScan}} style="height: 64px;"> -->
                             </div>
                             <div class="col-12">
                                 <label style="font-size: 24px;">เข้างาน</label>
@@ -49,8 +51,8 @@
                     color: #155724;" (click)="getAddressPromise('1')">
                         <div class="grid" style="margin-top: 20px;">
                             <div class="col-12">
-                                <!-- <i class="pi pi-sign-in" style="font-size: 32px;"></i> -->
-                                <img src="{{pictureScan}}" style="height: 64px;">
+                                <p-avatar image={{pictureScan}} size="xlarge">
+                                </p-avatar>
                             </div>
                             <div class="col-12">
                                 <label style="font-size: 24px;">ออกงาน</label>
