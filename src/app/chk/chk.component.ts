@@ -26,6 +26,7 @@ export class ChkComponent implements OnInit {
   zoom!: number;
   point!: boolean;
   precise!: number;
+  loadchk!: boolean;
 
   constructor(
     private messageService: MessageService,
@@ -80,6 +81,7 @@ export class ChkComponent implements OnInit {
   }
 
   getAddressPromise(checktype: string) {
+    this.loadchk = true;
     console.log('Address Promise ....')
     this.setCurrentLocation()
       .then((position) => {
@@ -96,8 +98,6 @@ export class ChkComponent implements OnInit {
           { lat1: position.latitude, lon1: position.longitude }, { lat2: 16.04861489815688, lon2: 103.65051961805949 }
         )
 
-        // console.log(isPoint);
-        // console.log(getPrecise);
         this.point = isPoint;
         this.precise = getPrecise;
 
@@ -108,18 +108,31 @@ export class ChkComponent implements OnInit {
             "scanId": this.locationParam
           }).then(resp => {
             if (resp === "created successful") {
-              this.messageService.add({ key: 'tc', severity: 'success', summary: 'เรียบร้อย', detail: 'คุณได้ลงเวลาทำงาน' });
+              setTimeout(() => {
+                this.loadchk = false;
+                this.messageService.add({ key: 'bc', severity: 'success', summary: 'เรียบร้อย', detail: 'คุณได้ลงเวลาทำงาน' });
+              }, 3000);
+
             } else {
-              this.messageService.add({ key: 'tc', severity: 'warn', summary: 'แจ้งเตือน', detail: 'กรุณาตรวจสอบการเชื่อมต่อ' });
+              setTimeout(() => {
+                this.loadchk = false;
+                this.messageService.add({ key: 'bc', severity: 'warn', summary: 'แจ้งเตือน', detail: 'กรุณาตรวจสอบการเชื่อมต่อ' });
+              }, 3000);
             }
           })
         } else {
-          this.messageService.add({ key: 'tc', severity: 'warn', summary: 'แจ้งเตือน', detail: 'กรุณาตรวจสอบระยะห่างระหว่างจุดสแกน' });
+          setTimeout(() => {
+            this.loadchk = false;
+            this.messageService.add({ key: 'bc', severity: 'warn', summary: 'แจ้งเตือน', detail: 'กรุณาตรวจสอบระยะห่างระหว่างจุดสแกน' });
+          }, 3000);
         }
       })
       .catch((err) => {
-        console.error(err.message);
-        this.messageService.add({ key: 'tc', severity: 'error', summary: 'ผิดพลาด', detail: 'กรุณาตรวจสอบการเชื่อมต่อ' });
+        setTimeout(() => {
+          this.loadchk = false;
+          console.error(err.message);
+          this.messageService.add({ key: 'bc', severity: 'error', summary: 'ผิดพลาด', detail: 'กรุณาตรวจสอบการเชื่อมต่อ' });
+        }, 3000);
       });
   }
 

@@ -24,34 +24,51 @@
             </div>
         </div>
 
-        <div class="card-container p-d-flex">
-            <div class="grid" style="text-align: center;">
+        <div class="card-container p-d-flex" style="margin-top : 10px;">
+            <div class="grid">
                 <div class="col-6">
-                    <div class="card in-box" pRipple (click)="getAddressPromise('0')">
+                    <button pButton pRipple type="button" [disabled]="loadchk" class="p-button-info" style="background: #cce5ff;
+                    border: solid #b8daff;
+                    border-width: 1px;
+                    color: #004085;" (click)="getAddressPromise('0')">
                         <div class="grid" style="margin-top: 20px;">
                             <div class="col-12">
-                                <i class="pi pi-sign-in" style="font-size: 32px;"></i>
+                                <!-- <i class="pi pi-sign-in" style="font-size: 32px;"></i> -->
+                                <img src="../../assets/icon/013-fingerprint-8.png" style="height: 64px;">
                             </div>
                             <div class="col-12">
                                 <label style="font-size: 24px;">เข้างาน</label>
                             </div>
                         </div>
-                    </div>
+                    </button>
                 </div>
                 <div class="col-6">
-                    <div class="card out-box" pRipple (click)="getAddressPromise('1')">
+                    <button pButton pRipple type="button" [disabled]="loadchk" class="p-button-success" style="background: #d4edda;
+                    border: solid #c3e6cb;
+                    border-width: 1px;
+                    color: #155724;" (click)="getAddressPromise('1')">
                         <div class="grid" style="margin-top: 20px;">
                             <div class="col-12">
-                                <i class="pi pi-sign-out" style="font-size: 32px;"></i>
+                                <!-- <i class="pi pi-sign-in" style="font-size: 32px;"></i> -->
+                                <img src="../../assets/icon/013-fingerprint-8.png" style="height: 64px;">
                             </div>
                             <div class="col-12">
                                 <label style="font-size: 24px;">ออกงาน</label>
                             </div>
                         </div>
-                    </div>
+                    </button>
                 </div>
             </div>
         </div>
 
+        <div class="card p-d-flex" *ngIf="loadchk" style="margin-top: 20px;">
+            <div class="grid" style="text-align: center;">
+                <div class="col-12">
+                    <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                        strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+
+                </div>
+            </div>
+        </div>
     </div>
 </div>
