@@ -5,12 +5,12 @@
 
 :host ::ng-deep .instock {
   font-weight: 700;
-  color: #cce5ff;
+  color: #b3d5f8;
 }
 
 :host ::ng-deep .outofstock {
   font-weight: 700;
-  color: #d4edda;
+  color: #aff5bf;
 }
 
 @keyframes custom-progress-spinner-color {
