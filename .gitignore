@@ -2,7 +2,7 @@
 
 # compiled output
 /dist
-/service/ipservice.service.ts
+/src/app/service
 /tmp
 /out-tsc
 # Only exists if Bazel was run
