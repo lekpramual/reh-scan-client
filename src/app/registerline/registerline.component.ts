@@ -71,6 +71,14 @@ export class RegisterlineComponent implements OnInit {
                   // is not register
                   this.router.navigate(['/register']);
                 }
+              } else if (this.pageUrl === "checkout") {
+                // is register
+                if (this.lineService.getCurrentUserIsLogin()) {
+                  this.router.navigate(['/checkout'])
+                } else {
+                  // is not register
+                  this.router.navigate(['/register']);
+                }
               } else if (this.pageUrl === "checkin") {
                 const status = this.paramsUrl?.get('status');
                 const location = this.paramsUrl?.get('location');
