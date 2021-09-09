@@ -1,5 +1,16 @@
 <div class="flex align-items-center justify-content-center" style="min-height: calc(100vh - 100px);">
-    <div class="card">
+    <div class="card" *ngIf="loadchk">
+        <div class="card p-d-flex" style="margin-top: 20px;">
+            <div class="grid" style="text-align: center;">
+                <div class="col-12">
+                    <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                        strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card" *ngIf="!loadchk">
         <div class="grid" style="text-align: center;">
             <div class="col-12">
                 <label for="avatar">

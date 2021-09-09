@@ -65,17 +65,13 @@ export class ChkComponent implements OnInit {
       this.locationParam = params['location'];
     });
 
-
-    this.locationService.getLocationMark(this.locationParam)
+    this.setCurrentLocation()
       .then((position) => {
-        this.latitudeMark = parseFloat(position.latitude);
-        this.longitudeMark = parseFloat(position.longitude);
+        this.latitude = position.latitude;
+        this.longitude = position.longitude;
       }).catch((err) => {
         console.error(err.message);
       });
-
-
-    this.setCurrentLocation()
   }
 
   // Get Current Location Coordinates
@@ -85,11 +81,7 @@ export class ChkComponent implements OnInit {
       // geolocation.watchPosition() | ดึงข้อมูลตำแหน่งปัจจุบันของอุปกรณ์
       // geolocation.getCurrentPosition ลงทะเบียนฟังก์ชันตัวจัดการที่จะเรียกโดยอัตโนมัติทุกครั้งที่ตำแหน่งของอุปกรณ์เปลี่ยนแปลง 
       // โดยจะส่งคืนตำแหน่งที่อัปเดต
-
-
-
       navigator.geolocation.getCurrentPosition(resp => {
-        console.log(resp);
         resolve({ longitude: resp.coords.longitude, latitude: resp.coords.latitude });
       },
         err => {
@@ -106,7 +98,6 @@ export class ChkComponent implements OnInit {
       // geolocation.getCurrentPosition ลงทะเบียนฟังก์ชันตัวจัดการที่จะเรียกโดยอัตโนมัติทุกครั้งที่ตำแหน่งของอุปกรณ์เปลี่ยนแปลง 
       // โดยจะส่งคืนตำแหน่งที่อัปเดต
       this.locationService.getLocationMark(this.locationParam).then(resp => {
-        console.log(resp);
         resolve({ longitude: parseFloat(resp.longitude), latitude: parseFloat(resp.latitude) });
       },
         err => {
@@ -120,8 +111,8 @@ export class ChkComponent implements OnInit {
     console.log('Address Promise ....')
     this.setCurrentLocation()
       .then((position) => {
-
         this.setCurrentLocationMark().then(mark => {
+          console.log('Location Promise ....')
           const getPrecise = this.arepointService.testFun1(
             // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
             { lat1: position.latitude, lon1: position.longitude }, { lat2: mark.latitude, lon2: mark.longitude }

@@ -1,20 +1,20 @@
 <div class="flex align-items-center justify-content-center" style="min-height: calc(100vh - 100px);">
-    <div class="card">
+    <div class="card" style="margin-top: 12px;">
         <div class="grid" style="text-align: center;">
-            <div class="col-12">
+            <div class="col-4">
                 <label for="avatar">
-                    <p-avatar image={{pictureUrl}} styleClass="p-mr-2 w-7rem h-7rem" size="xlarge" shape="circle">
+                    <p-avatar image={{pictureUrl}} styleClass="p-mr-2 w-5rem h-5rem" size="xlarge" shape="circle">
                     </p-avatar>
                 </label>
             </div>
-        </div>
-        <div class="grid" style="text-align: center;font-weight: bold;">
-            <div class="col-12">
+            <div class="col-8 flex align-items-center justify-content-center"
+                style="text-align: center;font-weight: bold;font-size: 24px;">
                 <label for="displayName">
                     {{displayName}}
                 </label>
             </div>
         </div>
+      
         <div class="grid">
             <div class="col-12">
                 <p-table [value]="scanlists" styleClass="p-datatable-sm" [scrollable]="true" [loading]="scanlistload">
