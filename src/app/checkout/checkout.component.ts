@@ -97,11 +97,11 @@ export class CheckoutComponent implements OnInit {
 
         const getPrecise = this.arepointService.testFun1(
           // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
-          { lat1: position.latitude, lon1: position.longitude }, { lat2: 16.04861489815688, lon2: 103.65051961805949 }
+          { lat1: position.latitude, lon1: position.longitude }, { lat2: 16.04899483562286, lon2: 103.65283787858233 }
         )
         const isPoint = this.arepointService.testFun(
           // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
-          { lat1: position.latitude, lon1: position.longitude }, { lat2: 16.04861489815688, lon2: 103.65051961805949 }
+          { lat1: position.latitude, lon1: position.longitude }, { lat2: 16.04899483562286, lon2: 103.65283787858233 }
         )
 
         this.point = isPoint;
