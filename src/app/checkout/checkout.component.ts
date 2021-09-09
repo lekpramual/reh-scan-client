@@ -56,9 +56,6 @@ export class CheckoutComponent implements OnInit {
     this.pictureUrl = this.lineService.getUserValue().pictureUrl;
     this.displayName = this.lineService.getCurrentUserValue().name;
     this.badgenumber = this.lineService.getCurrentUserValue().badgenumber;
-
-
-
     this.setCurrentLocation()
       .then((position) => {
         console.log(position);
