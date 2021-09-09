@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { MessageService } from 'primeng/api';
+import { PrimeNGConfig } from 'primeng/api';
 
 import { FilterService } from "primeng/api";
 import { SelectItemGroup } from "primeng/api";
@@ -14,7 +16,7 @@ import { LineService } from '../service/line.service';
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
-  providers: [UserService, FilterService]
+  providers: [UserService, FilterService, MessageService]
 })
 export class RegisterComponent implements OnInit {
 
@@ -51,11 +53,16 @@ export class RegisterComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private lineService: LineService,
+    private messageService: MessageService,
+    private primengConfig: PrimeNGConfig,
+
   ) {
 
   }
 
   ngOnInit(): void {
+
+    this.primengConfig.ripple = true;
 
     this.getLineProfile();
     this.resetForm();
@@ -119,7 +126,12 @@ export class RegisterComponent implements OnInit {
         "line_picture_url": this.pictureUrl
       }, this.badgenumber).then(resp => {
         // redirect to profile
-        this.router.navigate(['/profile']);
+        this.messageService.add({ key: 'bc', severity: 'success', summary: 'เรียบร้อย', detail: 'คุณได้ลงทะเบียนแล้ว' });
+        setTimeout(() => {
+          this.router.navigate(['/profile']);
+        }, 3000);
+      }).catch(err => {
+        this.messageService.add({ key: 'bc', severity: 'error', summary: 'ผิดพลาด', detail: 'กรุณาตรวจสอบการเชื่อมต่อ' });
       })
     }
   }

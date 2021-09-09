@@ -21,6 +21,7 @@ export class ProfileComponent implements OnInit {
   name = "";
   phone = "";
   version = "";
+  badgenumber = "";
 
   constructor(
     private userService: UserService,
@@ -40,10 +41,22 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
 
     this.version = packageInfo.version;
-    this.pictureUrl = this.lineService.getUserValue().pictureUrl;
-    this.displayName = this.lineService.getUserValue().displayName;
-    this.name = this.lineService.getCurrentUserValue().name;
-    this.phone = this.lineService.getCurrentUserValue().phone;
+    this.getUserProfile();
+  }
+
+
+  getUserProfile() {
+    this.userService.getUserProfile(this.lineService.getCurrentUserValue().badgenumber).then(resp => {
+
+      console.log(resp)
+      this.pictureUrl = this.lineService.getUserValue().pictureUrl;
+      this.displayName = resp.name;
+
+      this.name = resp.position;
+      this.badgenumber = resp.beloag;
+      this.phone = this.lineService.getCurrentUserValue().phone;
+
+    });
   }
 
   closeWindow() {

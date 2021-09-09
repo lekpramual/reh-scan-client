@@ -7,6 +7,7 @@ import { PrimeNGConfig } from 'primeng/api';
 import { LineService } from '../service/line.service';
 import { ArepointService } from '../service/arepoint.service'
 import { ScanlistService } from '../service/scanlist.service'
+import { LocationService } from '../service/location.service'
 
 @Component({
   selector: 'app-chk',
@@ -25,6 +26,8 @@ export class ChkComponent implements OnInit {
 
   latitude!: number;
   longitude!: number;
+  latitudeMark!: number;
+  longitudeMark!: number;
   zoom!: number;
   point!: boolean;
   precise!: number;
@@ -37,7 +40,8 @@ export class ChkComponent implements OnInit {
     private route: ActivatedRoute,
     private lineService: LineService,
     private scanlistService: ScanlistService,
-    private arepointService: ArepointService) {
+    private arepointService: ArepointService,
+    private locationService: LocationService) {
     // มีการเข้าสู่ระบบ line
     if (this.lineService.getUserIsLogin()) {
       // ไม่มีการ ลงทะเบียน
@@ -59,11 +63,27 @@ export class ChkComponent implements OnInit {
 
     this.route.params.subscribe((params: Params) => {
       this.locationParam = params['location'];
+
+      this.locationService.getLocationMark(params['location'])
+        .then((position) => {
+          this.latitudeMark = parseFloat(position.latitude);
+          this.longitudeMark = parseFloat(position.longitude);
+        }).catch((err) => {
+          console.error(err.message);
+        });
+
     });
 
-    //this.showConfirm();
-    //this.messageService.add({ key: 'c', sticky: true, severity: 'warn', summary: 'Are you sure?', detail: 'Confirm to proceed' });
-    this.setCurrentLocation();
+    this.setCurrentLocation()
+      .then((position) => {
+
+        this.latitude = position.latitude;
+        this.longitude = position.longitude;
+      }).catch((err) => {
+        console.error(err.message);
+      });
+
+
   }
 
   // Get Current Location Coordinates
@@ -94,11 +114,11 @@ export class ChkComponent implements OnInit {
 
         const getPrecise = this.arepointService.testFun1(
           // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
-          { lat1: position.latitude, lon1: position.longitude }, { lat2: 16.04861489815688, lon2: 103.65051961805949 }
+          { lat1: position.latitude, lon1: position.longitude }, { lat2: this.latitudeMark, lon2: this.longitudeMark }
         )
         const isPoint = this.arepointService.testFun(
           // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
-          { lat1: position.latitude, lon1: position.longitude }, { lat2: 16.04861489815688, lon2: 103.65051961805949 }
+          { lat1: position.latitude, lon1: position.longitude }, { lat2: this.latitudeMark, lon2: this.longitudeMark }
         )
 
         this.point = isPoint;
@@ -115,7 +135,6 @@ export class ChkComponent implements OnInit {
                 this.loadchk = false;
                 this.messageService.add({ key: 'bc', severity: 'success', summary: 'เรียบร้อย', detail: 'คุณได้ลงเวลาทำงาน' });
               }, 3000);
-
             } else {
               setTimeout(() => {
                 this.loadchk = false;
