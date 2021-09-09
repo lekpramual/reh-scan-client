@@ -20,9 +20,13 @@
                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                     <div class="field">
                         <span class="p-float-label">
-                            <p-autoComplete [style]="{width: '100%'}" [(ngModel)]="selectedCountryAdvanced"
-                                [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)" field="name"
-                                [dropdown]="true" formControlName="fullname">
+                            <p-autoComplete [style]="{width: '100%'}" 
+                                [(ngModel)]="selectedCountryAdvanced"
+                                [suggestions]="filteredCountries" 
+                                (completeMethod)="filterCountry($event)" 
+                                field="name"
+                                [dropdown]="true" 
+                                formControlName="fullname">
                                 <ng-template let-country pTemplate="item">
                                     <div class="country-item">
                                         <div>{{country.name}}</div>

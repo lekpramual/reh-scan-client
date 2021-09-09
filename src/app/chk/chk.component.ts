@@ -17,7 +17,7 @@ import { ScanlistService } from '../service/scanlist.service'
 export class ChkComponent implements OnInit {
 
 
-  pictureUrl = "../../assets/icon/logo128.png";
+  pictureUrl = "assets/icon/logo128.png";
   pictureScan = "assets/icon/013-fingerprint-8.png";
   displayName = "";
   badgenumber!: number;

@@ -42,6 +42,7 @@ export class RegisterComponent implements OnInit {
   pictureUrl?: string = "../../assets/icon/logo128.png";
   userId?: string = "";
   displayName?: string = "";
+  badgenumber!: number;
 
 
   constructor(
@@ -58,7 +59,8 @@ export class RegisterComponent implements OnInit {
 
     this.getLineProfile();
     this.resetForm();
-    this.getUsers("");
+
+    this.getUserAll();
     this.version = packageInfo.version;
   }
 
@@ -80,11 +82,18 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  getUserAll() {
+    this.userService.getUserAll().then(countries => {
+      this.countries = countries.data;
+    });
+  }
+
   getLineProfile() {
     if (this.lineService.getUserIsLogin()) {
       this.pictureUrl = this.lineService.getUserValue().pictureUrl;
       this.userId = this.lineService.getUserValue().userId;
       this.displayName = this.lineService.getUserValue().displayName;
+      this.badgenumber = this.lineService.getCurrentUserValue().badgenumber;
     }
   }
 
@@ -104,16 +113,21 @@ export class RegisterComponent implements OnInit {
         phone: this.loginForm.value.phone
       }));
 
-      // redirect to profile
-      this.router.navigate(['/profile']);
-
+      this.userService.createUser({
+        "line_id": this.userId,
+        "line_name": this.displayName,
+        "line_picture_url": this.pictureUrl
+      }, this.badgenumber).then(resp => {
+        // redirect to profile
+        this.router.navigate(['/profile']);
+      })
     }
   }
 
 
   filterCountry(event: { query: any; }) {
 
-    this.getUsers(event.query)
+    // this.getUsers(event.query)
     //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
     let filtered: any[] = [];
     let query = event.query;
