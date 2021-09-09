@@ -63,27 +63,19 @@ export class ChkComponent implements OnInit {
 
     this.route.params.subscribe((params: Params) => {
       this.locationParam = params['location'];
-
-      this.locationService.getLocationMark(params['location'])
-        .then((position) => {
-          this.latitudeMark = parseFloat(position.latitude);
-          this.longitudeMark = parseFloat(position.longitude);
-        }).catch((err) => {
-          console.error(err.message);
-        });
-
     });
 
-    this.setCurrentLocation()
-      .then((position) => {
 
-        this.latitude = position.latitude;
-        this.longitude = position.longitude;
+    this.locationService.getLocationMark(this.locationParam)
+      .then((position) => {
+        this.latitudeMark = parseFloat(position.latitude);
+        this.longitudeMark = parseFloat(position.longitude);
       }).catch((err) => {
         console.error(err.message);
       });
 
 
+    this.setCurrentLocation()
   }
 
   // Get Current Location Coordinates
@@ -93,6 +85,9 @@ export class ChkComponent implements OnInit {
       // geolocation.watchPosition() | ดึงข้อมูลตำแหน่งปัจจุบันของอุปกรณ์
       // geolocation.getCurrentPosition ลงทะเบียนฟังก์ชันตัวจัดการที่จะเรียกโดยอัตโนมัติทุกครั้งที่ตำแหน่งของอุปกรณ์เปลี่ยนแปลง 
       // โดยจะส่งคืนตำแหน่งที่อัปเดต
+
+
+
       navigator.geolocation.getCurrentPosition(resp => {
         console.log(resp);
         resolve({ longitude: resp.coords.longitude, latitude: resp.coords.latitude });
@@ -103,51 +98,76 @@ export class ChkComponent implements OnInit {
     });
   }
 
+  // Get Current Location Coordinates
+  setCurrentLocationMark(): Promise<any> {
+    // getCurrentPosition
+    return new Promise((resolve, reject) => {
+      // geolocation.watchPosition() | ดึงข้อมูลตำแหน่งปัจจุบันของอุปกรณ์
+      // geolocation.getCurrentPosition ลงทะเบียนฟังก์ชันตัวจัดการที่จะเรียกโดยอัตโนมัติทุกครั้งที่ตำแหน่งของอุปกรณ์เปลี่ยนแปลง 
+      // โดยจะส่งคืนตำแหน่งที่อัปเดต
+      this.locationService.getLocationMark(this.locationParam).then(resp => {
+        console.log(resp);
+        resolve({ longitude: parseFloat(resp.longitude), latitude: parseFloat(resp.latitude) });
+      },
+        err => {
+          reject(err);
+        });
+    });
+  }
+
   getAddressPromise(checktype: string) {
     this.loadchk = true;
     console.log('Address Promise ....')
     this.setCurrentLocation()
       .then((position) => {
-        console.log(position);
-        this.latitude = position.latitude;
-        this.longitude = position.longitude;
 
-        const getPrecise = this.arepointService.testFun1(
-          // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
-          { lat1: position.latitude, lon1: position.longitude }, { lat2: this.latitudeMark, lon2: this.longitudeMark }
-        )
-        const isPoint = this.arepointService.testFun(
-          // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
-          { lat1: position.latitude, lon1: position.longitude }, { lat2: this.latitudeMark, lon2: this.longitudeMark }
-        )
+        this.setCurrentLocationMark().then(mark => {
+          const getPrecise = this.arepointService.testFun1(
+            // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
+            { lat1: position.latitude, lon1: position.longitude }, { lat2: mark.latitude, lon2: mark.longitude }
+          )
+          const isPoint = this.arepointService.testFun(
+            // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
+            { lat1: position.latitude, lon1: position.longitude }, { lat2: mark.latitude, lon2: mark.longitude }
+          )
 
-        this.point = isPoint;
-        this.precise = getPrecise;
+          this.point = isPoint;
+          this.precise = getPrecise;
 
-        if (isPoint) {
-          this.scanlistService.createPost({
-            "userId": this.badgenumber,
-            "checkType": checktype,
-            "scanId": this.locationParam
-          }).then(resp => {
-            if (resp === "created successful") {
-              setTimeout(() => {
-                this.loadchk = false;
-                this.messageService.add({ key: 'bc', severity: 'success', summary: 'เรียบร้อย', detail: 'คุณได้ลงเวลาทำงาน' });
-              }, 3000);
-            } else {
-              setTimeout(() => {
-                this.loadchk = false;
-                this.messageService.add({ key: 'bc', severity: 'warn', summary: 'แจ้งเตือน', detail: 'กรุณาตรวจสอบการเชื่อมต่อ' });
-              }, 3000);
-            }
-          })
-        } else {
+          if (isPoint) {
+            this.scanlistService.createPost({
+              "userId": this.badgenumber,
+              "checkType": checktype,
+              "scanId": this.locationParam
+            }).then(resp => {
+              if (resp === "created successful") {
+                setTimeout(() => {
+                  this.loadchk = false;
+                  this.messageService.add({ key: 'bc', severity: 'success', summary: 'เรียบร้อย', detail: 'คุณได้ลงเวลาทำงาน' });
+                }, 3000);
+              } else {
+                setTimeout(() => {
+                  this.loadchk = false;
+                  this.messageService.add({ key: 'bc', severity: 'warn', summary: 'แจ้งเตือน', detail: 'กรุณาตรวจสอบการเชื่อมต่อ' });
+                }, 3000);
+              }
+            })
+          } else {
+            setTimeout(() => {
+              this.loadchk = false;
+              this.messageService.add({ key: 'bc', severity: 'warn', summary: 'แจ้งเตือน', detail: 'กรุณาตรวจสอบระยะห่างระหว่างจุดสแกน' });
+            }, 3000);
+          }
+        }).catch((err) => {
           setTimeout(() => {
             this.loadchk = false;
-            this.messageService.add({ key: 'bc', severity: 'warn', summary: 'แจ้งเตือน', detail: 'กรุณาตรวจสอบระยะห่างระหว่างจุดสแกน' });
+            console.error(err.message);
+            this.messageService.add({ key: 'bc', severity: 'error', summary: 'ผิดพลาด', detail: 'กรุณาตรวจสอบการเชื่อมต่อ ข้อมูล' });
           }, 3000);
-        }
+        });
+
+
+
       })
       .catch((err) => {
         setTimeout(() => {
