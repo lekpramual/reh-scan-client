@@ -8,13 +8,57 @@
         <div class="card p-d-flex">
             <div class="grid" style="text-align: center;">
                 <div class="col-12">
-                    <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
-                        <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"></agm-marker>
-                    </agm-map>
+                    <p-messages severity="info">
+                        <ng-template pTemplate>
+                            <div class="p-ml-2">latitude : {{this.latitude}} | longitude : {{longitude}}</div>
+                        </ng-template>
+                    </p-messages>
 
-                    <h5>Address: {{address}}</h5>
-                    <div>Latitude: {{latitude}}</div>
-                    <div>Longitude: {{longitude}}</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="card p-d-flex">
+            <div class="grid" style="text-align: center;">
+                <div class="col-12">
+                    <p-messages severity="info">
+                        <ng-template pTemplate>
+                            <div class="p-ml-2">point : {{this.point}} | precise : {{this.precise}}</div>
+                        </ng-template>
+                    </p-messages>
+                </div>
+            </div>
+        </div>
+        <div class="card p-d-flex" style="margin-top : 10px;">
+            <div class="grid" style="text-align: center;">
+                <div class="col-12">
+                    <button pButton pRipple type="button" [disabled]="loadchk" class="p-button-info" style="background: #cce5ff;
+                    border: solid #b8daff;
+                    border-width: 1px;
+                    color: #004085;" (click)="getAddressPromise()">
+                        <div class="grid" style="margin-top: 20px;text-align: center;">
+                            <div class="col-12">
+                                <!-- <i class="pi pi-sign-in" style="font-size: 32px;"></i> -->
+                                <p-avatar image={{pictureScan}} size="xlarge">
+                                </p-avatar>
+
+                                <!-- <img src={{pictureScan}} style="height: 64px;"> -->
+                            </div>
+                            <div class="col-12">
+                                <label style="font-size: 24px;">ดาวน์ข้อมูล</label>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card p-d-flex" *ngIf="loadchk" style="margin-top: 20px;">
+            <div class="grid" style="text-align: center;">
+                <div class="col-12">
+                    <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                        strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
 
                 </div>
             </div>

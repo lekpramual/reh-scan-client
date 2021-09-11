@@ -9,8 +9,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-// Google Map
-import { AgmCoreModule } from '@agm/core';
 
 // Prime NG
 import { TableModule } from 'primeng/table';
@@ -72,11 +70,7 @@ import { ChkComponent } from './chk/chk.component';
     ProgressSpinnerModule,
     TooltipModule,
     RippleModule,
-    ToastModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyD7bNPKrHyfUcLzzzbZnlCl0GMpRhr4_FE',
-      libraries: ['places']
-    })
+    ToastModule
   ],
   providers: [
     {
