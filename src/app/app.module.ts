@@ -37,6 +37,8 @@ import { NotsupportComponent } from './notsupport/notsupport.component';
 import { ProductService } from './service/productservice';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { ChkComponent } from './chk/chk.component';
+
+import { AgmCoreModule } from '@agm/core'
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,7 +72,11 @@ import { ChkComponent } from './chk/chk.component';
     ProgressSpinnerModule,
     TooltipModule,
     RippleModule,
-    ToastModule
+    ToastModule,
+    AgmCoreModule.forRoot({
+      apiKey: "AIzaSyB8xNKRrD398KKS2wQ-lkvu5APlfdqZoCU",
+      libraries: ['places']
+    })
   ],
   providers: [
     {

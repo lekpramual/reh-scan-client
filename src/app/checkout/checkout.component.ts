@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
+
+import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
+import { MapsAPILoader } from '@agm/core';
 
 // Service
 import { LineService } from '../service/line.service';
 import { ArepointService } from '../service/arepoint.service'
 import { ScanlistService } from '../service/scanlist.service'
+
 
 @Component({
   selector: 'app-checkout',
@@ -29,6 +32,13 @@ export class CheckoutComponent implements OnInit {
   precise!: number;
   loadchk!: boolean;
 
+  title: string = 'AGM project';
+  latitudeNew!: number;
+  longitudeNew!: number;
+
+  @ViewChild('search')
+  public searchElementRef!: ElementRef;
+
   constructor(
     private messageService: MessageService,
     private primengConfig: PrimeNGConfig,
@@ -36,7 +46,9 @@ export class CheckoutComponent implements OnInit {
     private route: ActivatedRoute,
     private lineService: LineService,
     private scanlistService: ScanlistService,
-    private arepointService: ArepointService
+    private arepointService: ArepointService,
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone
   ) {
 
 
@@ -65,7 +77,17 @@ export class CheckoutComponent implements OnInit {
         console.error(err.message);
       });
 
+    //load Places Autocomplete
+    this.mapsAPILoader.load().then((resp) => {
+      console.log(resp)
+    });
 
+  }
+
+  onMapClicked(event: any) {
+    console.table(event.coords);
+    this.latitude = event.coords.lat;
+    this.longitude = event.coords.lng;
   }
 
   // Get Current Location Coordinates
@@ -81,7 +103,7 @@ export class CheckoutComponent implements OnInit {
       },
         err => {
           reject(err);
-        }, { maximumAge: 0, enableHighAccuracy: true, timeout: 3000 });
+        }, { maximumAge: 10000, enableHighAccuracy: false, timeout: 5000 });
     });
   }
 
@@ -96,14 +118,19 @@ export class CheckoutComponent implements OnInit {
 
         const getPrecise = this.arepointService.testFun1(
           // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
-          { lat1: position.latitude, lon1: position.longitude }, { lat2: 16.04899483562286, lon2: 103.65283787858233 }
+          // 16.047754894773323, 103.65174275144074
+          // { lat1: position.latitude, lon1: position.longitude }, { lat2: 16.047752011951047, lon2: 103.65156527187919 }
+          { lat1: position.latitude, lon1: position.longitude }, { lat2: 16.047754894773323, lon2: 103.65174275144074 }
         )
+
         const isPoint = this.arepointService.testFun2(
           // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
           { lat1: position.latitude, lon1: position.longitude })
 
         this.point = isPoint;
         this.precise = getPrecise;
+
+        console.log(isPoint)
 
         this.loadchk = false;
       })
