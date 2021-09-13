@@ -1,67 +1,43 @@
-<p-toast></p-toast>
-<p-toast position="top-left" key="tl"></p-toast>
-<p-toast position="top-center" key="tc"></p-toast>
-<p-toast position="bottom-center" key="bc"></p-toast>
-
 <div class="flex align-items-center justify-content-center" style="min-height: calc(100vh - 100px);">
     <div class="card">
         <div class="card p-d-flex">
             <div class="grid" style="text-align: center;">
                 <div class="col-12">
-                    <p-messages severity="info">
-                        <ng-template pTemplate>
-                            <div class="p-ml-2">latitude : {{this.latitude}} | longitude : {{longitude}}</div>
-                        </ng-template>
-                    </p-messages>
-
+                    <b>จุดสแกน : </b>
+                </div>
+                <div class="col-12">
+                    <div class="p-ml-2">ละติจูต : {{this.latitude}} | ลองติจูต : {{longitude}}</div>
                 </div>
             </div>
-
-        </div>
-        <div class="card p-d-flex">
             <div class="grid" style="text-align: center;">
                 <div class="col-12">
-                    <p-messages severity="info">
-                        <ng-template pTemplate>
-                            <div class="p-ml-2">point : {{this.point}} | precise : {{this.precise}}</div>
-                        </ng-template>
-                    </p-messages>
+                    <b>พิกัด : </b>
+                </div>
+                <div class="col-12">
+                    <div class="p-ml-2">ละติจูต 1 : {{this.latitude}} | ลองติจูต 1 : {{longitude}}</div>
+                </div>
+                <div class="col-12">
+                    <div class="p-ml-2">ละติจูต 2 : {{this.latitude}} | ลองติจูต 2 : {{longitude}}</div>
+                </div>
+                <div class="col-12">
+                    <div class="p-ml-2">ละติจูต 3 : {{this.latitude}} | ลองติจูต 3 : {{longitude}}</div>
+                </div>
+                <div class="col-12">
+                    <div class="p-ml-2">ละติจูต 4 : {{this.latitude}} | ลองติจูต 4 : {{longitude}}</div>
                 </div>
             </div>
-        </div>
-        <div class="card p-d-flex" style="margin-top : 10px;">
             <div class="grid" style="text-align: center;">
                 <div class="col-12">
-                    <button pButton pRipple type="button" [disabled]="loadchk" class="p-button-info" style="background: #cce5ff;
-                    border: solid #b8daff;
-                    border-width: 1px;
-                    color: #004085;" (click)="getAddressPromise()">
-                        <div class="grid" style="margin-top: 20px;text-align: center;">
-                            <div class="col-12">
-                                <!-- <i class="pi pi-sign-in" style="font-size: 32px;"></i> -->
-                                <p-avatar image={{pictureScan}} size="xlarge">
-                                </p-avatar>
-
-                                <!-- <img src={{pictureScan}} style="height: 64px;"> -->
-                            </div>
-                            <div class="col-12">
-                                <label style="font-size: 24px;">ดาวน์ข้อมูล</label>
-                            </div>
-                        </div>
-                    </button>
+                    <b>ตรวจสอบพิกัด : {{point}} </b>
                 </div>
-
             </div>
-        </div>
-
-        <div class="card p-d-flex" *ngIf="loadchk" style="margin-top: 20px;">
-            <div class="grid" style="text-align: center;">
-                <div class="col-12">
-                    <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
-                        strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
-
+            <div class="grid" style="text-align: center;margin: 5px;">
+                <div class="col-12" style="text-align: center;">
+                    <button pButton type=" button" (click)="getAddressPromise()" class="p-button-info">
+                        CheckPoint</button>
                 </div>
             </div>
         </div>
+
     </div>
 </div>

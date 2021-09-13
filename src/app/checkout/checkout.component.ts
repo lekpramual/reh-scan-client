@@ -64,6 +64,8 @@ export class CheckoutComponent implements OnInit {
       }).catch((err) => {
         console.error(err.message);
       });
+
+
   }
 
   // Get Current Location Coordinates
@@ -96,10 +98,9 @@ export class CheckoutComponent implements OnInit {
           // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
           { lat1: position.latitude, lon1: position.longitude }, { lat2: 16.04899483562286, lon2: 103.65283787858233 }
         )
-        const isPoint = this.arepointService.testFun(
+        const isPoint = this.arepointService.testFun2(
           // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
-          { lat1: position.latitude, lon1: position.longitude }, { lat2: 16.04899483562286, lon2: 103.65283787858233 }
-        )
+          { lat1: position.latitude, lon1: position.longitude })
 
         this.point = isPoint;
         this.precise = getPrecise;
