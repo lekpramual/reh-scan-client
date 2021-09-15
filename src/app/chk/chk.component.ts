@@ -33,6 +33,7 @@ export class ChkComponent implements OnInit {
   precise!: number;
   loadchk!: boolean;
 
+
   constructor(
     private messageService: MessageService,
     private primengConfig: PrimeNGConfig,
@@ -86,7 +87,7 @@ export class ChkComponent implements OnInit {
       },
         err => {
           reject(err);
-        }, { maximumAge: 0, enableHighAccuracy: true, timeout: 3000 });
+        }, { maximumAge: 0, enableHighAccuracy: true, timeout: 1000 });
     });
   }
 
@@ -135,37 +136,34 @@ export class ChkComponent implements OnInit {
                 setTimeout(() => {
                   this.loadchk = false;
                   this.messageService.add({ key: 'bc', severity: 'success', summary: 'เรียบร้อย', detail: 'คุณได้ลงเวลาทำงาน' });
-                }, 3000);
+                }, 1000);
               } else {
                 setTimeout(() => {
                   this.loadchk = false;
                   this.messageService.add({ key: 'bc', severity: 'warn', summary: 'แจ้งเตือน', detail: 'กรุณาตรวจสอบการเชื่อมต่อ' });
-                }, 3000);
+                }, 1000);
               }
             })
           } else {
             setTimeout(() => {
               this.loadchk = false;
               this.messageService.add({ key: 'bc', severity: 'warn', summary: 'แจ้งเตือน', detail: 'กรุณาตรวจสอบระยะห่างระหว่างจุดสแกน' });
-            }, 3000);
+            }, 1000);
           }
         }).catch((err) => {
           setTimeout(() => {
             this.loadchk = false;
             console.error(err.message);
             this.messageService.add({ key: 'bc', severity: 'error', summary: 'ผิดพลาด', detail: 'กรุณาตรวจสอบการเชื่อมต่อ ข้อมูล' });
-          }, 3000);
+          }, 1000);
         });
-
-
-
       })
       .catch((err) => {
         setTimeout(() => {
           this.loadchk = false;
           console.error(err.message);
           this.messageService.add({ key: 'bc', severity: 'error', summary: 'ผิดพลาด', detail: 'กรุณาตรวจสอบการเชื่อมต่อ' });
-        }, 3000);
+        }, 1000);
       });
   }
 

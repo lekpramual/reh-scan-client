@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 import { LineService } from '../service/line.service';
 import { ArepointService } from '../service/arepoint.service'
 import { ScanlistService } from '../service/scanlist.service'
+import { LocationService } from '../service/location.service'
 
 @Component({
   selector: 'app-checkout',
@@ -39,8 +40,8 @@ export class CheckoutComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private lineService: LineService,
-    private scanlistService: ScanlistService,
     private arepointService: ArepointService,
+    private locationService: LocationService
   ) {
 
 
@@ -89,40 +90,55 @@ export class CheckoutComponent implements OnInit {
     });
   }
 
-  getAddressPromise() {
+  // Get Current Location Coordinates
+  setCurrentLocationMark(): Promise<any> {
+    // getCurrentPosition
+    return new Promise((resolve, reject) => {
+      // geolocation.watchPosition() | ดึงข้อมูลตำแหน่งปัจจุบันของอุปกรณ์
+      // geolocation.getCurrentPosition ลงทะเบียนฟังก์ชันตัวจัดการที่จะเรียกโดยอัตโนมัติทุกครั้งที่ตำแหน่งของอุปกรณ์เปลี่ยนแปลง 
+      // โดยจะส่งคืนตำแหน่งที่อัปเดต
+      this.locationService.getLocationMark(80).then(resp => {
+        console.log(resp)
+        resolve({ longitude: parseFloat(resp.longitude), latitude: parseFloat(resp.latitude) });
+      },
+        err => {
+          reject(err);
+        });
+    });
+  }
+
+  getAddressPromise(checktype: string) {
     this.loadchk = true;
     console.log('Address Promise ....')
     this.setCurrentLocation()
       .then((position) => {
-        console.log(position);
-        this.latitude = position.latitude;
-        this.longitude = position.longitude;
+        this.setCurrentLocationMark().then(mark => {
+          console.log('Location Promise ....')
+          const getPrecise = this.arepointService.testFun1(
+            // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
+            { lat1: position.latitude, lon1: position.longitude }, { lat2: mark.latitude, lon2: mark.longitude }
+          )
+          const isPoint = this.arepointService.testFun(
+            // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
+            { lat1: position.latitude, lon1: position.longitude }, { lat2: mark.latitude, lon2: mark.longitude }
+          )
 
-        const checkPoint_lat = 16.04899483562286;
-        const checkPoint_lng = 103.65283787858233;
+          this.point = isPoint;
+          this.precise = getPrecise;
 
-        const getPrecise = this.arepointService.testFun1(
-          // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
-          { lat1: position.latitude, lon1: position.longitude }, { lat2: checkPoint_lat, lon2: checkPoint_lng }
-        )
 
-        const isPoint = this.arepointService.testFun(
-          // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
-          { lat1: position.latitude, lon1: position.longitude }, { lat2: checkPoint_lat, lon2: checkPoint_lng })
+          setTimeout(() => {
+            this.loadchk = false;
+          }, 1000);
+        }).catch((err) => {
+          this.loadchk = false;
+        });
 
-        this.point = isPoint;
-        this.precise = getPrecise;
 
-        console.log(isPoint)
 
-        this.loadchk = false;
       })
       .catch((err) => {
-        setTimeout(() => {
-          this.loadchk = false;
-          console.error(err.message);
-          this.messageService.add({ key: 'bc', severity: 'error', summary: 'ผิดพลาด', detail: 'กรุณาตรวจสอบการเชื่อมต่อ' });
-        }, 3000);
+
       });
   }
 
