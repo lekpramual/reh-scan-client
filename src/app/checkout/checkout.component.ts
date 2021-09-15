@@ -63,13 +63,13 @@ export class CheckoutComponent implements OnInit {
     this.badgenumber = this.lineService.getCurrentUserValue().badgenumber;
 
 
-    this.setCurrentLocation()
-      .then((position) => {
-        this.latitude = position.latitude;
-        this.longitude = position.longitude;
-      }).catch((err) => {
-        console.error(err.message);
-      });
+    // this.setCurrentLocation()
+    //   .then((position) => {
+    //     this.latitude = position.latitude;
+    //     this.longitude = position.longitude;
+    //   }).catch((err) => {
+    //     console.error(err.message);
+    //   });
 
     //load Places Autocomplete
   }
@@ -118,6 +118,8 @@ export class CheckoutComponent implements OnInit {
     console.log('Address Promise ....')
     this.setCurrentLocation()
       .then((position) => {
+        this.latitude = position.latitude;
+        this.longitude = position.longitude;
         this.locationService.getLocationMark(80).then(resp => {
           console.log('Location Promise ....')
           const getPrecise = this.arepointService.testFun1(

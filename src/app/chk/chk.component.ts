@@ -66,13 +66,13 @@ export class ChkComponent implements OnInit {
       this.locationParam = params['location'];
     });
 
-    this.setCurrentLocation()
-      .then((position) => {
-        this.latitude = position.latitude;
-        this.longitude = position.longitude;
-      }).catch((err) => {
-        console.error(err.message);
-      });
+    // this.setCurrentLocation()
+    //   .then((position) => {
+    //     this.latitude = position.latitude;
+    //     this.longitude = position.longitude;
+    //   }).catch((err) => {
+    //     console.error(err.message);
+    //   });
   }
 
   // Get Current Location Coordinates
@@ -156,6 +156,9 @@ export class ChkComponent implements OnInit {
     console.log('Address Promise ....')
     this.setCurrentLocation()
       .then((position) => {
+        this.latitude = position.latitude;
+        this.longitude = position.longitude;
+
         this.locationService.getLocationMark(80).then(resp => {
           console.log('Location Promise ....')
           const getPrecise = this.arepointService.testFun1(
