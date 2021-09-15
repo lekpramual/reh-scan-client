@@ -1,11 +1,32 @@
-<!-- app.component.html -->
-<div class="container">
+<div class="flex align-items-center justify-content-center" style="min-height: calc(100vh - 100px);">
+    <div class="card">
+        <div class="card p-d-flex">
+            <div class="grid" style="text-align: center;">
+                <div class="col-12">
+                    <b>จุดสแกน : </b>
+                </div>
+                <div class="col-12">
+                    <div class="p-ml-2">ละติจูต : {{this.latitude}} | ลองติจูต : {{longitude}}</div>
+                </div>
+            </div>
 
-    <h1>Angular Google Maps - Get Latitude and Longitude on Click</h1>
+            <div class="grid" style="text-align: center;">
+                <div class="col-12">
+                    <b>ระยะห่าง : {{point}} </b>
+                </div>
+            </div>
+            <div class="grid" style="text-align: center;">
+                <div class="col-12">
+                    <b>ตรวจสอบพิกัด : {{precise}} </b>
+                </div>
+            </div>
+            <div class="grid" style="text-align: center;margin: 5px;">
+                <div class="col-12" style="text-align: center;">
+                    <button pButton type=" button" (click)="getAddressPromise()" class="p-button-info">
+                        Curren Location...</button>
+                </div>
+            </div>
+        </div>
 
-    <agm-map [latitude]="latitudeNew" [longitude]="longitudeNew" (mapClick)="onMapClicked($event)">
-    </agm-map>
-
-    <div>Latitude: {{latitudeNew}}</div>
-    <div>Longitude: {{longitudeNew}}</div>
+    </div>
 </div>

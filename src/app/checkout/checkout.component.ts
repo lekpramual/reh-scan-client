@@ -2,14 +2,12 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
 
-import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
-import { MapsAPILoader } from '@agm/core';
+import { Component, OnInit } from '@angular/core';
 
 // Service
 import { LineService } from '../service/line.service';
 import { ArepointService } from '../service/arepoint.service'
 import { ScanlistService } from '../service/scanlist.service'
-
 
 @Component({
   selector: 'app-checkout',
@@ -32,12 +30,8 @@ export class CheckoutComponent implements OnInit {
   precise!: number;
   loadchk!: boolean;
 
-  title: string = 'AGM project';
-  latitudeNew!: number;
-  longitudeNew!: number;
 
-  @ViewChild('search')
-  public searchElementRef!: ElementRef;
+
 
   constructor(
     private messageService: MessageService,
@@ -47,8 +41,6 @@ export class CheckoutComponent implements OnInit {
     private lineService: LineService,
     private scanlistService: ScanlistService,
     private arepointService: ArepointService,
-    private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone
   ) {
 
 
@@ -78,27 +70,17 @@ export class CheckoutComponent implements OnInit {
       });
 
     //load Places Autocomplete
-    this.mapsAPILoader.load().then((resp) => {
-      console.log(resp)
-    });
 
   }
 
-  onMapClicked(event: any) {
-    console.table(event.coords);
-    this.latitude = event.coords.lat;
-    this.longitude = event.coords.lng;
-  }
 
   // Get Current Location Coordinates
   setCurrentLocation(): Promise<any> {
     // getCurrentPosition
     return new Promise((resolve, reject) => {
-      // geolocation.watchPosition() | ดึงข้อมูลตำแหน่งปัจจุบันของอุปกรณ์
       // geolocation.getCurrentPosition ลงทะเบียนฟังก์ชันตัวจัดการที่จะเรียกโดยอัตโนมัติทุกครั้งที่ตำแหน่งของอุปกรณ์เปลี่ยนแปลง 
       // โดยจะส่งคืนตำแหน่งที่อัปเดต
       navigator.geolocation.getCurrentPosition(resp => {
-        console.log(resp);
         resolve({ longitude: resp.coords.longitude, latitude: resp.coords.latitude });
       },
         err => {
@@ -116,16 +98,17 @@ export class CheckoutComponent implements OnInit {
         this.latitude = position.latitude;
         this.longitude = position.longitude;
 
+        const checkPoint_lat = 16.04899483562286;
+        const checkPoint_lng = 103.65283787858233;
+
         const getPrecise = this.arepointService.testFun1(
           // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
-          // 16.047754894773323, 103.65174275144074
-          // { lat1: position.latitude, lon1: position.longitude }, { lat2: 16.047752011951047, lon2: 103.65156527187919 }
-          { lat1: position.latitude, lon1: position.longitude }, { lat2: 16.047754894773323, lon2: 103.65174275144074 }
+          { lat1: position.latitude, lon1: position.longitude }, { lat2: checkPoint_lat, lon2: checkPoint_lng }
         )
 
-        const isPoint = this.arepointService.testFun2(
+        const isPoint = this.arepointService.testFun(
           // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
-          { lat1: position.latitude, lon1: position.longitude })
+          { lat1: position.latitude, lon1: position.longitude }, { lat2: checkPoint_lat, lon2: checkPoint_lng })
 
         this.point = isPoint;
         this.precise = getPrecise;
