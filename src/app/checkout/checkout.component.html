@@ -1,3 +1,4 @@
+<p-toast position="center" key="bc"></p-toast>
 <div class="flex align-items-center justify-content-center" style="min-height: calc(100vh - 100px);">
     <div class="card">
         <div class="card p-d-flex">
@@ -21,9 +22,9 @@
                 </div>
             </div>
             <div class="grid" style="text-align: center;margin: 5px;">
-                <div class="col-12" style="text-align: center;">
-                    <button pButton type=" button" (click)="getAddressPromise('0')" class="p-button-info">
-                        Curren Location...</button>
+                <div class="col-12">
+                    <button pButton type="button" label="Large" icon="pi pi-map-marker" label="ตรวจสอบพิกัด"
+                        class="p-button-lg p-button-info" [loading]="loadchk" (click)="getAddressPromise('0')"></button>
                 </div>
             </div>
         </div>

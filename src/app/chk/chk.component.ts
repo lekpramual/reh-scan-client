@@ -91,78 +91,113 @@ export class ChkComponent implements OnInit {
     });
   }
 
-  // Get Current Location Coordinates
-  setCurrentLocationMark(): Promise<any> {
-    // getCurrentPosition
-    return new Promise((resolve, reject) => {
-      // geolocation.watchPosition() | ดึงข้อมูลตำแหน่งปัจจุบันของอุปกรณ์
-      // geolocation.getCurrentPosition ลงทะเบียนฟังก์ชันตัวจัดการที่จะเรียกโดยอัตโนมัติทุกครั้งที่ตำแหน่งของอุปกรณ์เปลี่ยนแปลง 
-      // โดยจะส่งคืนตำแหน่งที่อัปเดต
-      this.locationService.getLocationMark(this.locationParam).then(resp => {
-        resolve({ longitude: parseFloat(resp.longitude), latitude: parseFloat(resp.latitude) });
-      },
-        err => {
-          reject(err);
-        });
-    });
-  }
+  // getAddressPromise(checktype: string) {
+  //   this.loadchk = true;
+  //   console.log('Address Promise ....')
+  //   this.setCurrentLocation()
+  //     .then((position) => {
+  //       this.setCurrentLocationMark().then(mark => {
+  //         console.log('Location Promise ....')
+  //         const getPrecise = this.arepointService.testFun1(
+  //           // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
+  //           { lat1: position.latitude, lon1: position.longitude }, { lat2: mark.latitude, lon2: mark.longitude }
+  //         )
+  //         const isPoint = this.arepointService.testFun(
+  //           // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
+  //           { lat1: position.latitude, lon1: position.longitude }, { lat2: mark.latitude, lon2: mark.longitude }
+  //         )
+
+  //         this.point = isPoint;
+  //         this.precise = getPrecise;
+
+  //         if (isPoint) {
+  //           this.scanlistService.createPost({
+  //             "userId": this.badgenumber,
+  //             "checkType": checktype,
+  //             "scanId": this.locationParam
+  //           }).then(resp => {
+  //             if (resp === "created successful") {
+  //               setTimeout(() => {
+  //                 this.loadchk = false;
+  //                 this.messageService.add({ key: 'bc', severity: 'success', summary: 'เรียบร้อย', detail: 'คุณได้ลงเวลาทำงาน' });
+  //               }, 1000);
+  //             } else {
+  //               setTimeout(() => {
+  //                 this.loadchk = false;
+  //                 this.messageService.add({ key: 'bc', severity: 'warn', summary: 'แจ้งเตือน', detail: 'กรุณาตรวจสอบการเชื่อมต่อ' });
+  //               }, 1000);
+  //             }
+  //           })
+  //         } else {
+  //           setTimeout(() => {
+  //             this.loadchk = false;
+  //             this.messageService.add({ key: 'bc', severity: 'warn', summary: 'แจ้งเตือน', detail: 'กรุณาตรวจสอบระยะห่างระหว่างจุดสแกน' });
+  //           }, 1000);
+  //         }
+  //       }).catch((err) => {
+  //         setTimeout(() => {
+  //           this.loadchk = false;
+  //           console.error(err.message);
+  //           this.messageService.add({ key: 'bc', severity: 'error', summary: 'ผิดพลาด', detail: 'กรุณาตรวจสอบการเชื่อมต่อ ข้อมูล' });
+  //         }, 1000);
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       setTimeout(() => {
+  //         this.loadchk = false;
+  //         console.error(err.message);
+  //         this.messageService.add({ key: 'bc', severity: 'error', summary: 'ผิดพลาด', detail: 'กรุณาตรวจสอบการเชื่อมต่อ' });
+  //       }, 1000);
+  //     });
+  // }
 
   getAddressPromise(checktype: string) {
     this.loadchk = true;
     console.log('Address Promise ....')
     this.setCurrentLocation()
       .then((position) => {
-        this.setCurrentLocationMark().then(mark => {
+        this.locationService.getLocationMark(80).then(resp => {
           console.log('Location Promise ....')
           const getPrecise = this.arepointService.testFun1(
             // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
-            { lat1: position.latitude, lon1: position.longitude }, { lat2: mark.latitude, lon2: mark.longitude }
+            { lat1: position.latitude, lon1: position.longitude }, { lat2: resp.latitude, lon2: resp.longitude }
           )
           const isPoint = this.arepointService.testFun(
             // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
-            { lat1: position.latitude, lon1: position.longitude }, { lat2: mark.latitude, lon2: mark.longitude }
+            { lat1: position.latitude, lon1: position.longitude }, { lat2: resp.latitude, lon2: resp.longitude }
           )
 
           this.point = isPoint;
           this.precise = getPrecise;
 
+          // success scan 
           if (isPoint) {
-            this.scanlistService.createPost({
-              "userId": this.badgenumber,
-              "checkType": checktype,
-              "scanId": this.locationParam
-            }).then(resp => {
-              if (resp === "created successful") {
-                setTimeout(() => {
-                  this.loadchk = false;
-                  this.messageService.add({ key: 'bc', severity: 'success', summary: 'เรียบร้อย', detail: 'คุณได้ลงเวลาทำงาน' });
-                }, 1000);
-              } else {
-                setTimeout(() => {
-                  this.loadchk = false;
-                  this.messageService.add({ key: 'bc', severity: 'warn', summary: 'แจ้งเตือน', detail: 'กรุณาตรวจสอบการเชื่อมต่อ' });
-                }, 1000);
-              }
-            })
+            setTimeout(() => {
+              this.loadchk = false;
+              this.messageService.add({ key: 'bc', severity: 'success', summary: 'เรียบร้อย', detail: 'คุณได้ลงเวลาทำงาน' });
+            }, 1000);
           } else {
+            // failed scan
             setTimeout(() => {
               this.loadchk = false;
               this.messageService.add({ key: 'bc', severity: 'warn', summary: 'แจ้งเตือน', detail: 'กรุณาตรวจสอบระยะห่างระหว่างจุดสแกน' });
             }, 1000);
           }
-        }).catch((err) => {
+        }).catch(err => {
+          // error is not api 
           setTimeout(() => {
             this.loadchk = false;
             console.error(err.message);
-            this.messageService.add({ key: 'bc', severity: 'error', summary: 'ผิดพลาด', detail: 'กรุณาตรวจสอบการเชื่อมต่อ ข้อมูล' });
+            this.messageService.add({ key: 'bc', severity: 'error', summary: 'ผิดพลาด', detail: 'ดึงข้อมูลผิดพลาด' });
           }, 1000);
-        });
+        })
       })
       .catch((err) => {
+        // error is not location 
         setTimeout(() => {
           this.loadchk = false;
           console.error(err.message);
-          this.messageService.add({ key: 'bc', severity: 'error', summary: 'ผิดพลาด', detail: 'กรุณาตรวจสอบการเชื่อมต่อ' });
+          this.messageService.add({ key: 'bc', severity: 'error', summary: 'ผิดพลาด', detail: 'การเชื่อมต่อ GPS ผิดพลาด' });
         }, 1000);
       });
   }
