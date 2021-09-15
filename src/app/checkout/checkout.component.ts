@@ -84,7 +84,7 @@ export class CheckoutComponent implements OnInit {
       },
         err => {
           reject(err);
-        }, { maximumAge: 10000, enableHighAccuracy: false, timeout: 5000 });
+        }, { maximumAge: 10000, enableHighAccuracy: false, timeout: 3000 });
     });
   }
 
@@ -163,5 +163,5 @@ export class CheckoutComponent implements OnInit {
         }, 1000);
       });
   }
-  
+
 }
