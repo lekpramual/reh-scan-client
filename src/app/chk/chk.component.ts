@@ -175,10 +175,29 @@ export class ChkComponent implements OnInit {
 
           // success scan 
           if (isPoint) {
-            setTimeout(() => {
-              this.loadchk = false;
-              this.messageService.add({ key: 'bc', severity: 'success', summary: 'เรียบร้อย', detail: 'คุณได้ลงเวลาทำงาน' });
-            }, 1000);
+            this.scanlistService.createPost({
+              "userId": this.badgenumber,
+              "checkType": checktype,
+              "scanId": this.locationParam
+            }).then(resp => {
+              if (resp === "created successful") {
+                setTimeout(() => {
+                  this.loadchk = false;
+                  this.messageService.add({ key: 'bc', severity: 'success', summary: 'เรียบร้อย', detail: 'คุณได้ลงเวลาทำงาน' });
+                }, 1000);
+              } else {
+                setTimeout(() => {
+                  this.loadchk = false;
+                  this.messageService.add({ key: 'bc', severity: 'warn', summary: 'แจ้งเตือน', detail: 'กรุณาตรวจสอบการเชื่อมต่อ' });
+                }, 1000);
+              }
+            }).catch(err => {
+              setTimeout(() => {
+                this.loadchk = false;
+                console.error(err.message);
+                this.messageService.add({ key: 'bc', severity: 'error', summary: 'ผิดพลาด', detail: err });
+              }, 1000);
+            })
           } else {
             // failed scan
             setTimeout(() => {
