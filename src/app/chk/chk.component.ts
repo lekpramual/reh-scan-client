@@ -56,17 +56,14 @@ export class ChkComponent implements OnInit {
   ngOnInit(): void {
 
     this.primengConfig.ripple = true;
-
-    // this.pictureUrl = this.lineService.getUserValue().pictureUrl;
-    // this.displayName = this.lineService.getCurrentUserValue().name;
-    // this.badgenumber = this.lineService.getCurrentUserValue().badgenumber;
-    this.pictureUrl = "assets/icon/logo128.png";
-    this.displayName = "เล็ก ลำปาว";
-    this.badgenumber = 1735;
-
+    this.pictureUrl = this.lineService.getUserValue().pictureUrl;
+    this.displayName = this.lineService.getCurrentUserValue().name;
+    this.badgenumber = this.lineService.getCurrentUserValue().badgenumber;
+    // this.pictureUrl = "assets/icon/logo128.png";
+    // this.displayName = "เล็ก ลำปาว";
+    // this.badgenumber = 1735;
 
     this.route.params.subscribe((params: Params) => {
-      console.log(params['location']);
       this.locationParam = params['location'];
     });
 
@@ -162,11 +159,9 @@ export class ChkComponent implements OnInit {
       .then((position) => {
         this.latitude = position.latitude;
         this.longitude = position.longitude;
-        console.log('Location Promise ....', this.locationParam)
+
 
         this.locationService.getLocationMark(this.locationParam).then(resp => {
-          console.log('Location Promise ....', this.locationParam)
-          console.log('Location resp ....', resp)
           const resp_lat = resp.latitude;
           const resp_lng = resp.longitude;
           const getPrecise = this.arepointService.testFun1(

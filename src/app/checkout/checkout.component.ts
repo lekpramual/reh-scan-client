@@ -30,10 +30,6 @@ export class CheckoutComponent implements OnInit {
   point!: boolean;
   precise!: number;
   loadchk!: boolean;
-
-
-
-
   constructor(
     private messageService: MessageService,
     private primengConfig: PrimeNGConfig,
@@ -57,14 +53,13 @@ export class CheckoutComponent implements OnInit {
   ngOnInit(): void {
 
     this.primengConfig.ripple = true;
+    this.pictureUrl = this.lineService.getUserValue().pictureUrl;
+    this.displayName = this.lineService.getCurrentUserValue().name;
+    this.badgenumber = this.lineService.getCurrentUserValue().badgenumber;
 
-    // this.pictureUrl = this.lineService.getUserValue().pictureUrl;
-    // this.displayName = this.lineService.getCurrentUserValue().name;
-    // this.badgenumber = this.lineService.getCurrentUserValue().badgenumber;
-
-    this.pictureUrl = "../../assets/icon/logo128.png";
-    this.badgenumber = "1735";
-    this.displayName = "ประมวล นัดทะยาย";
+    // this.pictureUrl = "../../assets/icon/logo128.png";
+    // this.badgenumber = "1735";
+    // this.displayName = "ประมวล นัดทะยาย";
 
     // this.setCurrentLocation()
     //   .then((position) => {
