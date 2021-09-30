@@ -42,9 +42,14 @@ export class ScanlistComponent implements OnInit {
     this.version = packageInfo.version;
 
     this.scanlistload = true;
-    this.pictureUrl = this.lineService.getUserValue().pictureUrl;
-    this.userId = this.lineService.getUserValue().userId;
-    this.displayName = this.lineService.getCurrentUserValue().name;
+    // this.pictureUrl = this.lineService.getUserValue().pictureUrl;
+    // this.userId = this.lineService.getUserValue().userId;
+    // this.displayName = this.lineService.getCurrentUserValue().name;
+    this.pictureUrl = "../../assets/icon/logo128.png";
+    this.userId = "1738";
+    this.displayName = "ประมวล นัดทะยาย";
+
+
 
     this.productService.getProductsSmall().then(data => this.products = data);
 
@@ -58,7 +63,7 @@ export class ScanlistComponent implements OnInit {
   }
 
   getScanlist() {
-    this.scanlistService.getScanLists(this.lineService.getCurrentUserValue().badgenumber)
+    this.scanlistService.getScanLists("1735")
       .then((resp: { data: any[]; }) => {
         setTimeout(() => {
           this.scanlistload = false;

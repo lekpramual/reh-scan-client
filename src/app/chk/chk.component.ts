@@ -159,8 +159,8 @@ export class ChkComponent implements OnInit {
         this.latitude = position.latitude;
         this.longitude = position.longitude;
 
-        this.locationService.getLocationMark(80).then(resp => {
-          console.log('Location Promise ....')
+        this.locationService.getLocationMark(this.locationParam).then(resp => {
+          console.log('Location Promise ....', this.locationParam)
           const getPrecise = this.arepointService.testFun1(
             // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
             { lat1: position.latitude, lon1: position.longitude }, { lat2: resp.latitude, lon2: resp.longitude }

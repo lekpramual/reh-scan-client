@@ -21,7 +21,7 @@ export class CheckoutComponent implements OnInit {
   pictureUrl = "../../assets/icon/logo128.png";
   pictureScan = "assets/icon/013-fingerprint-8.png";
   displayName = "";
-  badgenumber!: number;
+  badgenumber!: string;
   locationParam!: string;
 
   latitude!: number;
@@ -58,10 +58,13 @@ export class CheckoutComponent implements OnInit {
 
     this.primengConfig.ripple = true;
 
-    this.pictureUrl = this.lineService.getUserValue().pictureUrl;
-    this.displayName = this.lineService.getCurrentUserValue().name;
-    this.badgenumber = this.lineService.getCurrentUserValue().badgenumber;
+    // this.pictureUrl = this.lineService.getUserValue().pictureUrl;
+    // this.displayName = this.lineService.getCurrentUserValue().name;
+    // this.badgenumber = this.lineService.getCurrentUserValue().badgenumber;
 
+    this.pictureUrl = "../../assets/icon/logo128.png";
+    this.badgenumber = "1735";
+    this.displayName = "ประมวล นัดทะยาย";
 
     // this.setCurrentLocation()
     //   .then((position) => {
@@ -118,9 +121,12 @@ export class CheckoutComponent implements OnInit {
     console.log('Address Promise ....')
     this.setCurrentLocation()
       .then((position) => {
+
+        console.log(position);
         this.latitude = position.latitude;
         this.longitude = position.longitude;
-        this.locationService.getLocationMark(80).then(resp => {
+        this.locationService.getLocationMark('80').then(resp => {
+
           console.log('Location Promise ....')
           const getPrecise = this.arepointService.testFun1(
             // ชุดแรกจุดเช็กอิน , จุดกึ่งกลาง สแกน
